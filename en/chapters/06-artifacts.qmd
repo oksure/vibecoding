@@ -1,0 +1,25 @@
+<!-- MACHINE-TRANSLATED from ko/chapters/06-artifacts.qmd source-sha256:ce6baef24fb3f488 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/06-artifacts.qmd and run tools/translate -->
+
+# Practice by Artifact Type: Writing, Code, Web Applications {#sec-artifacts}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What This Chapter Covers
+
+Even though it's all called "making it with AI," the actual work differs entirely depending on what is being made. This chapter divides practice by artifact type. Writing (reports, papers, documents), programming (scripts, libraries, data analysis), web applications (frontend, backend, through to deployment), and typeset materials such as documents and slides. For each type, we compare what works well and what doesn't, where human intervention is needed, and how quality checking differs. This book itself is an example of "a book written together with AI."
+
+## Seed Questions
+
+- How does verification cost differ by artifact type? (Code can be run to check, but what about writing?)
+- Where do people get stuck when vibe coding a web app from scratch through to deployment?
+- In writing, where does AI use stop being a tool and start being a ghostwriter? What are the norms for academic writing?
+- How is the landscape of representative tools divided up for each type?
+
+## Research Pointers
+
+- Collect and compare making-of accounts (writings that document the process of making something) by type
+- Documents on AI use policies from academic journals and conferences
+- Accumulate student project cases by type

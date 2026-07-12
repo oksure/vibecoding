@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+"""AI translation between the Korean and English editions.
+
+The Korean edition (ko/) is the authoritative source by default. Chapters whose
+frontmatter says `authoritative-lang: en` flow the other way (en/ -> ko/).
+Generated files carry a MACHINE-TRANSLATED marker with a hash of the source, so
+unchanged chapters are skipped on re-runs.
+
+Usage:
+  tools/translate                 # translate everything that changed
+  tools/translate chapters/05-best-practices.qmd   # only these files
+  tools/translate --force         # retranslate even if unchanged
+  tools/translate --model opus    # override model (default: sonnet)
+
+Requires the `claude` CLI (Claude Code). Model is subscription-billed.
+"""
+
+import argparse
+import hashlib
+import os
+import re
+import subprocess
+import sys
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+MARKER_RE = re.compile(r"MACHINE-TRANSLATED from \S+ source-sha256:([0-9a-f]+)")
+
+GLOSSARY = """바이브 코딩 = vibe coding | 프롬프트 엔지니어링 = prompt engineering
+루프 엔지니어링 = loop engineering | 컨텍스트 엔지니어링 = context engineering
+에이전틱 코딩 = agentic coding | 스펙 주도 개발 = spec-driven development
+개념 사전 = concept dictionary | 읽기 자료 = reading list | 기여자 = contributors
+서울대학교 = Seoul National University | 데이터사이언스 특강 = Special Topics in Data Science
+전사(前史) = prehistory | 티칭 팀 = teaching team | 수강생 = students"""
+
+PROMPT_TMPL = """You are translating one file of the book "The State of Vibe Coding" \
+({direction}). The file is Quarto markdown (.qmd).
+
+Hard rules:
+1. Output ONLY the translated document. No preamble, no explanation, and do NOT wrap \
+the output in a code fence.
+2. Preserve structure exactly: the YAML frontmatter block must be copied VERBATIM \
+(do not translate anything inside it), keep every heading level, anchors like \
+{{#sec-xxx}}, attributes like {{.unnumbered}}, callout blocks (::: {{.callout-note}} ... :::), \
+code blocks, inline code, URLs, and HTML comments unchanged.
+3. Translate: heading text, prose, list items, callout titles and bodies, table cells, \
+link text. Never translate: URLs, anchor IDs, code, file paths, direct quotations that \
+are already in the target language (keep original-language quotations as-is).
+4. Proper names stay in their original script (Andrej Karpathy, Simon Willison). \
+Use official English names for Korean institutions.
+5. Style: {style}. Do not use em dashes. Do not add, drop, or "improve" content.
+6. Terminology (use consistently):
+{glossary}
+
+Document to translate:
+
+{body}"""
+
+STYLE = {
+    ("ko", "en"): "plain, direct English prose",
+    ("en", "ko"): "담백하고 건조한 한국어. 번역투를 피하고 자연스러운 문장으로 쓴다",
+}
+
+
+def content_files():
+    """File list from ko/_quarto.yml (index + chapters + appendices)."""
+    import yaml
+    cfg = yaml.safe_load((ROOT / "ko" / "_quarto.yml").read_text())
+    files = []
+    for item in cfg["book"]["chapters"] + cfg["book"].get("appendices", []):
+        if isinstance(item, str):
+            files.append(item)
+        else:
+            files.extend(item.get("chapters", []))
+    return files
+
+
+def split_frontmatter(text):
+    if text.startswith("---\n"):
+        end = text.find("\n---", 4)
+        if end != -1:
+            close = text.find("\n", end + 1)
+            return text[: close + 1], text[close + 1 :]
+    return "", text
+
+
+def authoritative_lang(rel):
+    src = ROOT / "ko" / rel
+    if src.exists():
+        fm, _ = split_frontmatter(src.read_text())
+        m = re.search(r"^authoritative-lang:\s*(\w+)", fm, re.M)
+        if m:
+            return m.group(1)
+    return "ko"
+
+
+def sha(text):
+    return hashlib.sha256(text.encode()).hexdigest()[:16]
+
+
+def up_to_date(dst, src_hash):
+    if not dst.exists():
+        return False
+    m = MARKER_RE.search(dst.read_text())
+    return bool(m) and m.group(1) == src_hash
+
+
+def translate_one(rel, model, force):
+    src_lang = authoritative_lang(rel)
+    dst_lang = "en" if src_lang == "ko" else "ko"
+    src, dst = ROOT / src_lang / rel, ROOT / dst_lang / rel
+
+    if not src.exists():
+        print(f"  SKIP {rel}: source {src_lang}/{rel} missing "
+              f"(authoritative-lang is {src_lang}; create it first)")
+        return False
+    text = src.read_text()
+    h = sha(text)
+    if not force and up_to_date(dst, h):
+        print(f"  ok   {rel} (unchanged)")
+        return True
+
+    direction = ("from Korean to English" if src_lang == "ko"
+                 else "from English to Korean")
+    prompt = PROMPT_TMPL.format(direction=direction, glossary=GLOSSARY,
+                                style=STYLE[(src_lang, dst_lang)], body=text)
+    print(f"  ...  {rel} ({src_lang} -> {dst_lang}, model={model})", flush=True)
+    env = dict(os.environ, CLAUDE_CODE_SAFE_MODE="1")
+    try:
+        out = subprocess.run(["claude", "-p", "--model", model],
+                             input=prompt, capture_output=True, text=True,
+                             timeout=600, env=env)
+    except FileNotFoundError:
+        sys.exit("error: `claude` CLI not found. Install Claude Code first.")
+    except subprocess.TimeoutExpired:
+        print(f"  FAIL {rel}: translation timed out")
+        return False
+    if out.returncode != 0 or not out.stdout.strip():
+        print(f"  FAIL {rel}: {out.stderr.strip()[:200]}")
+        return False
+
+    result = out.stdout.strip()
+    # Strip a stray whole-document code fence if the model added one anyway.
+    if result.startswith("```"):
+        result = re.sub(r"^```[a-z]*\n", "", result)
+        result = re.sub(r"\n```$", "", result)
+    marker = (f"<!-- MACHINE-TRANSLATED from {src_lang}/{rel} "
+              f"source-sha256:{h} model:{model} date:{date.today()} "
+              f"| DO NOT EDIT: edit {src_lang}/{rel} and run tools/translate -->")
+    fm, body = split_frontmatter(result)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(f"{fm}\n{marker}\n{body.lstrip()}" if fm
+                   else f"{marker}\n\n{result}\n")
+    print(f"  DONE {rel}")
+    return True
+
+
+def sync_images():
+    src, dst = ROOT / "ko" / "images", ROOT / "en" / "images"
+    if src.is_dir() and any(src.iterdir()):
+        subprocess.run(["rsync", "-a", f"{src}/", f"{dst}/"], check=True)
+        print("  images synced ko -> en")
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("paths", nargs="*", help="relative paths to limit translation")
+    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--model", default=os.environ.get("TRANSLATE_MODEL", "sonnet"))
+    args = ap.parse_args()
+
+    files = args.paths or content_files()
+    print(f"translate: {len(files)} file(s)")
+    failures = [rel for rel in files if not translate_one(rel, args.model, args.force)]
+    sync_images()
+    if failures:
+        sys.exit(f"error: {len(failures)} file(s) failed: {', '.join(failures)}")
+    print("all translations up to date")
+
+
+if __name__ == "__main__":
+    main()

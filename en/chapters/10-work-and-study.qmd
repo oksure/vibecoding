@@ -1,0 +1,28 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/10-work-and-study.qmd source-sha256:0df33c98993e0bcc model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/10-work-and-study.qmd and run tools/translate -->
+# Studying and Working in the Age of AI {#sec-work-study}
+
+::: {.callout-warning}
+## Drafting status
+Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What this chapter covers
+
+Vibe coding started as a story about coding, but it ends as a story about work and study. This chapter widens the view. How is the workday of a person working alongside AI reorganized (delegation, review, parallel work)? What does the thing we need to learn change into (from memorizing syntax to defining problems and verifying results)? What should universities, and data science education in particular, teach? And even the question of identity: "If AI does everything, who am I as a worker?" We start not from prediction but from observation of change that has already happened.
+
+## Seed questions
+
+- How has the actual workday of practitioners and researchers who use AI deeply changed? (Interviews possible)
+- What outcomes have different responses in education (banning AI, mandating AI, changing evaluation methods) each produced?
+- How does the gap between "someone who knows how to verify" and "someone who only knows how to build" show up?
+- What does this course itself (seminar format, collaborative book writing, AI fully permitted) demonstrate as an experiment?
+
+## Research pointers
+
+- Empirical research on knowledge worker productivity (including economics and management literature)
+- Timeline of AI policy changes at major universities and companies
+- Use interviews with students and people nearby as primary sources

@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Build the book: web (Quarto book HTML) and PDF (Typst via a combined document).
+#
+# Usage:
+#   tools/build            # everything: html + pdf for ko & en, assembled in _site/
+#   tools/build html       # HTML only (both languages)
+#   tools/build pdf        # PDF only  (both languages)
+#   tools/build html ko    # one target, one language
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+TARGET="${1:-all}"
+LANGS="${2:-both}"
+[[ "$LANGS" == "both" ]] && LANGS="ko en"
+
+command -v quarto >/dev/null || { echo "error: quarto not found (https://quarto.org)"; exit 1; }
+python3 -c "import yaml" 2>/dev/null || { echo "error: python3 PyYAML required (pip install pyyaml)"; exit 1; }
+
+# The two editions must list the same chapter files.
+python3 - <<'EOF'
+import sys, yaml
+def files(lang):
+    cfg = yaml.safe_load(open(f"{lang}/_quarto.yml"))
+    out = []
+    for item in cfg["book"]["chapters"] + cfg["book"].get("appendices", []):
+        out.extend([item] if isinstance(item, str) else item.get("chapters", []))
+    return out
+ko, en = files("ko"), files("en")
+if ko != en:
+    sys.exit(f"error: chapter lists differ between ko/_quarto.yml and en/_quarto.yml\n"
+             f"  ko only: {[f for f in ko if f not in en]}\n"
+             f"  en only: {[f for f in en if f not in ko]}")
+EOF
+
+build_html() {
+  local lang="$1"
+  echo "== HTML ($lang) =="
+  (cd "$lang" && quarto render --to html)
+}
+
+build_pdf() {
+  local lang="$1"
+  echo "== PDF ($lang) =="
+  python3 tools/_pdf_assemble.py "$lang"
+  quarto render "_pdfbuild/$lang/main.qmd" --to typst
+  mkdir -p dist
+  mv "_pdfbuild/$lang/main.pdf" "dist/the-state-of-vibe-coding-$lang.pdf"
+  echo "-> dist/the-state-of-vibe-coding-$lang.pdf"
+}
+
+assemble_site() {
+  echo "== site (_site/) =="
+  rm -rf _site
+  mkdir -p _site/en _site/pdf
+  cp -r ko/_book/. _site/
+  cp -r en/_book/. _site/en/
+  cp dist/*.pdf _site/pdf/
+  touch _site/.nojekyll
+  echo "-> _site/ ready (ko at /, en at /en/, PDFs at /pdf/)"
+}
+
+for lang in $LANGS; do
+  case "$TARGET" in
+    html) build_html "$lang" ;;
+    pdf)  build_pdf  "$lang" ;;
+    all)  build_html "$lang"; build_pdf "$lang" ;;
+    site) ;;
+    *) echo "usage: tools/build [html|pdf|site|all] [ko|en|both]"; exit 1 ;;
+  esac
+done
+
+[[ "$TARGET" == "all" || "$TARGET" == "site" ]] && assemble_site
+echo "build complete"

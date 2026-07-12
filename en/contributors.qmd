@@ -1,0 +1,26 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/contributors.qmd source-sha256:35373c70f0e20c20 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/contributors.qmd and run tools/translate -->
+# Contributors {#sec-contributors}
+
+This book is written collaboratively in the Seoul National University Special Topics in Data Science course, "Vibe Coding." Each edition records that semester's contributors.
+
+## 2026 Edition (2026, 2nd Semester)
+
+**Lead**
+
+- Hyunwoo Park (Seoul National University Graduate School of Data Science) · Planning and editorial lead
+
+**Teaching Team**
+
+- (to be listed once confirmed)
+
+**Authors (Students)**
+
+- (to be listed once chapters are assigned. Format: Name · Assigned chapter)
+
+::: {.callout-note}
+Students add their name to this list when their first PR is merged. That is this course's rite of passage.
+:::

@@ -1,0 +1,34 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/02-birth-of-vibe-coding.qmd source-sha256:a8ec9b3fb3552194 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/02-birth-of-vibe-coding.qmd and run tools/translate -->
+# The Birth of Vibe Coding {#sec-birth}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What This Chapter Covers
+
+In February 2025, Andrej Karpathy posted a tweet.
+
+> There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
+>
+> — Andrej Karpathy, [X, February 2025](https://x.com/karpathy/status/1886192184808149383)
+
+This post, which he later recalled as "a tweet I dashed off after an idea struck me in the shower," got millions of views, and that November it became Collins Dictionary's [Word of the Year](https://www.collinsdictionary.com/us/woty). This chapter dissects that moment: what the original text actually said and did not say, how the term's meaning broadened and warped as it spread, and why that particular moment (model capability, tooling, mood) made it happen.
+
+## Seed Questions
+
+- What was Karpathy's original definition, and how does it differ from how people actually use the term?
+- Why did Simon Willison draw the line that "not all AI-assisted programming is vibe coding"?
+- What were the technical conditions (agentic coding tools, model generations) behind the term's explosion in early 2025?
+- How did dictionary inclusion and media coverage redefine the term?
+
+## Research Pointers
+
+- The original tweet, the one-year-anniversary retrospective tweet, and major quoted reactions
+- Simon Willison, ["Not all AI-assisted programming is vibe coding"](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19)
+- The Collins Word of the Year 2025 announcement and related coverage

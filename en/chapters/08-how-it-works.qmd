@@ -1,0 +1,28 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/08-how-it-works.qmd source-sha256:477c9455def467b5 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/08-how-it-works.qmd and run tools/translate -->
+# How It Works: LLMs and the Agent Loop {#sec-how}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What This Chapter Covers
+
+To use vibe coding properly, you need at least a rough sense of what runs underneath it. This chapter explains the principles without math, but accurately. It covers the basic structure of next-token prediction, why this works especially well for code, the constraint of the context window, and the anatomy of a coding agent (tool calls, reading and writing files, execution and feedback, the iteration loop). It lays out what is currently known about what actually happens between the claim that "the model understands code" and the claim that it "mimics patterns."
+
+## Seed Questions
+
+- If you break down what actually happens in a single turn of a coding agent, step by step, what does that look like?
+- Why is it easier to verify the quality of generated code than generated natural language? How is this reflected in tool design?
+- What failures do the limits of the context window show up as in real work?
+- What form does hallucination take in code generation?
+
+## Research Pointers
+
+- Public documentation on agent architecture (Anthropic's and OpenAI's writings on agent design)
+- Source code of open-source coding agents (read the loop structure directly)
+- Selected popular but accurate explanations of how LLMs work

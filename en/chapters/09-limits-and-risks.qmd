@@ -1,0 +1,28 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/09-limits-and-risks.qmd source-sha256:f16e273a58157e3a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/09-limits-and-risks.qmd and run tools/translate -->
+# Limits and Risks: A Codebase Turning into a Black Box {#sec-limits}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft · Owner: unassigned. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What This Chapter Covers
+
+Behind the promise of vibe coding there is a bill to pay. This chapter lays that bill out honestly. The core problem is a hollowing-out of understanding. A codebase touched by AI gradually becomes a black box that no one fully understands, and AI keeps piling more code on top of it. On top of this, we cover security vulnerabilities (unverified dependencies in generated code, prompt injection), quality debt (code that works but cannot be maintained), the paradox of the skills gap (beginners have gotten faster, but the path to becoming a senior developer is disappearing), and questions of evaluation and accountability (who signs off on this code).
+
+## Seed Questions
+
+- When does "code that works without being understood" become a problem? Can we distinguish those cases from ones where it doesn't?
+- What do empirical studies on security vulnerabilities in generated code show?
+- Are changes in the junior developer hiring market actually confirmed by data?
+- What governance (review policies, disclosure requirements) are organizations introducing for AI-generated code?
+
+## Research Pointers
+
+- Empirical studies on the quality and security of generated code (prioritize academic papers)
+- Reports of side effects from practitioners (incident postmortems, maintenance war stories)
+- AI code governance policy documents from various countries and companies

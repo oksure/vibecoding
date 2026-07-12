@@ -1,0 +1,58 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: en
+
+book:
+  title: "The State of Vibe Coding"
+  subtitle: "The History, Art, and Concepts of Vibe Coding"
+  author: "Hyunwoo Park and contributors · SNU Special Topics in Data Science: Vibe Coding"
+  date: today
+  repo-url: https://github.com/oksure/vibecoding
+  repo-subdir: en
+  repo-actions: [issue]
+  site-url: https://oksure.github.io/vibecoding/en/
+  sidebar:
+    tools:
+      - icon: globe
+        text: "한국어판 (원문)"
+        href: "/vibecoding/"
+      - icon: file-pdf
+        text: "Download PDF"
+        href: "/vibecoding/pdf/the-state-of-vibe-coding-en.pdf"
+  page-footer:
+    left: "CC BY-SA 4.0 · SNU Special Topics in Data Science: Vibe Coding"
+    right: "[GitHub](https://github.com/oksure/vibecoding)"
+  chapters:
+    - index.qmd
+    - part: "Part I · History of Vibe Coding"
+      chapters:
+        - chapters/01-before-vibe-coding.qmd
+        - chapters/02-birth-of-vibe-coding.qmd
+        - chapters/03-evolution-of-discourse.qmd
+    - part: "Part II · The Art of Vibe Coding"
+      chapters:
+        - chapters/04-opportunities.qmd
+        - chapters/05-best-practices.qmd
+        - chapters/06-artifacts.qmd
+        - chapters/07-content-generation.qmd
+    - part: "Part III · Principles and Limits"
+      chapters:
+        - chapters/08-how-it-works.qmd
+        - chapters/09-limits-and-risks.qmd
+    - part: "Part IV · Outlook"
+      chapters:
+        - chapters/10-work-and-study.qmd
+  appendices:
+    - glossary.qmd
+    - reading-list.qmd
+    - contributors.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    number-sections: true
+    code-copy: true

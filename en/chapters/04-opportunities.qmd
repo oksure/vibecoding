@@ -1,0 +1,28 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/04-opportunities.qmd source-sha256:dbaa4131cad55cb2 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/04-opportunities.qmd and run tools/translate -->
+# Opportunities and Potential {#sec-opportunities}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
+:::
+
+## What This Chapter Covers
+
+What vibe coding opens up is not "coding faster." Someone who couldn't write a single line of code can build working software, and an expert can shrink the distance from idea to prototype to under a day. This chapter addresses that opportunity concretely. It organizes, case by case, what doors have opened for whom (non-specialists, domain experts, solo founders, researchers), how the economics of software are changing (the marginal cost of custom software, the emergence of disposable software), and what has become possible in education.
+
+## Seed Questions
+
+- To what extent is it true that "now anyone can build software"? What do the failure cases show?
+- Is disposable, personal software (software for one) actually increasing?
+- How have prototyping practices changed at startups and in enterprise settings?
+- What kind of tool is vibe coding for researchers? (data pipelines, visualization, simulation)
+
+## Research Pointers
+
+- Collect examples of non-developers building things (domestic and international communities, Product Hunt-type sites)
+- Reports estimating the size of the vibe coding industry (figures must always be checked against primary sources)
+- Use each student's first vibe coding experience as case data

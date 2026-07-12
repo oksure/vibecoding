@@ -1,0 +1,58 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: ko
+
+book:
+  title: "The State of Vibe Coding"
+  subtitle: "바이브 코딩의 역사, 기술, 개념"
+  author: "박현우와 참여자들 · 서울대학교 데이터사이언스 특강 〈바이브 코딩〉"
+  date: today
+  repo-url: https://github.com/oksure/vibecoding
+  repo-subdir: ko
+  repo-actions: [edit, issue]
+  site-url: https://oksure.github.io/vibecoding/
+  sidebar:
+    tools:
+      - icon: globe
+        text: "English edition"
+        href: "/vibecoding/en/"
+      - icon: file-pdf
+        text: "PDF 내려받기"
+        href: "/vibecoding/pdf/the-state-of-vibe-coding-ko.pdf"
+  page-footer:
+    left: "CC BY-SA 4.0 · 서울대학교 데이터사이언스 특강 〈바이브 코딩〉"
+    right: "[GitHub](https://github.com/oksure/vibecoding)"
+  chapters:
+    - index.qmd
+    - part: "제1부 · 바이브 코딩의 역사"
+      chapters:
+        - chapters/01-before-vibe-coding.qmd
+        - chapters/02-birth-of-vibe-coding.qmd
+        - chapters/03-evolution-of-discourse.qmd
+    - part: "제2부 · 바이브 코딩의 기술"
+      chapters:
+        - chapters/04-opportunities.qmd
+        - chapters/05-best-practices.qmd
+        - chapters/06-artifacts.qmd
+        - chapters/07-content-generation.qmd
+    - part: "제3부 · 원리와 한계"
+      chapters:
+        - chapters/08-how-it-works.qmd
+        - chapters/09-limits-and-risks.qmd
+    - part: "제4부 · 전망"
+      chapters:
+        - chapters/10-work-and-study.qmd
+  appendices:
+    - glossary.qmd
+    - reading-list.qmd
+    - contributors.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    number-sections: true
+    code-copy: true

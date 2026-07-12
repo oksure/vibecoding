@@ -1,0 +1,31 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/reading-list.qmd source-sha256:e6c58682ef2acbdd model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/reading-list.qmd and run tools/translate -->
+# Reading List {#sec-reading}
+
+This is the shared reference list for the course and the writing. Whoever presents a chapter adds the sources for that chapter here. Rule: prioritize primary sources, note the date checked, and attach a one-line summary.
+
+## Original Sources
+
+- Andrej Karpathy, [the original vibe coding tweet](https://x.com/karpathy/status/1886192184808149383) (X, 2025-02). The birth of the term. "fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+- Andrej Karpathy, [one-year retrospective tweet](https://x.com/karpathy/status/2019137879310836075) (X, 2026-02). His own look back at how the term spread. "shower of thoughts throwaway tweet."
+- Andrej Karpathy, [Software 2.0](https://karpathy.medium.com/software-2-0-a64152b37c35) (Medium, 2017). The origin of the argument that neural networks replace code.
+
+## Discourse
+
+- Simon Willison, [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19). The representative piece distinguishing the narrow and broad senses of the term.
+- Collins Dictionary, [Word of the Year 2025 announcement](https://www.collinsdictionary.com/us/woty) (2025-11). Entry into everyday vocabulary. Related coverage: [CNN](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl).
+- CodeRabbit, [A semantic history of vibe coding](https://www.coderabbit.ai/blog/a-semantic-history-how-the-term-vibe-coding-went-from-a-tweet-to-prod). A summary of how the term's meaning has shifted.
+- ADTmag, [Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01). Reporting on the rise of the loop engineering concept.
+
+## Practice
+
+- Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents) (2024-12). The reference document for agent design principles.
+- Anthropic, [official prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). The reference document for the prehistory side.
+
+::: {.callout-note}
+## Pending Collection
+The original post on loop engineering (Addy Osmani, 2026-06) and the practitioner writings that were its source, domestic (Korean) discussion materials, and the key literature for each chapter. To be filled in by the person responsible, alongside their chapter research. Add links only after confirming they are accessible.
+:::

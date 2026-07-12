@@ -1,0 +1,7 @@
+/_pdfbuild/
+/_site/
+/dist/
+_book/
+.quarto/
+*.quarto_ipynb
+/.luarc.json

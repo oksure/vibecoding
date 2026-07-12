@@ -1,0 +1,30 @@
+<!-- MACHINE-TRANSLATED from ko/index.qmd source-sha256:379fec9c20d15909 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/index.qmd and run tools/translate -->
+
+# Preface {.unnumbered}
+
+This book is an attempt to gather thoughts about vibe coding in one place. Coined in Andrej Karpathy's tweet in February 2025, the term now serves as a lens not just for a particular coding style but for an entire way of working and studying with AI. If prompt engineering was its prehistory, loop engineering is its next chapter. This book covers that whole arc.
+
+## The nature of this book {.unnumbered}
+
+**It is a living book.** In the Seoul National University Special Topics in Data Science course "Vibe Coding," the instructor and students write it together on GitHub. A new edition comes out each semester, and it is revised frequently in between. It is not a finished book but a snapshot updated every year, literally "the state of" vibe coding.
+
+**It comes in two formats.** A web edition and a typeset PDF edition are built together from the same manuscript.
+
+**It comes in two languages.** The Korean edition is the primary original, and the English edition is machine-translated by AI. However, for chapters whose authors are more comfortable writing in English, English is the original and Korean is the translation. The original language of each chapter is noted in the metadata at the top of the chapter.
+
+## What it covers {.unnumbered}
+
+- **History**: the evolution of methodological discourse from prompt engineering to vibe coding, and on to agentic coding and loop engineering
+- **Techniques**: the opportunities vibe coding opens up, best practices, and hands-on practice for what can be made, from writing and code to web applications, images, and video
+- **Principles and limits**: why this approach works, and where it breaks down, including the problem of AI-touched codebases turning into black boxes
+- **Outlook**: how AI is changing the way we study and work
+- **Concept dictionary**: a dictionary of concepts being born and evolving around vibe coding. It keeps growing as an appendix
+
+## How to contribute {.unnumbered}
+
+This book itself is both a product of the course and a hands-on workshop. See the repository's [CONTRIBUTING.md](https://github.com/oksure/vibecoding/blob/main/CONTRIBUTING.md) for how to contribute. How the course is run is documented in the [README](https://github.com/oksure/vibecoding) and the [syllabus](https://github.com/oksure/vibecoding/blob/main/SYLLABUS.md).
+
+::: {.callout-note}
+## Current edition
+The 2026 edition (in progress). Writing is proceeding alongside the second-semester 2026 course.
+:::

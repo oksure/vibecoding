@@ -1,0 +1,30 @@
+---
+authoritative-lang: ko
+---
+
+# 읽기 자료 {#sec-reading}
+
+수업과 집필의 공통 기반이 되는 자료 목록이다. 발표 담당자는 자기 챕터의 자료를 여기에 추가한다. 규칙: 1차 출처를 우선하고, 확인한 날짜를 적고, 요약 한 줄을 단다.
+
+## 원전
+
+- Andrej Karpathy, [바이브 코딩 원 트윗](https://x.com/karpathy/status/1886192184808149383) (X, 2025-02). 용어의 탄생. "fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+- Andrej Karpathy, [1주년 회고 트윗](https://x.com/karpathy/status/2019137879310836075) (X, 2026-02). 본인이 돌아본 용어의 확산 과정. "shower of thoughts throwaway tweet."
+- Andrej Karpathy, [Software 2.0](https://karpathy.medium.com/software-2-0-a64152b37c35) (Medium, 2017). 신경망이 코드를 대체한다는 논의의 원류.
+
+## 담론
+
+- Simon Willison, [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19). 용어의 좁은 뜻과 넓은 뜻을 가른 대표 글.
+- Collins Dictionary, [Word of the Year 2025 발표](https://www.collinsdictionary.com/us/woty) (2025-11). 일반어로의 편입. 관련 보도: [CNN](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl).
+- CodeRabbit, [A semantic history of vibe coding](https://www.coderabbit.ai/blog/a-semantic-history-how-the-term-vibe-coding-went-from-a-tweet-to-prod) . 용어의 의미 변천 정리.
+- ADTmag, [Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01). 루프 엔지니어링 개념의 부상 보도.
+
+## 실무
+
+- Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents) (2024-12). 에이전트 설계 원칙의 기준 문서.
+- Anthropic, [Prompt engineering 공식 가이드](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). 전사(前史) 쪽 기준 문서.
+
+::: {.callout-note}
+## 수집 대기
+루프 엔지니어링의 원 포스트(Addy Osmani, 2026-06)와 그 원류가 된 실무자 글들, 국내 논의 자료, 각 챕터별 핵심 문헌. 담당자가 챕터 조사와 함께 채울 것. 링크는 반드시 접속 확인 후 추가한다.
+:::

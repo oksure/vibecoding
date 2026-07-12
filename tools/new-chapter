@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Scaffold a new chapter in the Korean (authoritative) edition.
+#
+# Usage: tools/new-chapter <NN-slug> "<제목>"
+# Example: tools/new-chapter 11-security "보안과 바이브 코딩"
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+[[ $# -eq 2 ]] || { echo "usage: tools/new-chapter <NN-slug> \"<제목>\""; exit 1; }
+SLUG="$1"; TITLE="$2"
+FILE="ko/chapters/${SLUG}.qmd"
+[[ -e "$FILE" ]] && { echo "error: $FILE already exists"; exit 1; }
+
+cat > "$FILE" <<EOF
+---
+authoritative-lang: ko
+---
+
+# ${TITLE} {#sec-${SLUG#*-}}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전 · 담당: 미정.
+:::
+
+## 이 장에서 다룰 것
+
+(챕터 브리프를 쓴다: 무엇을 다루고, 핵심 질문이 무엇인지.)
+
+## 시드 질문
+
+-
+
+## 조사 포인터
+
+-
+EOF
+
+echo "created $FILE"
+echo "next steps:"
+echo "  1. ko/_quarto.yml 과 en/_quarto.yml 의 chapters 목록에 chapters/${SLUG}.qmd 추가"
+echo "  2. 내용 작성 후 tools/translate 실행"
