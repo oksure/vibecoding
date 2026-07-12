@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 바이브 엔지니어링 (vibe engineering) {#gl-vibe-engineering}
+
+바이브 코딩의 속도를 유지하면서도 결과물의 책임을 지는 작업 방식을 가리키는 말이다. 검증, 테스트, 리뷰 같은 공학적 절차를 바이브 코딩 워크플로에 다시 결합하자는 제안에 가깝다.
+
+Simon Willison이 제안한 개념이다 ([글](https://simonw.substack.com/p/vibe-engineering)). 2025년 가을로 알려져 있으나 정확한 발행일은 확인이 필요하다.
+
+바이브 코딩의 "검증 문제"에 대한 반작용 개념 중 하나로, §3.5에서 이런 반작용 개념들을 함께 다룬다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- Willison 글의 정확한 발행일과 정의 원문 확인
+- vibe engineering과 spec-driven development, TDD 부활론(§10.4) 등 인접 반작용 개념과의 관계 정리
+- Willison 이후 이 용어를 쓴 다른 저자·기사 존재 여부 확인
+:::

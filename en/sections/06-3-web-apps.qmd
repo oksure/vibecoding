@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/06-3-web-apps.qmd source-sha256:6ea8cbb23affc6dd model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/06-3-web-apps.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Web Applications: From Frontend to Deployment {#sec-web-apps}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check the repository root's TOPICS.md for owner and status.
+:::
+
+**Brief.** Web applications are the most representative stage for vibe coding. Building a single frontend screen is a very different level of difficulty from connecting a backend and database and actually finishing deployment. This section follows the full path from idea to deployment, distinguishing where things go smoothly and where they get stuck, and whether that bottleneck comes from the limits of the tools or a lack of human understanding. Where §6.1 and §6.2 dealt with artifacts that are hard to verify, this section shows why an artifact that is comparatively easy to verify (you can see it by running it) is nonetheless hard to see through to completion.
+
+**Seed Questions**
+
+- How common are actual cases of completing a full-stack web application from planning to deployment using vibe coding alone? How does this compare to cases of giving up midway?
+- Among frontend, backend, database, and deployment pipeline, which stage does vibe coding work best for, and which is it most vulnerable at?
+- In areas where mistakes are costly, such as authentication, payments, and permission management, how is the reliability of AI-generated code assessed?
+- Among web apps built with vibe coding, what is the difference between cases that acquired and retained real users and cases that remained mere demos?
+- Record your own experience attempting a web application from planning to deployment as a case study. At which stage were you stuck the longest?
+
+**Research Pointers**
+
+- Full-stack vibe coding build logs (blogs, YouTube, X threads)
+- AI integration features and official case studies from web deployment platforms (Vercel, Railway, etc.)
+- Compile students' own web app project progress logs as case studies

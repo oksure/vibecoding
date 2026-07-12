@@ -1,0 +1,24 @@
+<!-- authoritative-lang: ko -->
+
+## 컨텍스트 엔지니어링 {#sec-context-engineering}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** 이 꼭지는 컨텍스트 엔지니어링이라는 개념의 명명과 정식화를 다룬다. Shopify CEO Tobi Lütke가 2025년 6월 트윗으로 이 말을 붙였고 Karpathy가 이를 승인하며 정식화에 힘을 실었다. 핵심 주장은 프롬프트 하나를 잘 쓰는 기술에서, 에이전트가 매 턴 무엇을 보고 무엇을 못 보는지, 즉 컨텍스트 창 구성 전체를 설계하는 기술로 병목이 옮겨갔다는 것이다. 3장에서 이 꼭지는 프롬프트 엔지니어링(1부)의 직접적 후계 개념을 다룬다.
+
+**시드 질문**
+
+- Tobi Lütke는 정확히 어떤 트윗에서 이 말을 제안했고, 어떤 문제의식에서 나왔나?
+- Karpathy는 어떤 방식으로 이 명명에 동의했나, 그의 승인이 용어 확산에 어떤 역할을 했나?
+- "프롬프트 엔지니어링"과 "컨텍스트 엔지니어링"의 실질적 차이는 무엇인가, 겹치는 부분은 어디인가?
+- Simon Willison과 Phil Schmid는 각각 이 개념을 어떻게 정리했나, 두 정리 사이에 강조점의 차이가 있는가?
+- 컨텍스트 엔지니어링이라는 개념이 실제로 바꾼 개발 관행(CLAUDE.md·AGENTS.md류 문서, 컨텍스트 창 예산 관리 등)은 무엇인가?
+
+**조사 포인터**
+
+- Tobi Lütke의 명명 트윗(2025-06-19)과 [Karpathy의 승인 트윗](https://x.com/karpathy/status/1937902205765607626)을 확인할 것
+- Simon Willison, [정리 글](https://simonwillison.net/2025/Jun/27/context-engineering/) (2025-06-27)을 읽을 것
+- Phil Schmid, [정리 글](https://www.philschmid.de/context-engineering)을 읽을 것

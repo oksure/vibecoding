@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/14-2-labor-data.qmd source-sha256:472e2796edb7e88f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/14-2-labor-data.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Changing Job Landscape: A Data-Driven Look {#sec-labor-data}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** There are many claims that AI is changing the job landscape for developers, but the quality of the evidence varies widely. This section looks for empirical research on job postings, wages, and employment scale in order to separate exaggerated narratives from changes that are actually confirmed. The only way this book is allowed to cite figures is by directly checking the original data and methodology. This section does not predetermine any specific figures or conclusions. The person in charge must not assert any figure without verification, and should write claims only after verifying them against empirical research and original data.
+
+**Seed Questions**
+
+- What are reliable data sources that track changes in the number of developer job postings and required skills, and what are their methodologies?
+- Can statistics on developer wage trends be causally linked to AI adoption, or do they only show correlation?
+- For the hiring-decline figures frequently cited in the media, what is the original source, and is the methodology verifiable?
+- How do patterns of change in employment data differ by country and by industry?
+- Where empirical studies reach conflicting conclusions, is the cause a difference in methodology or a difference in the observation period?
+
+**Research Pointers**
+
+- Check labor economics academic papers and official employment statistics (original data published by governments and international organizations) as primary sources.
+- For reports that hiring platforms publish themselves, be sure to check and state the limitations of their methodology and sample.
+- Use any figure in this section only after directly checking the original data. Do not assert figures that could not be verified; leave them marked as "to be verified."

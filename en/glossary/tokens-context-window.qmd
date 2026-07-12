@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/tokens-context-window.qmd source-sha256:3c53fc44b804c6ec model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/tokens-context-window.qmd and run tools/translate -->
+
+## Tokens / Context Window {#gl-tokens-context-window}
+
+A token is the smallest unit a language model uses to process text; it can be smaller than a word or span multiple words. The context window refers to the maximum number of tokens a model can reference at once.
+
+This is a general technical term with no attributable origin tied to a specific person or moment.
+
+This limit governs the size of codebase a coding agent can handle, the length of a conversation, and the number of files that can fit in context. There is an observation that as context windows grow larger, the importance of context engineering (G3) becomes even more pronounced, rather than less. §5.3 covers practical management techniques.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Trends in context window size across major models (verify figures against official documentation)
+- How tokenization methods (BPE, etc.) apply specifically to code
+- Cross-check against §5.3 (the art of context management)
+:::

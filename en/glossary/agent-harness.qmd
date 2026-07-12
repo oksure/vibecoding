@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/agent-harness.qmd source-sha256:75ce51745dfdd0af model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/agent-harness.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Agent Harness (agent harness / harness engineering) {#gl-agent-harness}
+
+This term refers to the execution environment that actually makes an agent work: the full set of mechanisms for tool access, permissions, loop control, and context management. In the formulation "Agent = Model + Harness," it captures the view that, apart from the model's own performance, harness design determines the quality of the agent.
+
+It has been summarized as a three-stage progression running from prompt engineering through context engineering to harness engineering ([Faros AI blog](https://www.faros.ai/blog/harness-engineering)). It remains to be confirmed who first used the term "harness" for an agent execution environment before this summary post.
+
+CLI-based coding agent tools such as Claude Code are cited as representative examples of a harness. This overlaps with §3.4 and §8.2.
+
+::: {.callout-note collapse="true"}
+## Pointers for Further Exploration
+- Confirm when the term "harness" first began to be used in the agent context
+- Verify the three-stage progression (prompt → context → harness) from the Faros AI post against the original source and compare it with §3.4 of this book
+- Connect to open-source agent harness examples (the source-reading targets covered in §8.2)
+:::

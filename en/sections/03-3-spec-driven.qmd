@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-3-spec-driven.qmd source-sha256:c11c58825a702969 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-3-spec-driven.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Spec-Driven Development {#sec-spec-driven}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section treats spec-driven development as a reaction to vibe coding. Spec Kit, released by GitHub in September 2025, is a tool that explicitly walks through four stages: Spec, Plan, Tasks, and Implement. The core question is what tension exists between vibe coding's attitude of "forget that the code even exists" and spec-driven development's attitude of writing the specification first and prioritizing it over the code. It should also address whether this conflict is a replay of the waterfall versus agile debate (revisited in Part 4 §10.1). In Chapter 3, this section covers the first systematic reaction to vibe coding.
+
+**Seed Questions**
+
+- What problem was each of the four stages specified by GitHub Spec Kit (Spec, Plan, Tasks, Implement) designed to address?
+- Are there other tools or workflows that claim to be spec-driven development, and if so, how do their approaches differ?
+- Is spec-driven development an attempt to replace vibe coding or to complement it, and which is closer to practitioners' actual usage patterns?
+- What similarities and differences emerge when this conflict is overlaid with the waterfall versus agile debate (Royce 1970, Agile Manifesto 2001)?
+- Is there evidence that the spec-first approach actually improved code quality or verifiability?
+
+**Research Pointers**
+
+- Read GitHub's official announcement, ["Spec-driven development with AI"](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (2025-09)
+- Contrast the primary sources Winston Royce, "Managing the Development of Large Software Systems" (1970) and the [Agile Manifesto](https://agilemanifesto.org) (2001)
+- Investigate and compare similar workflows besides Spec Kit (plan-mode-type features from other vendors)

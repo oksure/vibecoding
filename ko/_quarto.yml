@@ -41,9 +41,15 @@ book:
       chapters:
         - chapters/08-how-it-works.qmd
         - chapters/09-limits-and-risks.qmd
-    - part: "제4부 · 전망"
+    - part: "제4부 · 소프트웨어 엔지니어링의 재발견"
       chapters:
-        - chapters/10-work-and-study.qmd
+        - chapters/10-rediscovery-methods.qmd
+        - chapters/11-rediscovery-principles.qmd
+        - chapters/12-rediscovery-practices.qmd
+    - part: "제5부 · 공부와 일"
+      chapters:
+        - chapters/13-learning.qmd
+        - chapters/14-working.qmd
   appendices:
     - glossary.qmd
     - reading-list.qmd

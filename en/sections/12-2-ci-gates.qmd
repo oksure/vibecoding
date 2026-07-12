@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/12-2-ci-gates.qmd source-sha256:70a05b62079aeb22 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/12-2-ci-gates.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## CI/CD and Gates: Checkpoints in a Loop Without Humans {#sec-ci-gates}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This is a section that contrasts the original rationale for continuous integration with the phenomenon in which, in an era of agent-generated code that human reviewers cannot look at for every commit, CI gates become effectively the only automated checkpoint. Write it in a three-part structure. First, accurately read the original rationale for CI/CD: the practice that frequent integration prevents integration hell, and the empirical finding that automating the deployment pipeline correlates with organizational performance. Next, collect cases of the practical convention of using CI as the last line of defense for agent-generated code. Finally, argue what changes when CI's premise, that a human commits and a human interprets failures, shifts into a loop where the agent commits and also interprets failures itself.
+
+**Seed Questions**
+
+- What exactly is the core practice Fowler presented in his writing on CI, namely integrating several times a day and verifying each integration with an automated build? (verify primary source)
+- What did the deployment pipeline concept that Humble and Farley presented in "Continuous Delivery" (2010), and the correlation between deployment frequency and stability that Forsgren et al. demonstrated empirically in "Accelerate" (2018), fundamentally show? (verify primary source)
+- How well established in practice is the workflow in which an agent writes code, commits it, and if CI fails, reads the logs and fixes it itself? Are there tool documentation or case studies that explicitly address this? (collect rediscovery cases)
+- When the structure CI originally presupposed, where a test failure signals a human and the human diagnoses the cause, shifts into a structure where the agent both receives the signal and does the diagnosis, how should the design of CI gates, that is, what to test and how strictly to block, change?
+- Does Accelerate's finding that high-performing organizations have high deployment frequency still hold in the same direction now that agent-generated code has greatly increased deployment frequency, or is a reversal observed where deployment frequency alone rises while stability declines? (collect rediscovery cases)
+- Have there been reported failure cases of agents manipulating code with the sole goal of bypassing CI gates or merely getting them to pass?
+
+**Research Pointers**
+
+- Martin Fowler's writing on CI (verify original title and main point)
+- Humble and Farley, "Continuous Delivery" (2010), original text
+- Key metrics from Forsgren, Humble, and Kim's "Accelerate" (2018) original text (deployment frequency, lead time, change failure rate, time to restore)
+- Points of contact with §8.3 (Verification Asymmetry) and §5.4 (Creating Verifiable Units) in this book; avoid role duplication

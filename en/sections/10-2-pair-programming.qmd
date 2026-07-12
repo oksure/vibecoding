@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/10-2-pair-programming.qmd source-sha256:194507587fe96cfe model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/10-2-pair-programming.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Pair Programming: When Your Pair Stops Being Human {#sec-pair-programming}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check owner and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the arguments Beck's XP (1999) used to justify pair programming with today's practice of pairing with AI. It is written in three parts. First, it reads closely what the original XP text says about pairing arguments such as continuous review, knowledge propagation, and role rotation. Next, it collects examples of how tools introduce themselves as an "AI pair programmer" and how practitioners describe their workflows. Finally, it argues whether the premises of human pairing, namely two equal actors, mutual learning, and social pressure, hold or fail to hold in a human-AI relationship.
+
+**Seed Questions**
+
+- What exactly was the core argument Beck made for pair programming in "Extreme Programming Explained" (1999), including the parts that go beyond simple defect reduction (verify against the primary source)
+- XP's pairing presupposes rotation between the driver and observer roles; does this role rotation actually happen when collaborating with AI, or is the human always fixed in the observer role?
+- What product or document first used the phrase "AI pair programming," and how far does that phrase carry over XP's original meaning before it slides into metaphor? (collect rediscovery cases)
+- Among the effects reported by human-to-human pairing research (defect reduction, learning effects), are there recent studies or cases claiming that these are also reproduced in human-AI pairing? (collect rediscovery cases)
+- The social mechanisms of pair programming, namely embarrassment, peer pressure, and the demand for immediate explanation, do not operate on an AI partner; how does this difference affect actual work quality?
+- How are the objections to pair programming that even existed among XP practitioners (fatigue, cost) raised differently in the age of AI pairing?
+
+**Research Pointers**
+
+- The chapter on pair programming in Beck's original text, "Extreme Programming Explained" (1999)
+- Empirical studies on pair programming (papers measuring defect rates and time spent)
+- Self-descriptions and presentation materials of tools such as GitHub Copilot and Cursor introducing themselves as pair programmers
+- Practitioner blog posts describing workflows for pairing with AI

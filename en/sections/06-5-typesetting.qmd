@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/06-5-typesetting.qmd source-sha256:085a12c72866d5c5 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/06-5-typesetting.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Slides and Typesetting: A Case Study of This Book {#sec-typesetting}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** Presentation materials and typeset works like books pose a unique verification problem in that they require both visual polish and structural accuracy at the same time. This section covers how AI coding tools are actually used in producing slides and typeset works, taking this book's own build pipeline as the primary case study. This repository manages the manuscript with Quarto, typesets the PDF with Typst, and uses a pipeline that translates the Korean original into English with AI. The person responsible should directly document how this pipeline is actually structured and where humans intervene.
+
+**Seed Questions**
+
+- What stages does this repository's (vibecoding) build pipeline (`tools/build`, `tools/translate`, Quarto, Typst) actually consist of, and what does the AI do versus what does the human do at each stage? Read and run the repository's CLAUDE.md and tools/ scripts directly and document them.
+- How good is the quality of the AI translation (files in `en/` marked MACHINE-TRANSLATED) actually? What error patterns appear when compared against the original text?
+- How does the way AI is used differ between slide-making tools (code-based slide generators) and GUI tools like Word or PowerPoint?
+- What counts as "it works" verification for typeset works? (successful rendering, no broken layout, compliance with print specifications, etc.)
+- If you have experience working with AI on slide or document typesetting tasks outside of this book, record it as a case study.
+
+**Research Pointers**
+
+- Read and run this repository's `tools/build`, `tools/translate`, `_quarto.yml`, and CLAUDE.md directly to document the pipeline
+- Check the official Quarto and Typst documentation for descriptions related to automation or script integration
+- Compare cases of other code-based slide and typesetting tools (markdown-based presentation generators, etc.)

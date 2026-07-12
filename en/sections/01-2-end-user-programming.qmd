@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/01-2-end-user-programming.qmd source-sha256:ff25f2400a78efb4 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/01-2-end-user-programming.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## End-User Programming: The Spreadsheet Precedent {#sec-end-user-programming}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** There was already an era when non-programmers did programming. Writing cell formulas in a spreadsheet is, formally, programming, and it is the most widely adopted case of end-user programming for decades. This section should analyze what made spreadsheets successful (verifying candidates such as immediate feedback, visual representation, and a low barrier to entry) and draw out the implications for vibe coding. At the same time, it should also address the counterexample that spreadsheet errors have repeatedly caused major incidents in practice. In Part 1, this section serves as the counterpart that approaches the theme of "programming by non-experts" from the angle of tool form rather than programming language.
+
+**Seed Questions**
+
+- How has the term end-user programming been defined in academia (HCI, programming language research)?
+- Why were spreadsheets adopted far more widely than other natural-language or low-code attempts?
+- What actual incidents have resulted from spreadsheet errors (in finance, academia, etc.), and what do they suggest?
+- In what ways is the spreadsheet's immediate execution feedback structure similar to and different from vibe coding's execution-verification loop?
+- Which success factors of spreadsheets have low-code/no-code platforms inherited, and which have they missed?
+
+**Research Pointers**
+
+- Search the end-user programming research literature (the HCI/PL crossover field, e.g., research by Burnett and others).
+- Check collections of spreadsheet error cases (such as the incident archive of the European Spreadsheet Risks Interest Group).
+- Verify exact years and figures in computing history sources covering the adoption history of VisiCalc, Lotus 1-2-3, and Excel.

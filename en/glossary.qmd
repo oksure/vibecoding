@@ -2,41 +2,52 @@
 authoritative-lang: ko
 ---
 
-<!-- MACHINE-TRANSLATED from ko/glossary.qmd source-sha256:3d862b06122d5db2 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary.qmd and run tools/translate -->
+<!-- MACHINE-TRANSLATED from ko/glossary.qmd source-sha256:23ff939de8ff8b7f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary.qmd and run tools/translate -->
 # Concept Dictionary {#sec-glossary}
 
-A dictionary of concepts born and evolving around vibe coding. Each entry records a definition, its origin, and its current status. Because concepts keep appearing and their meanings keep shifting, this appendix is forever unfinished, and so it is the most frequently updated part of this book. Anyone can add a new entry (see CONTRIBUTING for how to contribute).
+This is a dictionary of concepts that are born and evolve around vibe coding. Each entry records a definition, its origin, and its current status. Because concepts keep appearing and their meanings keep shifting, this appendix is permanently unfinished, and so it is the most frequently updated part of this book. One entry is a unit of contribution. Add new entries and claim ownership in the repository's TOPICS.md.
 
 ::: {.callout-tip}
 ## Entry format
-A definition of a few sentences, the origin (who, when), and the current status (whether the term is still in active use, how its meaning has drifted). For the date and person behind the origin, check primary sources and link to them.
+A couple of sentences of definition, the origin (who, when), and the current status. For the date and person in the origin, check the primary source and link to it. Mark anything unconfirmed as "origin needs confirmation."
 :::
 
-## Vibe coding
+{{< include glossary/vibe-coding.qmd >}}
 
-A way of making software by instructing AI in natural language. In its narrow sense, it refers to a working attitude of iterating by looking only at the results, without reading the generated code. Andrej Karpathy coined the term in a [February 2025 tweet](https://x.com/karpathy/status/1886192184808149383), and it became a general-use word after being named [Word of the Year](https://www.collinsdictionary.com/us/woty) by Collins Dictionary in November 2025. Currently, the original narrow sense (not reading the code) and the broader sense (AI-assisted development in general) are used interchangeably.
+{{< include glossary/prompt-engineering.qmd >}}
 
-## Prompt engineering
+{{< include glossary/context-engineering.qmd >}}
 
-The skill of designing the input (prompt) given to a model to obtain a desired output. Since GPT-3 (2020), it was treated almost like a job title, but as models improved and interactions shifted toward conversational and agentic forms, its standing as an independent skill has faded. From this book's perspective, it is the prehistory of vibe coding.
+{{< include glossary/agentic-coding.qmd >}}
 
-## Context engineering
+{{< include glossary/chop.qmd >}}
 
-The skill of designing not just a single line of prompt but the entire context the model sees (files, documents, history, tool outputs). It reflects a shift in the bottleneck of prompt engineering, from "how do you say it" to "what do you show it." It began to be widely used in 2025.
+{{< include glossary/vibe-engineering.qmd >}}
 
-## Agentic coding
+{{< include glossary/loop-engineering.qmd >}}
 
-A way of working in which AI does not simply answer once and stop, but runs a loop of calling tools, executing code, observing results, and deciding the next action. It is the technical form that actually made vibe coding possible.
+{{< include glossary/agent-harness.qmd >}}
 
-## Loop engineering
+{{< include glossary/spec-driven-development.qmd >}}
 
-The skill of designing the loop itself, in which an agent finds work, performs it, verifies it, and records it, rather than having a person type a prompt each time. It spread widely following Addy Osmani's summary piece in June 2026, and is discussed as the successor concept to prompt engineering. From this book's perspective, it is the next chapter of vibe coding.
+{{< include glossary/subagent.qmd >}}
 
-## Spec-driven development
+{{< include glossary/human-in-the-loop.qmd >}}
 
-A way of working in which, instead of directly instructing AI to write code, a specification (spec) is first written together, and generation and verification then proceed against that specification. It is a representative response to the verification problem of "not reading the code" in vibe coding.
+{{< include glossary/hallucination.qmd >}}
 
-::: {.callout-note}
-## Entries awaiting addition
-Software 2.0 / Software 3.0, agent harness, human in the loop, one-shot generation, slop, MCP (Model Context Protocol), and so on. Assign owners and fill in these entries.
-:::
+{{< include glossary/slop.qmd >}}
+
+{{< include glossary/slopsquatting.qmd >}}
+
+{{< include glossary/mcp.qmd >}}
+
+{{< include glossary/rag.qmd >}}
+
+{{< include glossary/tokens-context-window.qmd >}}
+
+{{< include glossary/evals.qmd >}}
+
+{{< include glossary/guardrails.qmd >}}
+
+{{< include glossary/software-2-3.qmd >}}

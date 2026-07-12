@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/06-2-data-analysis.qmd source-sha256:ba9a6f848547be67 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/06-2-data-analysis.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Data Analysis and Visualization {#sec-data-analysis}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** Data analysis is an area where vibe coding has taken hold particularly quickly. In the exploratory analysis phase, handing code over to AI produces graphs and statistical tables in an instant. The problem is that a result looking plausible and actually being correct can be two different things. This section covers, with real cases, how much exploratory data analysis has accelerated, and the trap where plausible-looking graphs lead to conclusions without verification. It connects with §4.4 (Researchers' Vibe Coding), but this section covers business analysis as well as research.
+
+**Seed Questions**
+
+- What are actual error cases found in AI-generated visualization or statistical analysis code (axis distortion, statistical misuse, data leakage, etc.)?
+- As the speed of exploratory data analysis has increased, how has the analyst's role changed? Has the center of gravity shifted from writing code to interpreting and verifying results?
+- What concrete verification procedures do practitioners use to filter out plausible-looking graphs?
+- How is the landscape of data analysis tools (notebook-based agents, code-interpreter type tools) divided?
+- Record as a case your own experience of extracting data analysis results with AI and then verifying them yourself. What did you verify, and what turned out to be wrong?
+
+**Research Pointers**
+
+- Collections of statistical and data visualization error cases (academic and journalism critiques of graph distortion)
+- Official documentation for code interpreters and notebook-based AI analysis tools
+- Document a verification procedure using students' own data analysis assignments as a case study

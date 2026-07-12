@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/human-in-the-loop.qmd source-sha256:7ce69c3a5bcff04b model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/human-in-the-loop.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## human-in-the-loop {#gl-human-in-the-loop}
+
+This term refers to a design that explicitly places points of human confirmation or intervention within the execution process of an automated system. In the context of AI coding agents, it refers to mechanisms that require human approval before hard-to-reverse actions such as file modification, command execution, or deployment.
+
+It is a general term used in the automation and control systems field even before AI coding, and its precise origin needs verification.
+
+In coding agent tools, it is implemented in forms such as permission prompts, plan mode, and change approval UIs. This connects directly to the discussion of the limits of delegation covered in §5.6.
+
+::: {.callout-note collapse="true"}
+## Expansion Pointers
+- Verify the earliest literature in which this term was used in the automation and control field
+- Compare human-in-the-loop implementation methods (approval UI, plan mode, etc.) across coding agents
+- Organize the relationship with §5.6 (When to Stop and Read It Yourself)
+:::

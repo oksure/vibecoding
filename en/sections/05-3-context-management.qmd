@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-3-context-management.qmd source-sha256:b3ad53621cdad11a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-3-context-management.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Art of Context Management {#sec-context-management}
+
+::: {.callout-warning}
+## Writing status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The recognition that what the agent knows and doesn't know at the start of a task heavily determines the outcome is the practical counterpart of the context engineering concept covered in §3.2. This section covers the practical techniques of project instruction files like CLAUDE.md and AGENTS.md, how to allocate the context window's budget, and what to show and what to deliberately hide. It serves as a bridge between theory (§3.2) and practice (Chapter 5).
+
+**Seed questions**
+
+- What content do project instruction files like CLAUDE.md and AGENTS.md reportedly need to contain to be effective in practice?
+- As context windows grow larger (e.g., high-capacity token models), does the need for context management techniques themselves diminish, or does it persist in a different form?
+- What concrete advice do practitioners give on "what to hide"? (e.g., excluding unnecessary files, summarizing old conversations)
+- How are cases reported where context management failures led to actual task failures?
+- Record, as a case study, your own experience writing and improving a project instruction file (CLAUDE.md-type). What did you add that made the results better?
+
+**Research pointers**
+
+- Official documentation for project instruction files in Claude Code, Cursor, GitHub Copilot, etc.
+- Practical guides on context engineering (cross-reference with §3.2 research findings)
+- Analyze this repository's (vibecoding) own CLAUDE.md as a case study

@@ -1,0 +1,27 @@
+<!-- MACHINE-TRANSLATED from ko/sections/02-1-karpathy-moment.qmd source-sha256:6e02e8c0765ee62e model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/02-1-karpathy-moment.qmd and run tools/translate -->
+
+## Karpathy's Tweet and the Conditions of That Moment {#sec-karpathy-moment}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** In February 2025, a single tweet by Andrej Karpathy gave rise to the term that would be cited more than any other in the software industry over the following year. This section dissects that original text: exactly what it defined and what it did not, how the technical conditions at the moment the tweet was written (the model generation, the maturity of agentic coding tools, the mood of the developer community) contributed to the spread of this definition, and why that particular moment. This is the section that serves as the starting point for the whole of Chapter 2.
+
+> There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
+>
+> — Andrej Karpathy, [X, February 2025](https://x.com/karpathy/status/1886192184808149383)
+
+**Seed Questions**
+
+- What scope did Karpathy's original text actually define, and how does it differ from the meaning that later became widespread?
+- What coding agents and tools were available at the time the tweet was posted, and what role did their maturity play in the adoption of this concept?
+- A year later, in a retrospective tweet, Karpathy called this tweet "a thought he tossed out after it came to him in the shower." How does this self-assessment diverge from its actual impact?
+- In the early days as the tweet spread, which reactions (welcome, cynicism, refutation) predominated?
+
+**Research Pointers**
+
+- Collect the full text of the original tweet (https://x.com/karpathy/status/1886192184808149383) and the one-year retrospective tweet (https://x.com/karpathy/status/2019137879310836075), along with major quote-tweet reactions.
+- Check the release and update history of major coding agent tools around the time the tweet was posted.
+- Check the Wikipedia overview (https://en.wikipedia.org/wiki/Vibe_coding) for descriptions related to early adoption.

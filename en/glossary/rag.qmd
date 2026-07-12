@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/rag.qmd source-sha256:e90f145f1ce4a25b model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/rag.qmd and run tools/translate -->
+
+## RAG (retrieval-augmented generation) {#gl-rag}
+
+A technique in which a model retrieves relevant content from external documents or databases before generating an answer, and includes that content in the prompt. It allows the model's response to reflect up-to-date information or private documents that are not part of its training data.
+
+Origin needs verification. The original paper, its authors, and the publication date should be confirmed from the primary source.
+
+In coding agents, it is used to search internal codebases or documentation and place the results into the context, and it is treated as one of the concrete implementation techniques of context engineering (G3).
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm the authors and publication date of the paper that first proposed RAG from the primary source
+- Collect examples of RAG usage in the context of coding agents (code search, document search)
+- Clarify the relationship with the context engineering entry
+:::

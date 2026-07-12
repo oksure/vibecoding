@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/spec-driven-development.qmd source-sha256:282b69eeaca27353 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/spec-driven-development.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Spec-Driven Development (spec-driven development) {#gl-spec-driven-development}
+
+This is an approach in which, rather than telling AI to write code right away, you first draft a specification, or spec, together, and then carry out generation and verification based on that specification. It is often cited as a representative response to the verification problem of vibe coding, which by definition involves "not reading the code."
+
+In September 2025, GitHub released Spec Kit, presenting a four-stage flow of Spec, Plan, Tasks, and Implement ([GitHub blog](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/)).
+
+This can be seen as a case in which the specification-first principle of waterfall development was rediscovered in the AI era. §3.3 and §10.1 respectively cover the spread of the concept and the replay of the waterfall debate.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Check whether similar "spec-first" tools or proposals existed before Spec Kit
+- Compare Spec Kit's four-stage flow with the stage divisions of the waterfall model covered in §10.1
+- Collect adoption cases or critical write-ups of Spec Kit
+:::

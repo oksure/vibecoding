@@ -1,0 +1,24 @@
+<!-- MACHINE-TRANSLATED from ko/sections/07-1-image-generation.qmd source-sha256:2a76dac066bf5365 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/07-1-image-generation.qmd and run tools/translate -->
+
+## Image Generation {#sec-image-generation}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. For assignment and status, see TOPICS.md in the repository root.
+:::
+
+**Brief.** Image generation shares with code generation the same iterative structure of instructing in natural language and revising while reviewing the result, but its prompt-writing practices and how results are evaluated differ considerably. This section covers the prompt practices actually used in image generation, techniques for maintaining consistent style, and how the verification structure differs compared to code generation. As the first section of Chapter 7 (Content Generation), it extends the discussion of verification asymmetry to be covered in §8.3 to images as a concrete artifact.
+
+**Seed Questions**
+
+- In what ways do image generation prompt-writing practices (style keywords, negative prompts, seed fixing, etc.) differ from code generation prompts?
+- What techniques exist for maintaining style consistency across multiple images, and how well do they actually work in practice?
+- What criteria, other than whether it works or not, are used to evaluate the quality of image generation results? How is the subjectivity problem in evaluation criteria addressed?
+- How has the asymmetry that code can be verified by running it while images cannot been affected prompt-writing practices themselves?
+- Record as a case study your own iterative process of obtaining the desired result with an image generation tool. How many attempts were needed, and what did you change along the way to converge on the result?
+
+**Research Pointers**
+
+- Official documentation and prompt guides for major image generation models
+- Practitioner guides on style control techniques (verify exact technique names and their current status)
+- Document the students' own image generation prompt iteration process and compile it as a case study

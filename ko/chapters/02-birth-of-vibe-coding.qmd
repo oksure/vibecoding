@@ -4,30 +4,10 @@ authoritative-lang: ko
 
 # 바이브 코딩의 탄생 {#sec-birth}
 
-::: {.callout-warning}
-## 집필 상태
-초안 전 · 담당: 미정. 아래 브리프는 티칭 팀이 잡은 방향이며, 담당자가 조사 후 다시 쓴다.
-:::
+2025년 2월 Andrej Karpathy의 트윗 하나가 이름 없던 작업 방식에 이름을 줬다. 이 장은 그 순간을 해부한다. 원문이 말한 것과 말하지 않은 것, 왜 하필 그 시점이었는지, 그리고 말이 퍼지며 뜻이 어떻게 흘러갔는지.
 
-## 이 장에서 다룰 것
+{{< include ../sections/02-1-karpathy-moment.qmd >}}
 
-2025년 2월, Andrej Karpathy는 트윗 하나를 올렸다.
+{{< include ../sections/02-2-semantic-drift.qmd >}}
 
-> There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
->
-> — Andrej Karpathy, [X, 2025년 2월](https://x.com/karpathy/status/1886192184808149383)
-
-본인이 나중에 "샤워하다 떠오른 생각을 던진 트윗"이라고 회고한 이 글은 수백만 조회를 얻었고, 그해 11월 Collins 사전의 [올해의 단어](https://www.collinsdictionary.com/us/woty)가 되었다. 이 장은 이 순간을 해부한다. 원문이 실제로 말한 것과 말하지 않은 것, 용어가 퍼지며 뜻이 넓어지고 뒤틀린 과정, 그리고 왜 하필 그 시점이었는지(모델 능력, 도구, 분위기)를 다룬다.
-
-## 시드 질문
-
-- Karpathy의 원문 정의는 무엇이고, 사람들이 실제로 쓰는 뜻과 어떻게 다른가?
-- Simon Willison은 왜 "모든 AI 보조 프로그래밍이 바이브 코딩은 아니다"라고 선을 그었나?
-- 용어가 폭발한 2025년 초의 기술적 조건(에이전트형 코딩 도구, 모델 세대)은 무엇이었나?
-- 사전 등재와 언론 보도는 이 말을 어떻게 재정의했나?
-
-## 조사 포인터
-
-- 원 트윗과 1주년 회고 트윗, 그리고 주요 인용 반응들
-- Simon Willison, ["Not all AI-assisted programming is vibe coding"](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19)
-- Collins Word of the Year 2025 발표문과 관련 보도
+{{< include ../sections/02-3-tool-genealogy.qmd >}}

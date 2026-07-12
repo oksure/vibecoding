@@ -2,27 +2,19 @@
 authoritative-lang: ko
 ---
 
-<!-- MACHINE-TRANSLATED from ko/chapters/03-evolution-of-discourse.qmd source-sha256:aa7a9016c3384484 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/03-evolution-of-discourse.qmd and run tools/translate -->
-# The Evolution of the Discourse: From Agentic Coding to Loop Engineering {#sec-discourse}
+<!-- MACHINE-TRANSLATED from ko/chapters/03-evolution-of-discourse.qmd source-sha256:d38ea8ba6214a2f8 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/03-evolution-of-discourse.qmd and run tools/translate -->
+# Evolution of the Discourse {#sec-discourse}
 
-::: {.callout-warning}
-## Drafting Status
-Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
-:::
+As soon as the term vibe coding took hold, a flood of concepts emerged to refine or move beyond it: CHOP, context engineering, spec-driven development, loop engineering, vibe engineering. This chapter traces the genealogy of these concepts and tracks what bottleneck each conceptual shift was responding to. The final section treats this marketplace of concepts itself as an object of analysis.
 
-## What This Chapter Covers
+{{< include ../sections/03-1-chop-agentic.qmd >}}
 
-As soon as the term "vibe coding" took hold, a flood of concepts emerged to refine or move past it: agentic coding, context engineering, spec-driven development, and, settling into place by mid-2026, loop engineering. Where prompt engineering asked "what do we say to the model," loop engineering asks "how do we design the system that lets an agent find its own work, do it, verify it, and remember it." This chapter traces the genealogy of these concepts and analyzes what bottleneck shift each one reflects.
+{{< include ../sections/03-2-context-engineering.qmd >}}
 
-## Seed Questions
+{{< include ../sections/03-3-spec-driven.qmd >}}
 
-- Who first formalized each concept (agentic coding, context engineering, spec-driven development, loop engineering), and when?
-- What bottleneck moved each time the concept changed? (model capability → context → verification → loop design)
-- Did these discourses actually change development practice, or just rename it?
-- What is likely to be the next bottleneck?
+{{< include ../sections/03-4-loop-harness.qmd >}}
 
-## Research Pointers
+{{< include ../sections/03-5-vibe-engineering.qmd >}}
 
-- Addy Osmani's June 2026 synthesis of the loop engineering discussion and its origins (Anthropic's agent design writing, practitioners' automation loop experiments)
-- Anthropic's agent design literature, including "Building effective agents"
-- Collect representative blog posts for each concept paired with their rebuttals
+{{< include ../sections/03-6-concept-market.qmd >}}

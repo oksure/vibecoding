@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/09-1-blackbox-codebase.qmd source-sha256:3c7376c417732ac2 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/09-1-blackbox-codebase.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Codebase Becoming a Black Box {#sec-blackbox-codebase}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** Code that AI writes quickly piles up just as quickly, in a state where no one understands the whole. This section addresses the problem of hollowed-out understanding. It examines the process by which individual commits work but the people who grasp the overall architecture disappear from the organization, and what happens when AI layers more code on top of such a codebase again. Establishing criteria for when "code that works without being understood" becomes a problem and when it does not is the core argument of this section. This serves as the introduction to the whole of Chapter 9 (Limits and Risks).
+
+**Seed Questions**
+
+- Are there reported cases where "code that works without being understood" actually led to accidents or outages?
+- What do empirical studies on the relationship between codebase comprehension and maintenance cost show?
+- When AI layers more code on top of code that AI already wrote, is the accumulation of errors or style inconsistencies confirmed?
+- How do organizations try to measure or mitigate the state where "no one knows the whole"? Have documentation requirements or onboarding practices actually changed?
+- How does this problem play out differently in personal projects (solo development) versus team codebases?
+
+**Research Pointers**
+
+- Prioritize finding academic papers on program comprehension and codebase complexity.
+- Collect field reports from practice, such as incident postmortem reports and maintenance experience accounts.
+- Cross-reference with §11.1, which addresses Parnas's (1972) module decomposition argument.

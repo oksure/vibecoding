@@ -1,0 +1,27 @@
+<!-- MACHINE-TRANSLATED from ko/sections/01-3-prompt-engineering.qmd source-sha256:dccb45fe8c14420a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/01-3-prompt-engineering.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Short Heyday of Prompt Engineering {#sec-prompt-engineering}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** In the stage just before vibe coding, there was a heyday of prompt engineering that looks brief in hindsight. This piece should cover the period when "what to say and how to say it" to a large language model was treated as a standalone skill, the process by which techniques like few-shot and chain-of-thought were discovered and formalized, and the process by which the job title "prompt engineer" appeared in the job market and then quickly faded. The key question is what limitation of this technique-centered era brought about the next stage, vibe coding, which centers on iterative dialogue and execution verification. In Part 1, this piece serves as the final prehistory installment right before the transition to Chapter 2 (Birth).
+
+**Seed questions**
+
+- When and in which community did the term "prompt engineering" first come into use?
+- What problem was each representative technique, such as few-shot, chain-of-thought, and role assignment, developed to solve?
+- Where, and why, did the boundary between "the skill of writing a good prompt" and "the skill of building something through iterative dialogue with a model" start to break down?
+- When did prompt engineer job postings peak, and when did they start to decline?
+- Can Karpathy's Software 2.0 (2017) discussion be read as having foreseen the prompt engineering era?
+
+**Research pointers**
+
+- Check Anthropic's and OpenAI's official prompt engineering guide documents as primary sources
+- Check the publication timing and core arguments of early academic papers on chain-of-thought (Wei et al. and others)
+- Collect news articles covering the rise and disappearance of prompt engineer job postings
+- Reread Karpathy, ["Software 2.0"](https://karpathy.medium.com/software-2-0-a64152b37c35) (2017) for how it connects to the discourse of this period

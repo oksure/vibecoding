@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/10-3-code-review.qmd source-sha256:ba572253aa3c33eb model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/10-3-code-review.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Code Review: From Fagan Inspections to AI Reviewers {#sec-code-review}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** This section contrasts the original purpose of code review established by Fagan's inspections (1976) with LLM-based automated review tools. It is written in three parts. First, it reads the formal procedure of Fagan inspections precisely from the original source: preparation in advance, role-based participants, defect classification, and rework verification. Next, it gathers cases of what AI reviewer tools actually check and what they miss. Finally, it argues which of the three functions of review, defect detection, knowledge diffusion, and establishing organizational norms, survive in the AI era and which fall away.
+
+**Seed Questions**
+
+- In Fagan's (1976) inspection procedure, how exactly were participant roles (moderator, author, reviewer, recorder) and the defect classification system defined? (verify against the original source)
+- What Fagan inspections explicitly tried to prevent, such as authors defending themselves or unstructured ad hoc review, reappears or disappears in what form in today's AI review tools? (verify against the original source)
+- Of the three traditional purposes of code review, defect detection, knowledge diffusion to newcomers, and establishing team coding norms, which does the AI reviewer replace and which can it not replace? (collect rediscovery cases)
+- How does the structure in which AI reviews code written by AI conflict with the principle of author-reviewer independence that Fagan assumed?
+- Does data exist on the rate at which people actually act on what AI review tools flag in practice? (collect rediscovery cases)
+- Formality already receded once when the field moved from Fagan inspections to lightweight code review; does the emergence of AI reviewers push formality back up or down further?
+
+**Research Pointers**
+
+- Fagan, "Design and Code Inspections to Reduce Errors in Program Development", IBM Systems Journal(1976) original text
+- Official documentation for tools such as GitHub Copilot code review and Claude Code /code-review
+- Empirical research on code review (papers covering code review practices at large tech companies)
+- Focus on the review procedure and purpose itself, to avoid overlapping with §9.3 (Quality Debt) of this book

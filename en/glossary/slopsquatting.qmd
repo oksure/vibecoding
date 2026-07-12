@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/slopsquatting.qmd source-sha256:d7840cde05111740 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/slopsquatting.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Slopsquatting {#gl-slopsquatting}
+
+This term refers to a supply chain attack technique in which an attacker pre-registers a package name that does not actually exist but was hallucinated by an AI coding agent. If a developer pastes the agent's suggestion directly into an install command, the malicious package registered by the attacker gets installed.
+
+Origin needs verification. Who coined this term and when needs to be traced back to an original source. It appears to be a coinage derived from typosquatting (preemptively registering package names that exploit typos), but this lineage also needs confirmation.
+
+It is frequently cited in security discussions as a representative case illustrating the trust problem with generated code. It is a key case covered in §9.2 (Security: New Attack Surfaces).
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm the earliest use of the term "slopsquatting" (security research, blog posts, papers, etc.)
+- Collect actual observed slopsquatting attack cases and the scale of damage
+- Cross-check against §9.2 for factual consistency
+:::

@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/12-4-open-source.qmd source-sha256:591c342eb5bf0340 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/12-4-open-source.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Open Source Collaboration Models: Cathedral, Bazaar, Agent {#sec-open-source}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the cathedral model and the bazaar model presented in Raymond's "The Cathedral and the Bazaar" (essay 1997, book 1999), along with the proposition that given enough eyeballs, all bugs are shallow, against the recent phenomenon of AI contributors appearing en masse in open source projects. It is written in a three-part structure. First, it accurately reads Raymond's original argument: Linus's Law, early release, frequent releases, and treating users as co-developers. Next, it gathers cases of how AI-generated issue triage or PRs are changing the review bottleneck and trust problems of open source projects. Finally, it argues whether the proposition that more eyeballs make bugs shallow still holds when those eyeballs are AI rather than human, and whether the hidden premise of trust in the bazaar model collapses in the face of AI contributors.
+
+**Seed Questions**
+
+- What was the exact original wording of Linus's Law as presented by Raymond in "The Cathedral and the Bazaar", the proposition that given enough eyeballs, all bugs are shallow, and what evidence did he cite to support it? (Source verification)
+- What exactly were the conditions Raymond presented for the bazaar model to work, namely frequent releases, treating users as co-developers, and the coordinating role of the project leader, and among these, was there a stated precondition without which the bazaar model would not function? (Source verification)
+- Are there actually reported cases of large volumes of AI-generated PRs or issues flooding open source projects, or public response policies from maintainers? (Rediscovery case collection)
+- When "enough eyeballs" are filled not by humans but by AI reviewers or AI contributors, does the qualification of eyeballs that Raymond presupposed, namely trustworthy judgment and understanding of the project, still hold, or is a reversal observed in which the number of eyeballs increases while quality declines?
+- How many concrete cases can be found of policies newly introduced by open source maintainers to handle AI-generated contributions, such as changes to contribution guidelines, automatic labeling, or mandatory disclosure of AI contributions? (Rediscovery case collection)
+- Is there a trend in which Raymond's cathedral model, the approach in which a small number of trusted developers develop in a closed manner, is being reevaluated in the AI era, and if so, can it be seen as a reaction to the crisis of the bazaar model?
+
+**Research Pointers**
+
+- Raymond, "The Cathedral and the Bazaar" (essay 1997, book 1999), original text
+- Public policy documents on AI contributions from major open source projects, maintainer blogs
+- Related sections in Chapter 9 (Limits and Risks) of this book, and points of contact with §12.3 (Documentation)
+- Discussion of AI slop is split with concept dictionary entry G13 (slop/workslop) handling that topic; this section focuses on the open source collaboration model itself

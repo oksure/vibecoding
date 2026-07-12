@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/subagent.qmd source-sha256:a4c4d715ab8a4257 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/subagent.qmd and run tools/translate -->
+
+## Subagent (subagent / multi-agent) {#gl-subagent}
+
+This term refers to the structure in which a main agent delegates a specific task to a separate, independent agent instance, or to an individual agent that is delegated to and executes in this way. A delegated subagent typically has its own context window and its own scope of tool access, and returns only the result to the main agent once the task is finished. A structure that coordinates multiple subagents simultaneously or sequentially is called a multi-agent system.
+
+The precise origin of the term needs confirmation.
+
+As a means of parallelizing work while conserving the context window, several coding agent tools have adopted this structure. It is one of the components of agent anatomy covered in §8.2.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm which tool first productized the subagent concept, and when
+- Compare how context isolation between subagents differs across tools
+- Check consistency of this definition with §8.2 (Anatomy of a Coding Agent)
+:::

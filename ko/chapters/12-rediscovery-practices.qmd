@@ -1,0 +1,15 @@
+---
+authoritative-lang: ko
+---
+
+# 도구와 관행의 재발견 {#sec-rediscovery-practices}
+
+버전 관리, 지속 통합, 문서화, 오픈소스 협업. 사람들의 협업을 위해 만들어진 도구와 관행이 에이전트가 끼어든 루프에서 새 역할을 얻는다. 이 장은 그 역할 전환을 다룬다.
+
+{{< include ../sections/12-1-version-control.qmd >}}
+
+{{< include ../sections/12-2-ci-gates.qmd >}}
+
+{{< include ../sections/12-3-documentation.qmd >}}
+
+{{< include ../sections/12-4-open-source.qmd >}}

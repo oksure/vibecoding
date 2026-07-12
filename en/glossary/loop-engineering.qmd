@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/loop-engineering.qmd source-sha256:ddd20a300a6791a5 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/loop-engineering.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## loop engineering {#gl-loop-engineering}
+
+Instead of a person typing a prompt every time, this is the technique of designing the loop itself, in which an agent finds work, performs it, verifies it, and records it. It is discussed as the successor concept to prompt engineering.
+
+It spread widely following Addy Osmani's summary piece in June 2026 ([coverage](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx)).
+
+From this book's perspective, it is a concept corresponding to the next chapter of vibe coding. It is covered together with harness engineering in §3.4.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Find Osmani's original piece (the original source of the summary piece) and verify the citation
+- Sort out where the concepts of loop engineering and agent harness overlap and where they diverge
+- Collect real examples of tools and workflows that use this term (link with §3.4)
+:::

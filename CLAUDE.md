@@ -5,9 +5,12 @@
 ## 구조
 
 - `ko/` = 한국어판 Quarto book, **1차 원문**. `en/` = 영어판, 대부분 AI 번역 생성물.
+- 집필 단위 = 꼭지: `ko/sections/NN-M-slug.qmd`(섹션)와 `ko/glossary/slug.qmd`(개념 사전). 목록·담당은 루트 `TOPICS.md`.
+- 챕터 파일(`ko/chapters/`)은 리드 문단 + `{{< include ../sections/... >}}` 래퍼다. 본문은 섹션 파일에 쓴다.
+- **섹션·사전 파일에는 YAML frontmatter 금지** (include되므로 깨진다). 첫 줄은 `<!-- authoritative-lang: ko -->` 주석. 챕터 파일은 frontmatter를 쓴다.
 - `en/`에서 파일 상단에 `MACHINE-TRANSLATED` 마커가 있는 파일은 **절대 직접 수정 금지**. 원문(`ko/`)을 고치고 `tools/translate`를 실행한다.
-- 챕터 원문 언어는 각 챕터 frontmatter의 `authoritative-lang` (기본 `ko`)이 결정한다.
-- 챕터 추가·삭제 시 `ko/_quarto.yml`과 `en/_quarto.yml` **두 곳 모두** 갱신 (불일치 시 `tools/build`가 에러).
+- 꼭지 원문 언어는 `authoritative-lang` 태그(기본 `ko`)가 결정한다.
+- 챕터 추가·삭제 시 `ko/_quarto.yml`과 `en/_quarto.yml` **두 곳 모두** 갱신 (불일치 시 `tools/build`가 에러). 섹션 추가는 챕터 파일의 include와 TOPICS.md 갱신.
 
 ## 명령
 

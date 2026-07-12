@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-6-concept-market.qmd source-sha256:ff65c83980c36799 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-6-concept-market.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Observing the Concept Market: How Is the Next Buzzword Made? {#sec-concept-market}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section serves as a meta-analysis of the entire Chapter 3. It takes as its object of analysis the pattern itself of birth, spread, and disappearance (or settling) of the terms that led from prompt engineering to vibe coding, agentic coding, context engineering, spec-driven development, loop engineering, harness engineering, and vibe engineering. The core hypothesis is that each conceptual replacement reflects a shift in the actual bottleneck (from a lack of model capability, to a lack of context management, to a lack of verification, to a lack of loop and system design). If this hypothesis holds, we can also try to predict which bottleneck the next buzzword will point to. As the final section of Part 1, it serves to summarize the entire conceptual history before moving on to Part 2 (Technology).
+
+**Seed Questions**
+
+- If we arrange the concepts covered in this chapter in chronological order, how long was each concept's lifespan (from its emergence until it gave way to the next concept)?
+- At each point of conceptual replacement, what can we claim was the bottleneck that actually shifted, and what is the basis for that claim?
+- Did these discourses actually change development practices, or were they closer to just putting a new name on existing practices?
+- Is there a common pattern in the paths by which concepts spread (a single tweet, endorsement by an influential figure, media coverage, dictionary entry)?
+- If this analysis is correct, in which direction can we predict the next bottleneck and the next buzzword will lie?
+
+**Research Pointers**
+
+- Organize into a table the exact emergence timing of each concept as established in the other sections of this chapter (§3.1-§3.5), and compare them chronologically.
+- Search for whether there is linguistic or meme-diffusion research that addresses the mechanism of terminology diffusion itself.
+- Examine whether Meir Lehman's laws of software evolution (1970s) can also be analogized to the evolution of concepts themselves.

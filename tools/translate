@@ -26,6 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 MARKER_RE = re.compile(r"MACHINE-TRANSLATED from \S+ source-sha256:([0-9a-f]+)")
+INC_RE = re.compile(r"\{\{<\s*include\s+(\S+)\s*>\}\}")
 
 GLOSSARY = """바이브 코딩 = vibe coding | 프롬프트 엔지니어링 = prompt engineering
 루프 엔지니어링 = loop engineering | 컨텍스트 엔지니어링 = context engineering
@@ -64,16 +65,27 @@ STYLE = {
 
 
 def content_files():
-    """File list from ko/_quarto.yml (index + chapters + appendices)."""
+    """File list from ko/_quarto.yml, expanded with include targets.
+
+    Chapters are thin wrappers over per-topic section files pulled in with
+    Quarto include shortcodes; both levels must be translated.
+    """
     import yaml
     cfg = yaml.safe_load((ROOT / "ko" / "_quarto.yml").read_text())
-    files = []
+    top = []
     for item in cfg["book"]["chapters"] + cfg["book"].get("appendices", []):
         if isinstance(item, str):
-            files.append(item)
+            top.append(item)
         else:
-            files.extend(item.get("chapters", []))
-    return files
+            top.extend(item.get("chapters", []))
+    ko_root = (ROOT / "ko").resolve()
+    files = []
+    for rel in top:
+        files.append(rel)
+        for m in INC_RE.finditer((ROOT / "ko" / rel).read_text()):
+            inc = ((ROOT / "ko" / rel).parent / m.group(1)).resolve()
+            files.append(str(inc.relative_to(ko_root)))
+    return list(dict.fromkeys(files))
 
 
 def split_frontmatter(text):
@@ -86,12 +98,14 @@ def split_frontmatter(text):
 
 
 def authoritative_lang(rel):
-    src = ROOT / "ko" / rel
-    if src.exists():
-        fm, _ = split_frontmatter(src.read_text())
-        m = re.search(r"^authoritative-lang:\s*(\w+)", fm, re.M)
-        if m:
-            return m.group(1)
+    """Frontmatter `authoritative-lang:` or the HTML-comment form used by
+    section files (which cannot carry frontmatter because they are included)."""
+    for lang in ("ko", "en"):
+        f = ROOT / lang / rel
+        if f.exists():
+            m = re.search(r"authoritative-lang:\s*(\w+)", f.read_text()[:400])
+            if m:
+                return m.group(1)
     return "ko"
 
 
@@ -168,11 +182,21 @@ def main():
     ap.add_argument("paths", nargs="*", help="relative paths to limit translation")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--model", default=os.environ.get("TRANSLATE_MODEL", "sonnet"))
+    ap.add_argument("-j", "--jobs", type=int, default=1,
+                    help="parallel translation calls (default 1)")
     args = ap.parse_args()
 
     files = args.paths or content_files()
-    print(f"translate: {len(files)} file(s)")
-    failures = [rel for rel in files if not translate_one(rel, args.model, args.force)]
+    print(f"translate: {len(files)} file(s), jobs={args.jobs}")
+    if args.jobs > 1:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=args.jobs) as ex:
+            oks = list(ex.map(lambda r: translate_one(r, args.model, args.force),
+                              files))
+        failures = [rel for rel, ok in zip(files, oks) if not ok]
+    else:
+        failures = [rel for rel in files
+                    if not translate_one(rel, args.model, args.force)]
     sync_images()
     if failures:
         sys.exit(f"error: {len(failures)} file(s) failed: {', '.join(failures)}")

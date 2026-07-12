@@ -1,0 +1,13 @@
+---
+authoritative-lang: ko
+---
+
+# 공부의 재구성 {#sec-learning}
+
+배워야 할 것이 바뀌면 배우는 방법도 바뀐다. 이 장은 커리큘럼 논쟁, 교육 현장의 실험들, 그리고 전문성이 자라는 경로의 변형을 다룬다. 이 수업 자체가 하나의 실험 사례다.
+
+{{< include ../sections/13-1-what-to-learn.qmd >}}
+
+{{< include ../sections/13-2-education-experiments.qmd >}}
+
+{{< include ../sections/13-3-expertise-ladder.qmd >}}

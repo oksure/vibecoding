@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/prompt-engineering.qmd source-sha256:a660c4f1c2991d31 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/prompt-engineering.qmd and run tools/translate -->
+
+## Prompt Engineering (프롬프트 엔지니어링) {#gl-prompt-engineering}
+
+The skill of designing the input given to a model, that is, the prompt, in order to obtain a desired output. This includes discovering and systematizing specific techniques such as constructing few-shot examples and inducing chain-of-thought.
+
+For a while after the release of GPT-3 (2020), this was treated as something like a job function. Exactly who fixed this term as a job title, and when, needs verification.
+
+As model performance improved and interaction shifted to conversational and agentic forms, its standing as an independent skill grew blurred. From the perspective of this book, it belongs to the prehistory of vibe coding.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Check the timeline of when the job title "prompt engineer" appeared and when it disappeared from job postings
+- Check the original papers for representative techniques such as few-shot and chain-of-thought
+- Collect articles reporting on the disappearance of the job function (link with §1.3 section)
+:::

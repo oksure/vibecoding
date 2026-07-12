@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/08-3-verification-asymmetry.qmd source-sha256:e8aba8997cb511f6 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/08-3-verification-asymmetry.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Verification Asymmetry: Why Code, of All Things {#sec-verification-asymmetry}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. See TOPICS.md at the repository root for ownership and status.
+:::
+
+**Brief.** One reason code became the first major domain of AI generation is verifiability. When you run code, you can immediately tell, at least in part, whether it is right or wrong, but this is not true of prose or images. This section covers why this asymmetry arises, what concrete role automated verification signals such as tests, compilation, and type checks actually play in model training and agent loop design, and what conditions would be needed for this verification advantage to generalize to writing or other creative domains. This section forms a counterpart to the "artifacts that are hard to verify" discussion in §6.1 (Writing).
+
+**Seed Questions**
+
+- What exactly does the claim that "code is verified by running it" verify, and what does it fail to verify?
+- How are automated verification signals (passing tests, successful compilation, type checks) concretely reflected in agent loop design?
+- What empirical research supports or refutes the verification asymmetry hypothesis?
+- What conditions (formalizability, the existence of gradeable criteria) would be needed for this verification advantage to generalize to other outputs such as writing, images, or data analysis?
+- What long-term bias does automation progressing preferentially on verifiable tasks create?
+
+**Research Pointers**
+
+- Find and review empirical research on learning based on verifiable rewards.
+- Cross-reference with §5.4 (Creating Verifiable Units) and §6.1 (Writing) to divide roles without overlap.
+- Identify where software testing theory intersects with the AI evaluation (evals) literature.

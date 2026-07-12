@@ -1,0 +1,11 @@
+<!-- MACHINE-TRANSLATED from ko/chapters/13-learning.qmd source-sha256:16b3219487bf1a11 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/13-learning.qmd and run tools/translate -->
+
+# The Reconstruction of Study {#sec-learning}
+
+When what needs to be learned changes, how we learn changes too. This chapter covers curriculum debates, experiments in educational settings, and shifts in the path along which expertise grows. This very course is itself one case of that experiment.
+
+{{< include ../sections/13-1-what-to-learn.qmd >}}
+
+{{< include ../sections/13-2-education-experiments.qmd >}}
+
+{{< include ../sections/13-3-expertise-ladder.qmd >}}

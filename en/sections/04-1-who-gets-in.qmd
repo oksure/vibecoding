@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/04-1-who-gets-in.qmd source-sha256:298a74cc13c2d7ad model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/04-1-who-gets-in.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Which Doors Opened for Whom {#sec-who-gets-in}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** The first thing vibe coding changed is the boundary of who can make software. This section's theme is how widely this door has opened for non-programmers, domain experts, solo founders, and researchers respectively, and what new barriers have been hidden behind that threshold. The narrative that "now anyone can build" comes largely from success stories, while failure cases and cases of giving up partway are relatively underdocumented. This section gathers both currents in balance to concretely depict who actually gained access to what. It serves as the introduction to Chapter 4 (Opportunities and Potential), with the following §4.2-4.4 covering the specifics.
+
+**Seed Questions**
+
+- What cases are there of non-programmers completing software from start to finish with vibe coding, and where did they get stuck?
+- What patterns appear in cases where domain experts (medicine, law, education, etc.) directly coded solutions to problems in their own field?
+- Did vibe coding actually let solo founders shrink their team size, or did it just shift the problem to other bottlenecks (marketing, operations)?
+- What evidence do skeptical rebuttals to the claim that "now anyone can build" cite?
+- Record your own experience of building something as a case for this section. What background knowledge were you missing when you first tried vibe coding, and what actually filled that gap, and what did not?
+
+**Research Pointers**
+
+- Collect build reports from non-developers (blogs, communities, Product Hunt-type sites), covering both successes and failures
+- Case interviews from solo founder and indie hacker communities (Indie Hackers, etc.)
+- Interview students themselves and their peers about their first building experience and compile them as cases

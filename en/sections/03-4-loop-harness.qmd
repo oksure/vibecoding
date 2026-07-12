@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-4-loop-harness.qmd source-sha256:071392e6d7bc7e06 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-4-loop-harness.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Loop Engineering and Harness Engineering {#sec-loop-harness}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section covers two successor concepts formalized in 2026: loop engineering and harness engineering. Loop engineering is a concept that Addy Osmani formalized and popularized around June 2026; it covers designs that make agents iterate on their own, finding and verifying work by themselves. Harness engineering is a concept that emerged from the formulation "an agent is the sum of a model and a harness," emphasizing the design of the tools, prompts, and verification mechanisms that surround the model rather than the model itself. The key question is where these two concepts sit, alongside prompt engineering and context engineering, on the continuum of bottleneck shifts.
+
+**Seed Questions**
+
+- What is the core claim of the loop engineering concept as formalized by Addy Osmani, and what practical examples does he cite?
+- How does the "loop" as a unit (a cycle in which the agent finds work, does it, verifies it, and remembers it on its own) differ from earlier conversation-turn-based interaction?
+- Who first proposed the formulation "Agent = Model + Harness," and when, and what does this formulation emphasize?
+- In practice, how is the term harness engineering distinguished from context engineering, or do the two overlap?
+- Which of loop engineering and harness engineering refers to the broader concept, or are they different axes altogether?
+
+**Research Pointers**
+
+- Trace back to Osmani's original formalization via the adtmag report, ["Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat"](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01).
+- Read Faros AI's ["harness engineering" blog post](https://www.faros.ai/blog/harness-engineering).
+- Check the genealogical relationship with Anthropic's ["Building effective agents"](https://www.anthropic.com/research/building-effective-agents) (2024-12).

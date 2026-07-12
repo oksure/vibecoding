@@ -41,9 +41,15 @@ book:
       chapters:
         - chapters/08-how-it-works.qmd
         - chapters/09-limits-and-risks.qmd
-    - part: "Part IV · Outlook"
+    - part: "Part IV · Software Engineering, Rediscovered"
       chapters:
-        - chapters/10-work-and-study.qmd
+        - chapters/10-rediscovery-methods.qmd
+        - chapters/11-rediscovery-principles.qmd
+        - chapters/12-rediscovery-practices.qmd
+    - part: "Part V · Learning and Working"
+      chapters:
+        - chapters/13-learning.qmd
+        - chapters/14-working.qmd
   appendices:
     - glossary.qmd
     - reading-list.qmd

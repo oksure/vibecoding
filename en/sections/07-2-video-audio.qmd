@@ -1,0 +1,24 @@
+<!-- MACHINE-TRANSLATED from ko/sections/07-2-video-audio.qmd source-sha256:9c2b98f71833d50a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/07-2-video-audio.qmd and run tools/translate -->
+
+## Video and Audio Generation {#sec-video-audio}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check the repository root's TOPICS.md for ownership and status.
+:::
+
+**Brief.** Video and audio generation is more computationally expensive than images and adds a time axis, which makes evaluation harder. This section covers the video generation model landscape as of 2025 to 2026, the current state of speech synthesis and music generation, and what criteria are used to evaluate the quality of these artifacts. Video is distinguished from §7.1 (image generation) in that it has new failure modes that images don't have, such as frame-to-frame consistency and violations of physical laws.
+
+**Seed questions**
+
+- As of 2025 to 2026, what are the major video generation models, and how are their respective strengths and limitations reported? (Model names and release dates must be verified against primary sources.)
+- How are failure modes unique to video generation (breakdown of frame-to-frame consistency, violations of physical laws, etc.) being classified?
+- For speech synthesis and music generation respectively, what criteria are used to judge quality as good? Are there quantitative metrics beyond human listening judgment?
+- How far have copyright disputes over video and audio generation (training data, celebrity voice cloning, etc.) progressed so far?
+- Record your own experience using video or audio generation tools as a case study. What did you repeatedly adjust to get the result you wanted?
+
+**Research pointers**
+
+- Official announcements and technical blogs from major video and audio generation models (verify dates and model names against primary sources)
+- Reporting on copyright and policy-related lawsuits and regulatory trends
+- Record of the student's own generation experience

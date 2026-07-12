@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/chop.qmd source-sha256:c4fcd05718515787 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/chop.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## CHOP (chat-oriented programming) {#gl-chop}
+
+A term for the practice of instructing AI to write code in a conversational manner through a chat interface. It is a concept adjacent to vibe coding, emphasizing that work proceeds through conversation rather than direct manipulation of code.
+
+Steve Yegge coined the term before the phrase vibe coding emerged ([O'Reilly podcast](https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-vibe-coding-with-steve-yegge/)). The exact timing of its first use needs to be confirmed. Yegge co-authored a book titled "Vibe Coding" with Gene Kim, though the exact publication details need to be confirmed.
+
+Since the term vibe coding became popular, CHOP is often used more as an earlier-generation term, or as something close to a synonym for vibe coding.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm from the original source when and in what context (which piece of writing, which talk) CHOP was first used
+- Confirm the publication date and publisher of Kim and Yegge's co-authored book "Vibe Coding"
+- Collect examples that use CHOP and vibe coding as the same term, and examples that distinguish them (linked to §3.1)
+:::

@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/04-4-research-vibe-coding.qmd source-sha256:ff70d9952991d780 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/04-4-research-vibe-coding.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Vibe Coding for Researchers {#sec-research-vibe-coding}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** For researchers, vibe coding operates under somewhat different conditions. Data pipelines, visualizations, and simulation code are mostly not written once and discarded, but must pass peer review and reproducibility checks. This section covers how vibe coding is actually used in research settings, and where the vibe coding practice of "if it works, it's fine" collides with the research requirement that results "must be reproducible." Since this book is a product of the Special Topics in Data Science course at Seoul National University, this section also touches on the actual working methods of the author group itself.
+
+**Seed Questions**
+
+- How are researchers using AI coding tools to write data preprocessing, visualization, and simulation code? Are there differences across fields?
+- Do reproducibility requirements (code disclosure, fixed environments, fixed seeds) actually conflict with the fast-iteration practices of vibe coding, or do tools resolve this automatically?
+- In statistics and econometrics code, what procedures are needed to verify AI-generated results differently?
+- What constraints do journal and conference AI-use disclosure policies place on writing research code?
+- Record, as a case study, your own experience of vibe coding one of a data pipeline, visualization, or simulation for your research or coursework. How did you verify the results?
+
+**Research Pointers**
+
+- Accounts from econometrics and statistics researchers on using AI coding tools (blogs, X threads)
+- Academic discussions of reproducibility (literature on the reproducibility crisis and its reexamination in the AI era)
+- Compile each student's own experience building research or assignment pipelines as case studies

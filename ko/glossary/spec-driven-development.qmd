@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 스펙 주도 개발 (spec-driven development) {#gl-spec-driven-development}
+
+AI에게 바로 코드를 시키지 않고 먼저 명세, 즉 스펙을 함께 작성한 뒤 그 명세를 기준으로 생성과 검증을 진행하는 방식이다. "코드를 읽지 않는" 바이브 코딩의 검증 문제에 대한 대표적 대응으로 이야기된다.
+
+GitHub이 2025년 9월 Spec Kit을 공개하며 Spec, Plan, Tasks, Implement 4단계 흐름을 제시했다 ([GitHub 블로그](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/)).
+
+폭포수 개발의 명세 우선 원칙이 AI 시대에 재발견된 사례로 볼 수 있다. §3.3, §10.1에서 각각 개념 확산과 폭포수 논쟁 재상연을 다룬다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- Spec Kit 이전에 유사한 "스펙 먼저" 도구·제안이 있었는지 확인
+- Spec Kit의 4단계 흐름과 §10.1이 다루는 폭포수 모델의 단계 구분을 비교
+- Spec Kit 채택 사례나 비판 글 수집
+:::

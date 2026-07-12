@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/09-2-security.qmd source-sha256:52c5421ed102ee2b model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/09-2-security.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Security: A New Attack Surface {#sec-security}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check TOPICS.md in the repository root for owner and status.
+:::
+
+**Brief.** Does AI-generated code create vulnerabilities of a different kind, or at a different frequency, than human-written code? This section covers empirical research on security vulnerabilities in generated code, prompt injection where an agent reads external content (search results, documents, issue comments) and ends up executing malicious instructions embedded in them, and slopsquatting, where a model invents a package name that doesn't exist and an attacker registers that name first. Figures and cases must be verified against primary sources before being cited.
+
+**Seed questions**
+
+- What empirical studies compare vulnerability rates in AI-generated code with human-written code, and is their methodology reliable?
+- Concretely, what attack paths does prompt injection create in the context of coding agents?
+- Are there actual reported cases of slopsquatting, and how large is the estimated damage?
+- How do the execution privileges granted to coding agents (shell commands, file writes, network access) change the security model?
+- What mitigations do vendors (Anthropic, GitHub, etc.) present in official documentation for this attack surface?
+
+**Research pointers**
+
+- Prioritize searching for academic papers that quantitatively analyze security vulnerabilities in generated code
+- Check empirical reports from security firms and researchers covering prompt injection and slopsquatting
+- Cross-reference with the slopsquatting entry (G14) in the glossary, but divide roles to avoid duplication

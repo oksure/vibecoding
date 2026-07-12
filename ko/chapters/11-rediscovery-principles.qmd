@@ -1,0 +1,17 @@
+---
+authoritative-lang: ko
+---
+
+# 원리의 재발견 {#sec-rediscovery-principles}
+
+방법론 아래에는 원리가 있다. 추상화와 정보 은닉, 기술 부채, 조직과 시스템 구조의 동형성, 본질적 복잡성과 우연적 복잡성, 그리고 사람과 시간의 교환 법칙. 반세기 전의 논문들이 컨텍스트 윈도와 에이전트의 시대에 어떻게 다시 읽히는지가 이 장의 내용이다.
+
+{{< include ../sections/11-1-abstraction-parnas.qmd >}}
+
+{{< include ../sections/11-2-technical-debt.qmd >}}
+
+{{< include ../sections/11-3-conways-law.qmd >}}
+
+{{< include ../sections/11-4-no-silver-bullet.qmd >}}
+
+{{< include ../sections/11-5-mythical-man-month.qmd >}}

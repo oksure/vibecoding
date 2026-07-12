@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/software-2-3.qmd source-sha256:3267f2bb8bb9ca2a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/software-2-3.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Software 2.0 / 3.0 (Software 2.0 / 3.0) {#gl-software-2-3}
+
+Software 2.0 refers to the paradigm of building programs by training neural network weights on data, rather than having people write rules directly as code. Software 3.0 continues this lineage and is used to refer to the stage in which a model's behavior is programmed through natural language prompts.
+
+Software 2.0 is a concept coined by Andrej Karpathy in a piece he wrote in 2017 ([link](https://karpathy.medium.com/software-2-0-a64152b37c35)). It remains to be confirmed who formalized the follow-up concept of Software 3.0, and when.
+
+Software 2.0 has become established as a term for deep learning in general, while Software 3.0 is used in vibe coding discourse as a concept that underpins the view of natural language as a program.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm the original source of who first formalized the concept of "Software 3.0" and when (including Karpathy's later talks and writings)
+- Confirm in the original source where the three-stage distinction of Software 1.0/2.0/3.0 first appeared, and whether 3.0 was already present in the 2.0 article
+- Work out how this connects conceptually to §8.1 (from next-token prediction to code)
+:::

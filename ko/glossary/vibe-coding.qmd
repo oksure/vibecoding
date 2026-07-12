@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 바이브 코딩 (vibe coding) {#gl-vibe-coding}
+
+자연어로 AI 코딩 에이전트에게 지시해 소프트웨어를 만드는 방식이다. 좁은 뜻으로는 생성된 코드를 직접 읽지 않고 실행 결과만 보며 반복하는 작업 태도를 가리키고, 넓은 뜻으로는 AI 보조 개발 전반을 가리킨다.
+
+Andrej Karpathy가 2025년 2월 트윗에서 만든 말이다. 원문에는 "fully give in to the vibes, embrace exponentials, and forget that the code even exists"라는 표현이 들어 있다 ([원 트윗](https://x.com/karpathy/status/1886192184808149383)). Karpathy는 2026년 2월 1주년 회고 트윗에서 이 말을 "shower of thoughts throwaway tweet"이라고 돌아봤다 ([회고 트윗](https://x.com/karpathy/status/2019137879310836075)).
+
+2025년 11월 Collins 사전 올해의 단어로 선정되며 일반어가 됐다 ([발표](https://www.collinsdictionary.com/us/woty), [보도](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl)). Simon Willison은 "코드를 읽지 않는 방식"과 "AI 보조 개발 전반"을 구분하자고 제안했지만 ([글](https://simonwillison.net/2025/Mar/19/vibe-coding/)), 실제 사용에서는 두 뜻이 섞여 쓰인다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- Willison 글 전문을 읽고 그가 구분한 스펙트럼을 정리할 것
+- Karpathy 1주년 회고 트윗 전문에서 원 트윗 당시 맥락(어떤 모델·도구를 쓰고 있었는지) 확인할 것
+- 위키피디아 개관 문서([링크](https://en.wikipedia.org/wiki/Vibe_coding))와 대조해 뜻의 표류 사례를 추가로 모을 것
+:::

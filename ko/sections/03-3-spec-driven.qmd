@@ -1,0 +1,24 @@
+<!-- authoritative-lang: ko -->
+
+## 스펙 주도 개발 {#sec-spec-driven}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** 이 꼭지는 스펙 주도 개발을 바이브 코딩에 대한 반작용으로 다룬다. GitHub이 2025년 9월 공개한 Spec Kit은 Spec, Plan, Tasks, Implement 네 단계를 명시적으로 밟게 하는 도구다. 핵심 질문은 "코드가 존재한다는 사실조차 잊어버리라"는 바이브 코딩의 태도와, 명세를 먼저 쓰고 그것을 코드보다 우선시하는 스펙 주도 개발의 태도가 어떤 긴장 관계에 있는가이다. 이 대립이 폭포수와 애자일 논쟁의 재상연인지(4부 §10.1에서 다시 다룸)도 짚어야 한다. 3장에서 이 꼭지는 바이브 코딩에 대한 최초의 체계적 반작용을 맡는다.
+
+**시드 질문**
+
+- GitHub Spec Kit이 명시한 네 단계(Spec, Plan, Tasks, Implement) 각각은 어떤 문제를 겨냥해 설계되었나?
+- 스펙 주도 개발을 표방하는 다른 도구·워크플로가 있는가, 있다면 접근 방식이 어떻게 다른가?
+- 스펙 주도 개발은 바이브 코딩을 대체하려는 시도인가 보완하려는 시도인가, 실무자들의 실제 사용 패턴은 어느 쪽에 가까운가?
+- 이 대립을 폭포수 대 애자일 논쟁(Royce 1970, Agile Manifesto 2001)과 겹쳐 보면 어떤 유사점과 차이점이 드러나는가?
+- 스펙 우선 접근이 실제로 코드 품질이나 검증 가능성을 높였다는 증거가 있는가?
+
+**조사 포인터**
+
+- GitHub, ["Spec-driven development with AI"](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (2025-09) 공식 발표문을 읽을 것
+- Winston Royce, "Managing the Development of Large Software Systems" (1970)과 [Agile Manifesto](https://agilemanifesto.org) (2001)를 원전으로 대조할 것
+- Spec Kit 외 유사 워크플로(다른 벤더의 plan-mode류 기능)를 조사해 비교할 것

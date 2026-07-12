@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/04-3-prototyping-economics.qmd source-sha256:55370a56f767306c model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/04-3-prototyping-economics.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Economics of Prototyping {#sec-prototyping-economics}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** When the distance between the moment an idea occurs and the moment a working demo can be shown shrinks, the rationale for the various organizational practices that used to fill that gap (planning documents, approval processes, mockup tools) starts to waver. This section addresses what practices the change in prototyping speed has actually altered on the ground in startups and enterprises, and what has remained unchanged. It should also distinguish whether only the speed has increased, or whether the nature of the prototype itself has changed. It extends the discussion of personal software in §4.2 into organizational and startup contexts.
+
+**Seed Questions**
+
+- How much has the time to build a startup's MVP (minimum viable product) actually shortened? What is the quantitative evidence?
+- Has the internal approval process for prototypes within companies shortened as much as production speed has increased, or has the bottleneck simply moved elsewhere?
+- What problems arise as the boundary between a "quick prototype" and a "prototype deployed directly to production" blurs?
+- How has the role of the prototype changed in fundraising or internal persuasion processes?
+- Actually measure the time it takes you to go from idea to a working demo and record it as a case study. What was the bottleneck (conception, building, or validation)?
+
+**Research Pointers**
+
+- Collect mentions of MVP build times from public materials by startup accelerators and VCs (verify figures against primary sources).
+- News coverage of internal corporate hackathons and innovation lab cases.
+- Record students' own project build times and use them as comparative data.

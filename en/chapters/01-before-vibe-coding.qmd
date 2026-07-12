@@ -2,27 +2,13 @@
 authoritative-lang: ko
 ---
 
-<!-- MACHINE-TRANSLATED from ko/chapters/01-before-vibe-coding.qmd source-sha256:a6ab69d4ad607fbb model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/01-before-vibe-coding.qmd and run tools/translate -->
-# Before Vibe Coding: Prompt Engineering {#sec-before}
+<!-- MACHINE-TRANSLATED from ko/chapters/01-before-vibe-coding.qmd source-sha256:ea64bdad5f3724ec model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/01-before-vibe-coding.qmd and run tools/translate -->
+# Prehistory: A History of Humans Speaking to Machines {#sec-before}
 
-::: {.callout-warning}
-## Writing Status
-Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
-:::
+Vibe coding did not appear suddenly one day. The dream of "programming in human language" is as old as the history of computing itself, and it has returned again and again under different names. This chapter begins with that history of repetition and arrives at prompt engineering, the direct prehistory of vibe coding.
 
-## What This Chapter Covers
+{{< include ../sections/01-1-natural-language-dream.qmd >}}
 
-Vibe coding did not appear suddenly one day. This chapter covers its prehistory: prompt engineering. It traces the process by which, after the appearance of GPT-3 (2020), "what and how to say to the model" became established as a skill; the process by which techniques like few-shot and chain-of-thought were discovered and systematized; and the process by which the title "prompt engineer" emerged and then faded again. The central question of this chapter is which limitations of prompt engineering called forth the next stage, vibe coding.
+{{< include ../sections/01-2-end-user-programming.qmd >}}
 
-## Seed Questions
-
-- When and where was the term prompt engineering first used? What was the trajectory of its popularity?
-- What problem was each representative technique (few-shot, chain-of-thought, role assignment, etc.) trying to solve?
-- Where did the boundary between "the skill of writing a good prompt" and "the skill of building something through iterative conversation with the model" begin to break down?
-- Where does Karpathy's discussion of Software 2.0 (2017) fit into this flow?
-
-## Research Pointers
-
-- Anthropic's and OpenAI's official prompt engineering guide documents
-- Early academic literature such as the chain-of-thought paper (Wei et al., 2022)
-- News articles covering the rise and fall of prompt engineer job postings
+{{< include ../sections/01-3-prompt-engineering.qmd >}}

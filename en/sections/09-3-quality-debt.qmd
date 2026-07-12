@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/09-3-quality-debt.qmd source-sha256:ccf0c4964334be91 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/09-3-quality-debt.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Quality Debt and Maintenance {#sec-quality-debt}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check assignment and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** Rapidly generated code often works but is hard to fix. This section covers how quality debt is similar to and different from the existing concept of technical debt, how AI's generation speed changes the rate of debt accumulation, and when rewriting from scratch becomes the cheaper option. If there are attempts to calculate rewrite costs financially, they will be checked and introduced. This pairs with §11.2 (technical debt, from a rediscovery perspective), but this section emphasizes the practical and financial perspective.
+
+**Seed Questions**
+
+- Is there empirical research showing that AI-generated code has different maintenance costs compared to human-written code?
+- When applying the technical debt metaphor to AI-generated code, what fits and what doesn't?
+- What concrete criteria (complexity metrics, review time, etc.) are used in practice to identify "code that works but cannot be fixed"?
+- What financial frameworks have been proposed for judging whether a rewrite or incremental refactoring is cheaper?
+- Is the increase in code generation speed outpacing the growth rate of review and testing capacity, and is this confirmed by data?
+
+**Research Pointers**
+
+- Check Cunningham's (1992) original presentation of technical debt (OOPSLA experience report) in the original text.
+- Prioritize searching academic papers on software maintenance costs and refactoring-versus-rewrite decisions.
+- Divide roles with §11.2: this section takes the practical/financial perspective, §11.2 takes the conceptual history perspective.

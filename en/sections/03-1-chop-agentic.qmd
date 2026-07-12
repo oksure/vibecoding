@@ -1,0 +1,24 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-1-chop-agentic.qmd source-sha256:d36ed087d7fd74bb model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-1-chop-agentic.qmd and run tools/translate -->
+
+## CHOP and Agentic Coding: A Spectrum of Autonomy {#sec-chop-agentic}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check TOPICS.md at the repository root for ownership and status.
+:::
+
+**Brief.** This section starts from the concept of CHOP (chat-oriented programming), which Steve Yegge used before the term vibe coding spread, and moves on to the agent autonomy spectrum (how far humans are involved and from what point agents move autonomously) that was formulated afterward. The key question is how CHOP, vibe coding, and agentic coding are distinguished from and overlap with each other. Chapter 3 covers the follow-up concepts that poured out after the term vibe coding took hold, and this section covers the earliest of these threads.
+
+**Seed Questions**
+
+- When and in what context did Steve Yegge first propose CHOP, and what is its chronological relationship to vibe coding?
+- How do CHOP and vibe coding differ by definition, and do practitioners use the two terms distinctly or interchangeably?
+- How does the term "agentic coding" relate to CHOP and vibe coding respectively?
+- Who organized the attempts to divide agent autonomy into stages (from autocomplete to autonomous execution and autonomous verification), and by what criteria?
+- How did the book co-written by Gene Kim and Steve Yegge synthesize these concepts?
+
+**Research Pointers**
+
+- Check Steve Yegge's remarks on CHOP in the [O'Reilly podcast interview](https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-vibe-coding-with-steve-yegge/)
+- Check the exact publication date and core arguments of the book "Vibe Coding," co-written by Gene Kim and Steve Yegge
+- Find and compare practitioner blog posts that address stages of agent autonomy (cases that present a level table)

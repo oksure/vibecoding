@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 루프 엔지니어링 (loop engineering) {#gl-loop-engineering}
+
+프롬프트를 사람이 매번 치는 대신, 에이전트가 일을 찾고 수행하고 검증하고 기록하는 루프 자체를 설계하는 기술이다. 프롬프트 엔지니어링의 후계 개념으로 이야기된다.
+
+2026년 6월 Addy Osmani의 정리 글을 계기로 널리 퍼졌다 ([보도](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx)).
+
+이 책의 관점에서는 바이브 코딩의 다음 장에 해당하는 개념이다. §3.4에서 하네스 엔지니어링과 함께 다룬다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- Osmani 원문 글(정리 글의 원 출처) 찾아 인용 확인
+- loop engineering과 agent harness 개념이 어디서 겹치고 어디서 갈리는지 정리
+- 이 용어를 쓰는 실제 도구·워크플로 사례 수집 (§3.4와 연계)
+:::

@@ -1,0 +1,27 @@
+<!-- MACHINE-TRANSLATED from ko/sections/11-5-mythical-man-month.qmd source-sha256:235f4ce9eb627740 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/11-5-mythical-man-month.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Mythical Man-Month: From Person-Months to Agent-Hours {#sec-mythical-man-month}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This piece contrasts Brooks's (1975) core law, the claim that adding manpower to a late project makes it later, and its rationale, with the recent practice of adding more agents in parallel. It is structured in three parts. First, read Brooks's law and its communication-overhead rationale precisely from the original text. Next, gather cases of parallel operation where multiple agents are run simultaneously. Finally, argue whether adding people and adding agents are the same or different in terms of the communication-overhead mechanism.
+
+**Seed Questions**
+
+- What was the exact argument by which Brooks (1975) derived the law that adding manpower to a late project makes it later, and specifically, as what function of headcount did he calculate the number of communication paths growing? (verify in the original text)
+- Brooks's argument also cited the cost of training newcomers and the difficulty of dividing work sequentially as grounds; how does each of these two grounds apply, or fail to apply, to the situation of deploying additional agents? (verify in the original text)
+- Is there any case or report on whether running multiple agents in parallel, each assigned to a different part of the same project, actually reduces total completion time, or whether it is offset by human coordination costs? (collect rediscovery cases)
+- If the core mechanism underlying Brooks's law is communication overhead among people, does a corresponding overhead exist among agents, and if so, what is it measured by (token cost, context-sharing failure, conflicting changes, etc.)?
+- Does writing by practitioners or researchers exist that explicitly claims Brooks's law does not apply to agents, or conversely that it applies to them unchanged? (collect rediscovery cases)
+- How are the surgical team model and the importance of conceptual integrity, which Brooks presented together in the same book, being reexamined in discussions of agent orchestration?
+
+**Research Pointers**
+
+- Brooks, "The Mythical Man-Month" (1975), original text (check the relevant chapter)
+- Practitioner writing and tool documentation on multi-agent parallel coding operations (parallel subagents, running multiple worktrees simultaneously, etc.)
+- Points of overlap with §8.2 of this book (Agent Anatomy); avoid duplicating roles

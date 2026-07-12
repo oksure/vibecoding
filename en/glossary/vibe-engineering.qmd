@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/vibe-engineering.qmd source-sha256:8caaceff8802aa6f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/vibe-engineering.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## 바이브 엔지니어링 (vibe engineering) {#gl-vibe-engineering}
+
+A term for a way of working that keeps the speed of vibe coding while taking responsibility for the output. It amounts to a proposal to recombine engineering procedures such as verification, testing, and review back into the vibe coding workflow.
+
+The concept was proposed by Simon Willison ([post](https://simonw.substack.com/p/vibe-engineering)). It is known to date from fall 2025, but the exact publication date needs to be confirmed.
+
+It is one of the reactive concepts to vibe coding's "verification problem," and §3.5 covers these reactive concepts together.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Confirm the exact publication date of Willison's post and the original wording of the definition
+- Clarify the relationship between vibe engineering and adjacent reactive concepts such as spec-driven development and the TDD revival argument (§10.4)
+- Check whether other authors or articles have used this term since Willison
+:::

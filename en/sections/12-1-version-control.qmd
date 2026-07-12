@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/12-1-version-control.qmd source-sha256:97e503b8542e780d model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/12-1-version-control.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Version Control: From History to Safety Net {#sec-version-control}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the historical background of Git as a collaboration tool with the way its use in agentic coding has shifted toward reverting experiments at the commit level. Write only what is confirmed about the year Git emerged or its founding narrative, and defer the rest to research directions. Structure the section in three parts. First, confirm, only to the extent verifiable, the history of version control systems and in particular the conventional narrative that the shift to a distributed model was meant to solve collaboration problems. Next, gather examples of recent practices in agentic workflows where commits, branches, and worktrees are used as a safety net. Finally, argue which properties of Git's design remain valid, and which have become excessive, now that its use has shifted from a tool that coordinates the parallel work of multiple people to a tool with which one person reverts an agent's experiments.
+
+**Seed questions**
+
+- What facts can be stated definitively about the historical background of Git's creation, and which parts, such as the exact year or detailed narrative, need verification? (Check primary sources; do not assert years without confirmation.)
+- How much does the problem version control systems originally set out to solve, namely conflicts from simultaneous editing by multiple people and history tracking, overlap with the use actually observed in agentic coding, namely reverting code after an agent has broken it?
+- When and in what form did practical advice to have agents commit frequently, or to make a commit at every checkpoint, first appear in tool documentation or practitioner writing? (Collect rediscovery cases.)
+- Is the practice of multiple agents working simultaneously in different worktrees closer to the parallel work of multiple people that Git originally set out to support, or to one person coordinating the parallel work of multiple agents?
+- How do Git collaboration practices meant for one person to explain to another, such as commit messages or review diffs, change when an agent is the one generating the commit? Do they still assume a human reader, or do they become a record intended for other agents or for the agent itself?
+- Do problems from the era before version control, namely conflicts in shared-file or lock-based systems, reappear in the uncontrolled bulk edits made by agents? (Collect rediscovery cases.)
+
+**Research pointers**
+
+- Git's official history documentation and early announcement materials (verify exact dates and the circumstances of its origin; do not assert from memory)
+- Official documentation on commits and checkpoints in agentic coding tools
+- Practitioner writing on git worktree and branching strategies
+- Division of labor with §5.5 of this book (Make It Revertible). That section focuses on practical technique, this section on the historical shift in how the tool is used.

@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/13-2-education-experiments.qmd source-sha256:1b8454c9e3154650 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/13-2-education-experiments.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Experiments in Educational Settings {#sec-education-experiments}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** In the AI era, educational settings have largely split into three camps: those that ban AI use, those that mandate it, and those that overhaul their evaluation methods entirely. This section finds concrete cases of each approach and compares the actual outcomes they produced. A special task of this section is to include this very course (seminar-style, collaborative book writing, full AI use permitted) as one of the experimental cases and self-document it. Interviews and primary data collection are the core methods.
+
+**Seed Questions**
+
+- What cases exist of educational institutions or courses that banned AI use, and was the ban actually observed in practice?
+- What cases exist of mandating or fully permitting AI use, and how did evaluation methods change?
+- What outcomes have been reported by cases that overhauled evaluation methods themselves (reviving oral exams, strengthening process-based assessment, etc.)?
+- Do educational research studies or large-scale surveys exist that compare these three approaches?
+- How should the design and progress of this course itself be documented as an experimental case, and what can be confirmed through student interviews?
+
+**Research Pointers**
+
+- Collect official AI policy announcements from domestic and international universities and high schools as primary sources.
+- Prioritize searching empirical studies in education journals.
+- Directly collect this course's syllabus, operational records, and student interviews as primary sources.

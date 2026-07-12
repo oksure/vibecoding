@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/09-4-junior-paradox.qmd source-sha256:cfcaf4c71debd345 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/09-4-junior-paradox.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Junior Paradox: The Ladder Disappears {#sec-junior-paradox}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The work that AI substitutes for best is often the work that juniors used to take on in order to grow. This section addresses the concern that automating entry-level work cuts off the ladder to expertise. It looks for data on junior developer hiring and changes in internships and entry-level postings, to determine whether this problem is actually confirmed by data or is an exaggerated narrative. It pairs with §13.3 (The Ladder of Expertise), but this section weighs more heavily toward labor market and hiring data. Figures must be verified against original data before being cited.
+
+**Seed Questions**
+
+- How have the number of junior developer job postings and the scale of internships actually changed recently, and what are reliable data sources for this?
+- Is the observation that "juniors have become faster with AI" and the observation that "junior hiring has declined" different facets of the same phenomenon, or are they separate phenomena?
+- Have companies ever officially acknowledged that the decline in entry-level hiring is due to AI, or do other factors such as the economy or corrections for prior overhiring play a larger role?
+- What research refutes the concern that "the ladder is disappearing," or offers a different explanation?
+- Are there reported cases of company- or industry-level responses to the decline in entry-level hiring (such as maintaining junior-dedicated projects, redesigning mentoring, etc.)?
+
+**Research Pointers**
+
+- Prioritize searching empirical labor economics research that deals with job postings and employment statistics; figures must be verified against original data before being cited.
+- Distinguish between industry surveys (such as developer hiring trend reports) and academic research, and treat their reliability differently.
+- Divide roles with §13.3 (The Ladder of Expertise) and §14.2 (Changes in the Job Landscape): this section is limited to the coding ladder.

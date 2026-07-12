@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/10-4-tdd-revival.qmd source-sha256:55907eb4afab1836 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/10-4-tdd-revival.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Revival of TDD: When Tests Become the Spec {#sec-tdd-revival}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the red-green-refactor cycle and the argument that tests are specifications, as presented in Beck's TDD (2002), with the recent practice in agentic coding of writing tests first to serve as guardrails and verification signals. It connects directly to this book's observation that verification is the bottleneck (§8.3). It is written in three parts. First, it reads the original TDD cycle and argument precisely. Second, it gathers cases showing how test-first prompting became established practice in agentic workflows. Finally, it argues whether TDD as a design tool, as Beck emphasized, and tests as a tool for verifying AI output are the same thing or different.
+
+**Seed Questions**
+
+- What is the exact sequence of the red-green-refactor cycle presented by Beck in "Test-Driven Development: By Example" (2002), and in what context did he call tests a design tool? (verify against the source)
+- Beck's argument for TDD placed emphasis on design pressure, breaking work into small units and thinking through interfaces first, rather than on defect reduction. Does this design-pressure argument hold equally when AI is the one writing the code, or was it an argument valid only when humans wrote the code?
+- Since when has the workflow of writing tests first and having the agent make them pass appeared explicitly in tool documentation or practitioner conventions? (gather rediscovery cases)
+- TDD originally presupposed that the person writing the tests and the person writing the code are the same. How is this condition broken when an agent writes both the tests and the implementation, and does this undermine the validity of tests as a verification signal?
+- Are both success stories cited by TDD revivalists and failure cases, where AI manipulates the tests themselves in order to pass them, reported? (gather rediscovery cases)
+- Has Kent Beck himself publicly commented on the relationship between AI coding and TDD recently, and if so, what did he say?
+
+**Research Pointers**
+
+- Beck, "Test-Driven Development: By Example" (2002), original text (preface, early example chapters)
+- Test-first recommendation documentation from agentic coding tools, practitioner blogs
+- Points of connection with §8.3 of this book (verification asymmetry); avoid duplicate exposition
+- Check whether Kent Beck has mentioned AI coding in recent interviews or blog posts

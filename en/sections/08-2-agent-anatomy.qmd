@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/08-2-agent-anatomy.qmd source-sha256:714971f315583834 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/08-2-agent-anatomy.qmd and run tools/translate -->
+
+I'll translate this Quarto markdown file from Korean to English, preserving the structure exactly as specified.
+
+<!-- authoritative-lang: ko -->
+
+## Anatomy of a Coding Agent {#sec-agent-anatomy}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check the repository root's TOPICS.md for owner and status.
+:::
+
+**Brief.** Break down what a coding agent actually does in a single turn. Trace, step by step, how user input is assembled into a prompt, how tool calls (reading and writing files, executing commands) proceed, how the feedback loop by which execution results flow back into context works, and how many times this loop repeats before the task ends. The core work is to use Anthropic's "Building effective agents" and its distinction between workflows and agents as the theoretical axis, and to cross-check it against the actual source code of open-source coding agents to identify the gap between theory and implementation.
+
+**Seed Questions**
+
+- If you break down a single turn of a coding agent from user input to final response, step by step, what do you get?
+- What does tool use mean on the model side, and what does the harness side need to prepare for it to work?
+- Where is the boundary between the "workflow" and "agent" that Anthropic distinguishes, and which are actual coding agents closer to?
+- In the source code of open-source coding agents, how is the main loop actually implemented, and does it match the documented explanation?
+- What changes if there is no feedback loop by which execution results (test failures, error messages, shell output) flow back into the model's input?
+
+**Research Pointers**
+
+- Read closely Anthropic's "Building effective agents" (2024-12) and use it as this chapter's theoretical axis
+- Read the main loop code directly from the GitHub repositories of several open-source coding agents (CLI-type tools)
+- Find materials related to harness engineering and cross-reference them with §3.4 and the agent harness entry in the glossary

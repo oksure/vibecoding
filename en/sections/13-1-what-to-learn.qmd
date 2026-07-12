@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/13-1-what-to-learn.qmd source-sha256:52df823a949a0a94 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/13-1-what-to-learn.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## What Should We Learn? {#sec-what-to-learn}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check assignment and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** What should be taught and learned in an era when AI writes syntax and boilerplate for us? This section examines the claim that the center of gravity in programming education is shifting from syntax memorization to the abilities of problem definition, decomposition, and verification, and organizes the positions that clash in actual curriculum debates. The task of this section is to verify the grounds for each position through interviews and primary sources, without prejudging a conclusion. This corresponds to the introduction of Part 5 as a whole, and it should be kept in mind that this course itself is one experimental answer to this debate.
+
+**Seed Questions**
+
+- What grounds does each side offer: the claim that "syntax memorization no longer matters" and the counterargument that "without basic syntax you cannot even verify"?
+- Do curriculum efforts that explicitly try to teach problem definition, decomposition, and verification actually exist, and what form do they take?
+- How does the shape of this debate differ between data science education and traditional computer science education?
+- How much do educators actually agree on what should be taught in the AI era, and where do opinions diverge sharply?
+- What position does this course's own curriculum design (seminar-style, collaborative book writing) take in this debate?
+
+**Research Pointers**
+
+- Verify cases of curriculum reform at universities and bootcamps through primary documents (syllabi, department announcements).
+- Interview programming education researchers and current professors/instructors to collect primary sources.
+- Divide roles with §13.2 (Experiments in the Field of Education): this section covers the debate over "what" to teach, while §13.2 covers actual experimental cases.

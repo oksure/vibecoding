@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/08-1-next-token.qmd source-sha256:053bd6ebe4723767 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/08-1-next-token.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## From Next-Token Prediction to Code {#sec-next-token}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** The basic behavior of an LLM is nothing more than predicting the next token. This section's task is to explain precisely, without formulas, how the ability to write code emerges from this simple mechanism, and why code is a particularly good fit for this mechanism compared to natural language. It examines the role played by each of the following: the syntactic regularity of code, the vast training data available from public repositories, and the signal provided by executability. At the same time, it addresses where this mechanism breaks down, that is, what form hallucination takes in code generation. The actual boundary between the claim that "the model understands" and the claim that "it merely mimics patterns" forms the outline for this entire chapter (Chapter 8).
+
+**Seed Questions**
+
+- Through what specific pathway does the ability to write code emerge from the simple training objective of next-token prediction?
+- Why is code generation more favorable for training than natural language generation? Which contributes more: syntactic regularity or data scale?
+- What specific forms does hallucination take in code generation? Do fabricating a nonexistent API and using the wrong argument share the same cause?
+- What grounds does each of the claims "the model understands code" and "it merely mimics patterns" rest on?
+- How has the expansion of context window size translated into performance improvements in actual coding tasks?
+
+**Research Pointers**
+
+- Reread Karpathy's original "Software 2.0" (2017) as the origin of the perspective that treats code as data.
+- Select and cite popular yet accurate explanatory material on next-token prediction and the transformer architecture.
+- Prioritize searching for academic papers addressing hallucination in code generation (empirical research is the basic stance of Part 3 as a whole).

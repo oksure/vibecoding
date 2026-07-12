@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/14-1-ai-workday.qmd source-sha256:e9a8589d337c22e1 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/14-1-ai-workday.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## A Day Working with AI {#sec-ai-workday}
+
+::: {.callout-warning}
+## Writing status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The day of a practitioner who uses AI deeply is being restructured around time spent delegating, reviewing, and running multiple tasks in parallel, rather than time spent typing code directly. This section starts from observation, not prediction. The core method of this section is to directly interview people who work deeply with AI and record, as primary source material, how their day has changed. This corresponds to the introduction of Chapter 14 (Reconstructing Work).
+
+**Seed questions**
+
+- If you reconstruct the daily routine of a developer or researcher who uses AI deeply hour by hour, what stands out as having changed?
+- How does the cycle of delegation and review actually play out, and has the time spent reviewing increased or decreased relative to the time spent generating?
+- Does the practice of running multiple agents in parallel actually increase productivity, or does it increase the burden of management?
+- What tasks remain that people insist on doing themselves rather than delegating to AI during the day, and what is the criterion for that?
+- How does this change appear differently depending on occupation (developers, researchers, founders)?
+
+**Investigation pointers**
+
+- Directly recruit practitioners and researchers who use AI deeply and conduct in-depth interviews. The core material for this section is the interviews
+- Diversify interview subjects so that occupation, career experience, and tools used differ
+- If there are already published primary-source essays or blogs in the form of a "day in the life" record, refer to them, but do not let them replace the interviews

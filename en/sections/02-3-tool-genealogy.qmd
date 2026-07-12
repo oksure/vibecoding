@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/02-3-tool-genealogy.qmd source-sha256:7f4eaa2e92cdca5c model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/02-3-tool-genealogy.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Genealogy of Tools: From Autocomplete to Agents {#sec-tool-genealogy}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check assignment and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section deals with the genealogy of tools, not concepts. It should trace the flow starting from GitHub Copilot's autocomplete-style coding assistance, released in 2021, through chat-interface-based coding tools, to agentic CLI and IDE tools. The core claim is that the form of the tool (autocomplete versus conversation versus autonomous execution) has defined the coding methodology of its era. We need to verify the causal claim that the methodology of vibe coding would not have emerged without the tool forms that made it possible. Within Chapter 2, this section complements the conceptual history (§2.1, §2.2) with a history of tools.
+
+**Seed Questions**
+
+- Why did GitHub Copilot (released in preview in 2021) choose the autocomplete form, and which later tools adopted that form as their default?
+- The transition from autocomplete-style tools to chat-based coding assistance (code explanation, generation requests) occurred with which tools, and at what point in time?
+- What technical prerequisites did the transition from chat-based to agentic tools (file system access, command execution, autonomous loops) require?
+- How did the developer community react (welcome, resistance) at each transition period between tool forms?
+- Which led which, tool form or methodology, or were they mutually determining?
+
+**Research Pointers**
+
+- Check GitHub Copilot's public announcement (2021; confirm the exact date and distinguish preview from general availability) and its subsequent major update history.
+- Compile the release chronology of representative agentic coding CLI and IDE tools (Cursor, Windsurf, Claude Code, Devin, etc.).
+- Check the discussion of tool form and autonomy in Anthropic's ["Building effective agents"](https://www.anthropic.com/research/building-effective-agents) (December 2024).

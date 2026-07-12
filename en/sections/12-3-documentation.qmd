@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/12-3-documentation.qmd source-sha256:ba4199507e5346ca model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/12-3-documentation.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Documentation: From Literate Programming to CLAUDE.md {#sec-documentation}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the ideal presented by Knuth's (1984) literate programming, the argument that code should be woven together with explanatory prose meant for human readers, with the new documentation genre created by files like AGENTS.md and CLAUDE.md. It is written in three parts. First, it reads closely what Knuth's ideal actually intended: that the WEB system and programs should be written to explain themselves to people. Next, it gathers cases of when and how the new practice of AGENTS.md and CLAUDE.md became standardized. Finally, it argues what remains and what becomes meaningless, among the narrative quality of explanation and the integration of code and prose that Knuth emphasized, when the reader of the document shifts from a human to an AI.
+
+**Seed Questions**
+
+- What is the exact wording and basis of the core argument Knuth presents in "Literate Programming" (1984), the claim that a program should be treated as a literary work that explains itself to people? (verify against the primary source)
+- Confirm precisely how Knuth's WEB system actually worked: in what order it wove together code and explanatory prose, and how it split into two outputs, a human-readable document and compilable code. (verify against the primary source)
+- Since when, and starting from which tool or practice, did files like AGENTS.md and CLAUDE.md become established as project descriptions read by AI agents? (collect rediscovery cases; if it cannot be confirmed, leave it as a research directive)
+- The core of Knuth's literate programming was physically weaving code and explanation together into a single file, whereas files like AGENTS.md are separate files apart from the code. Is this physical separation compatible with Knuth's argument that the order of the narrative need not follow the execution order of the code, or is it a design that runs in the opposite direction?
+- How are the reasons commonly cited for why literate programming failed to gain wide adoption in practice (lack of tooling, maintenance burden, and so on) either avoided or reproduced identically in AGENTS.md-style documents?
+- If there is a practice of AI generating or updating the AGENTS.md that it will itself read, how does this change literate programming's premise of authorship, that a person explains something for another person?
+
+**Research Pointers**
+
+- Knuth, "Literate Programming" (1984), the original text published in The Computer Journal
+- Announcements or presentations related to the standardization of AGENTS.md (the process by which multiple tools came to adopt it in common; verify the exact timing)
+- Official documentation on CLAUDE.md and AGENTS.md from Claude Code, Cursor, and others
+- Division of roles with §5.3 of this book (The Art of Context Management). That section focuses on practical techniques, while this section focuses on the historical lineage of the documentation genre.

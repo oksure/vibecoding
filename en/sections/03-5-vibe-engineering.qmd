@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-5-vibe-engineering.qmd source-sha256:472502ce3b948119 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-5-vibe-engineering.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Vibe Engineering and Its Reactions {#sec-vibe-engineering}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** This section covers the concept of vibe engineering proposed by Simon Willison and the attempts to redefine it that arose around it. Once vibe coding came to be widely understood as an attitude of "not reading the code and leaving everything to it," terms emerged in reaction, referring to an attitude that maintains speed while taking responsibility for the results. This section needs to verify exactly what distinguishes vibe engineering from vibe coding, and whether these attempts at redefinition are actually used distinctly in practice. In Chapter 3, this section, together with §3.3 (spec-driven development), forms the axis of reaction against vibe coding.
+
+**Seed Questions**
+
+- What problem was Simon Willison responding to when he proposed vibe engineering, and exactly when did he propose it?
+- Specifically, where is the boundary drawn between vibe engineering and vibe coding?
+- Are there other writers or concepts that have attempted redefinitions along the lines of "accountable acceleration," and if so, how do they compare with Willison's definition?
+- Are these attempts at redefinition actually used distinctly in practice, or are they all lumped together under the term vibe coding?
+- How widely did the term vibe engineering itself spread afterward, or did it remain a minority discourse?
+
+**Research Pointers**
+
+- Simon Willison, ["vibe engineering"](https://simonw.substack.com/p/vibe-engineering) - check the full original text and the exact publication date.
+- Compare the continuity of argument with Willison's earlier piece ["Not all AI-assisted programming is vibe coding"](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19).
+- Find follow-up pieces that cite or rebut vibe engineering to gauge the extent of its spread.

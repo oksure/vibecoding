@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/context-engineering.qmd source-sha256:49bf57b3a236b45a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/context-engineering.qmd and run tools/translate -->
+
+## Context Engineering (context engineering) {#gl-context-engineering}
+
+This is the technique of designing not a single line of prompt but the entire context the model sees, including files, documents, conversation history, and tool outputs. It reflects a shift in the bottleneck of prompt engineering from "how do you say it" to "what do you show it."
+
+Tobi Lütke (Shopify CEO) coined the name in a tweet on June 19, 2025, and Karpathy left a tweet endorsing it ([Karpathy tweet](https://x.com/karpathy/status/1937902205765607626)). Simon Willison and Phil Schmid each wrote posts organizing the concept ([Willison](https://simonwillison.net/2025/Jun/27/context-engineering/), [Schmid](https://www.philschmid.de/context-engineering)).
+
+It began to be widely used from the second half of 2025, and has now become a practical term referring to the practice of designing context files like CLAUDE.md and AGENTS.md.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Check the full text of Lütke's original tweet and thread reactions
+- Compare the definitional differences between the Willison and Schmid write-ups
+- Cross-reference with practical cases covered in §3.2 and §5.3
+:::

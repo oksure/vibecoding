@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/06-1-writing.qmd source-sha256:84c81dc3ddba047b model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/06-1-writing.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Writing: Reports, Papers, Documents {#sec-writing}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** Code can be verified by running it, but writing cannot. This asymmetry makes writing the most difficult artifact in the vibe coding discussion. This section covers how far AI use actually extends in writing reports, papers, and documents; where the line falls between tool and ghostwriter; and the problem of academic writing norms versus AI-specific style (including the cliches and inflated rhetoric this repository guards against). As the first section of Chapter 6 (artifact-by-artifact practice), it connects directly to the verification asymmetry discussion in §8.3.
+
+**Seed Questions**
+
+- Unlike code, writing has no equivalent procedure to "run it to check." What do practitioners use to fill that gap?
+- How far do journal and conference AI-use disclosure policies allow, and where do they draw the line at prohibition? What are the differences across fields?
+- How are the features identified as "AI style" (cliched expressions, inflated rhetoric, specific vocabulary patterns) being detected?
+- Is there any discussion that proposes criteria for distinguishing AI use as a tool from AI use as a ghostwriter?
+- Record your own experience of writing this book or other text with AI as a case study. How much did AI write, and where did you revise it yourself?
+
+**Research Pointers**
+
+- Original text of major journal and conference AI-use policies (each journal's homepage)
+- Discussions related to AI style (analysis pieces from linguistics and journalism)
+- Record the writing process of this book itself, especially the style discipline this stub follows (see the top of the brief), as a case study

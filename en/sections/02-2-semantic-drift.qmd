@@ -1,0 +1,25 @@
+<!-- MACHINE-TRANSLATED from ko/sections/02-2-semantic-drift.qmd source-sha256:70d60af45b46340f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/02-2-semantic-drift.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Spread of the Term and Drift of Its Meaning {#sec-semantic-drift}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** A term that started from a single tweet came to be used, within a few months, in a much broader sense than its original definition. This section covers that spread and the drift of its meaning. It should cover why Simon Willison drew a line by saying "not all AI-assisted programming is vibe coding," how the narrow sense (fully delegating without reading the code) and the broad sense (coding in general using AI tools) circulated at the same time, and how the Collins Dictionary, by selecting it as its Word of the Year, gave this spread official sanction. If §2.1 in Chapter 2 covers the moment of the utterance, this section covers the process of circulation that followed.
+
+**Seed questions**
+
+- What was the specific criterion for the line Simon Willison drew? What examples did he use to distinguish between "real vibe coding" and "AI-assisted programming"?
+- What kind of confusion (debates like "is this vibe coding?") did the coexistence of the narrow and broad senses cause in practice?
+- How did the Collins Dictionary's citation for its selection define the term? Is that definition closer to the original tweet or to Willison's distinction?
+- When comparing snapshots across time (right after the tweet, months later, at the time of the dictionary entry), what pattern appears in the drift of meaning?
+
+**Research pointers**
+
+- Read the full text of Simon Willison, ["Not all AI-assisted programming is vibe coding"](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19)
+- Compare the definition wording in the Collins Word of the Year 2025 announcement (https://www.collinsdictionary.com/us/woty) with the news coverage (https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl)
+- Check whether the change in the definition can be traced through the edit history of the Wikipedia overview (https://en.wikipedia.org/wiki/Vibe_coding)

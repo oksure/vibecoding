@@ -1,0 +1,24 @@
+<!-- authoritative-lang: ko -->
+
+## 루프 엔지니어링과 하네스 엔지니어링 {#sec-loop-harness}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** 이 꼭지는 2026년에 정리된 두 후계 개념, 루프 엔지니어링과 하네스 엔지니어링을 다룬다. 루프 엔지니어링은 Addy Osmani가 2026년 6월 무렵 정리하며 확산시킨 개념으로, 에이전트를 반복시켜 스스로 일을 찾고 검증하게 만드는 설계를 다룬다. 하네스 엔지니어링은 "에이전트는 모델과 하네스의 합"이라는 정식화에서 나온 개념으로, 모델 자체보다 그것을 둘러싼 도구·프롬프트·검증 장치의 설계를 강조한다. 두 개념이 프롬프트 엔지니어링, 컨텍스트 엔지니어링과 함께 병목 이동의 연속선 어디에 놓이는지가 핵심 질문이다.
+
+**시드 질문**
+
+- Addy Osmani가 정리한 루프 엔지니어링의 핵심 주장은 무엇인가, 그가 인용한 실무 사례는 어떤 것들인가?
+- "루프"라는 단위(에이전트가 스스로 일을 찾고, 하고, 검증하고, 기억하는 순환)는 이전의 대화 턴 단위 상호작용과 무엇이 다른가?
+- "Agent = Model + Harness"라는 정식화는 누가, 언제 처음 제안했나, 이 정식화가 강조하는 것은 무엇인가?
+- 하네스 엔지니어링이라는 말은 실무에서 컨텍스트 엔지니어링과 어떻게 구분되어 쓰이는가, 겹쳐 쓰이는가?
+- 루프 엔지니어링과 하네스 엔지니어링 중 어느 쪽이 더 넓은 개념을 가리키는가, 아니면 서로 다른 축인가?
+
+**조사 포인터**
+
+- adtmag 보도, ["Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat"](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01)에서 Osmani 원 정리의 출처를 역추적할 것
+- Faros AI, ["harness engineering" 블로그 글](https://www.faros.ai/blog/harness-engineering)을 읽을 것
+- Anthropic, ["Building effective agents"](https://www.anthropic.com/research/building-effective-agents) (2024-12)와의 계보 관계를 확인할 것

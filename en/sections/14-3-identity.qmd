@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/14-3-identity.qmd source-sha256:841049aaef6c116a model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/14-3-identity.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Identity Question: What Kind of Person Am I? {#sec-identity}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** If AI writes a substantial portion of the code, how does the person who made that code define what kind of person they are. This piece covers how the self-definition of developers, researchers, and creators is actually changing, and where the old discourse of craftsmanship or mastery goes in the face of this change. The method of this piece is to treat the voices of those involved, not statistics, as the primary source. As the final piece of Chapter 14, it closes the entire book with the identity question.
+
+**Seed Questions**
+
+- If someone has shifted from "I am a person who writes code" to a different self-definition, how does that new definition (designer, reviewer, orchestrator, etc.) actually get expressed in interviews?
+- Is the discourse of craftsmanship and mastery discarded in the face of AI-assisted production, or is it redefined in a different form?
+- How do reactions to this identity shift differ by generation and by career stage?
+- What grounds do people who continue to hold onto the self-definition of "maker" give for doing so?
+- Are there comparable cases to reference from identity debates in fields that experienced tool automation earlier, such as photography or music production?
+
+**Research Pointers**
+
+- Conduct in-depth interviews directly with developers and creators about identity change. Interviews are the core material for this piece
+- Check literature on identity debates in fields that experienced automation earlier, such as photography and music, as comparative material
+- Cross-reference with §13.3 (The Ladder of Expertise) but divide roles: this piece covers identity and self-narrative, §13.3 covers learning pathways

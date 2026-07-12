@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/01-1-natural-language-dream.qmd source-sha256:a36f8c4f8cc90de4 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/01-1-natural-language-dream.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## The Old Dream of Natural Language Programming {#sec-natural-language-dream}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The idea that "writing code in natural language removes the barrier to entry for programming" did not start with vibe coding. From the "English-like syntax" that COBOL championed, to fourth-generation languages (4GLs), to CASE (Computer-Aided Software Engineering) tools, a similar promise has recurred over decades, and each time it was never fully realized. This section should trace the history of that recurrence and lay out specifically what each attempt promised and where it fell short. The goal of this section is to establish grounds for judging whether vibe coding should be seen as the latest iteration of this history, or as a qualitatively different break from it. This is the section that covers the most distant origin in all of Part 1.
+
+**Seed Questions**
+
+- What did COBOL's designers actually aim for with "code that reads like English," and to what extent was that goal achieved?
+- What problem did 4GLs claim to solve when they emerged, and what trajectory did their actual adoption follow?
+- What specifically were the promises of CASE tools and the failure cases of the 1990s?
+- Is there a common cause behind the repeated failures of natural language programming, or did each attempt fail for a different reason?
+- If there is a basis for vibe coding to claim "this time is different," what is it, or is it just a repetition of the same pattern?
+
+**Research Pointers**
+
+- Check COBOL's original design documents (CODASYL-related materials) and records of Grace Hopper's related remarks in primary sources.
+- Cross-check the accounts in software engineering textbooks (e.g., Pressman, Sommerville) that cover the history of 4GLs and CASE tools.
+- Search for academic reviews or retrospective pieces covering the repeated failures of natural language programming.

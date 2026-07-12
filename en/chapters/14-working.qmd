@@ -1,0 +1,11 @@
+<!-- MACHINE-TRANSLATED from ko/chapters/14-working.qmd source-sha256:1a1384f6bb05076d model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/14-working.qmd and run tools/translate -->
+
+# Reconstructing Work {#sec-working}
+
+Vibe coding began as a story about coding, but it ends as a story about work. The day of a person working with AI, the actual shifts in the job landscape, and even the question "if AI does everything, what am I here to do?" We start not from prediction but from observation of changes that have already happened.
+
+{{< include ../sections/14-1-ai-workday.qmd >}}
+
+{{< include ../sections/14-2-labor-data.qmd >}}
+
+{{< include ../sections/14-3-identity.qmd >}}

@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/agentic-coding.qmd source-sha256:ce780b44257e2679 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/agentic-coding.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Agentic Coding {#gl-agentic-coding}
+
+This is a way of working in which the AI does not simply answer once and stop, but cycles through a loop of calling tools, executing code, checking the results, and then deciding on the next action. It is the technological form that actually made vibe coding possible.
+
+It remains to be confirmed who first used the expression "agentic coding" and when. However, one reference that lays out this loop structure itself is Anthropic's "Building Effective Agents" (December 2024) ([link](https://www.anthropic.com/research/building-effective-agents)).
+
+CLI-type coding agents (such as Claude Code) and IDE-integrated agents are cited as the representative tools implementing this approach. Sections §2.3 and §8.2 cover the lineage of tools and the loop structure, respectively.
+
+::: {.callout-note collapse="true"}
+## Expansion Pointers
+- Confirm the earliest use of the term "agentic coding"
+- Compare Anthropic's "Building Effective Agents" distinction between workflows and agents against this book's usage
+- Check definitional consistency with §8.2 (Anatomy of a Coding Agent)
+:::

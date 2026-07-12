@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Scaffold a new section (꼭지) file in the Korean (authoritative) edition.
+#
+# Usage: tools/new-section <NN-M-slug> "<제목>"
+# Example: tools/new-section 09-6-supply-chain "공급망 리스크"
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+[[ $# -eq 2 ]] || { echo "usage: tools/new-section <NN-M-slug> \"<제목>\""; exit 1; }
+SLUG="$1"; TITLE="$2"
+FILE="ko/sections/${SLUG}.qmd"
+[[ -e "$FILE" ]] && { echo "error: $FILE already exists"; exit 1; }
+ANCHOR="${SLUG#*-}"; ANCHOR="${ANCHOR#*-}"   # strip NN-M- prefix
+
+cat > "$FILE" <<EOF
+<!-- authoritative-lang: ko -->
+
+## ${TITLE} {#sec-${ANCHOR}}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** (이 꼭지가 다루는 것, 핵심 질문, 어떤 근거를 모아야 하는지 3~5문장.)
+
+**시드 질문**
+
+-
+
+**조사 포인터**
+
+-
+EOF
+
+echo "created $FILE"
+echo "next steps:"
+echo "  1. 해당 챕터 파일(ko/chapters/${SLUG%%-*}-*.qmd)에 include 추가:"
+echo "     {{< include ../sections/${SLUG}.qmd >}}"
+echo "  2. TOPICS.md 표에 행 추가"
+echo "  3. 내용 작성 후 tools/translate 실행"

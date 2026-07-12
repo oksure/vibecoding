@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/09-5-accountability.qmd source-sha256:f5676945e9c642fd model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/09-5-accountability.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Accountability and Sign-off: Who Signs Off on This Code {#sec-accountability}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** When an accident occurs in code written by AI, who is responsible? This section covers how the traditional sign-off practices of code review and deployment approval are being redefined in the face of AI-generated code, what AI code governance policies (review requirements, labeling of generated code, designation of accountable parties) real companies and institutions have actually adopted, and how responsibility has actually been distributed in incident cases. As the final section of Chapter 9, it asks whose responsibility the preceding problems (the hollowing-out of understanding, security, and quality debt) ultimately become at the organizational level.
+
+**Seed Questions**
+
+- In outages or incidents caused by AI-generated code, how has responsibility actually been attributed, and are there any publicly documented cases?
+- What do the AI code governance policies formalized by companies and institutions specifically require regarding review obligations, approval procedures, and labeling of generated code?
+- Is the traditional practice of code review approval being maintained only in form, while its substance hollows out in the face of AI-generated code?
+- What labeling and review rules are open source projects introducing for AI-generated contributions?
+- How far have discussions of legal and contractual liability (such as analogies to product liability) progressed?
+
+**Research Pointers**
+
+- Collect AI code governance policy documents published by companies and government agencies as primary sources.
+- Check actual cases in open source projects' AI contribution policies (contribution guidelines).
+- Cross-reference with §10.3, which covers the teleology of code review, but divide the roles: this section is limited to accountability and governance.

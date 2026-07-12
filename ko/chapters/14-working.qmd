@@ -1,0 +1,13 @@
+---
+authoritative-lang: ko
+---
+
+# 일의 재구성 {#sec-working}
+
+바이브 코딩은 코딩 이야기로 시작했지만 끝은 일의 이야기다. AI와 함께 일하는 사람의 하루, 직업 지형의 실제 변화, 그리고 "AI가 다 해주면 나는 무엇을 하는 사람인가"라는 질문까지. 예측이 아니라 이미 일어난 변화의 관찰에서 출발한다.
+
+{{< include ../sections/14-1-ai-workday.qmd >}}
+
+{{< include ../sections/14-2-labor-data.qmd >}}
+
+{{< include ../sections/14-3-identity.qmd >}}

@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-4-verifiable-units.qmd source-sha256:4e4d0b7e4d4de6c7 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-4-verifiable-units.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Creating Verifiable Units {#sec-verifiable-units}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md in the repository root for owner and status.
+:::
+
+**Brief.** The phrase "it works" is a looser standard than it seems. It might mean that running it once produced no errors, or it might mean that all tests passed. This section covers the techniques used in vibe coding practice to narrow this loose standard: writing tests, directly checking execution results, and the practice of triangulation, cross-verifying the same result through multiple methods. It is the practical counterpart to the concept of verification asymmetry covered in §8.3, and shows what techniques actually implement the theory that code is easy to verify.
+
+**Seed questions**
+
+- Is the practice of having AI write tests directly during a vibe coding session reliable? How is the risk of the tests themselves being poorly written addressed?
+- "Confirming by running it" and "passing tests" are two standards with different verification strength. What combination do practitioners recommend?
+- What are concrete examples of triangulation (reconfirming the same result through a different method) actually being used?
+- How is the cost of splitting verification units too finely (slowdowns, excessive test code) discussed?
+- Record the verification methods used in your own project in detail. What did you test, what did you only check visually, and why did you make those choices?
+
+**Research pointers**
+
+- Practical discussions on combining TDD with AI agents (can cross-reference §10.4)
+- Official documentation on automatic test generation and execution features by tool
+- Compile students' own project verification procedures as case studies

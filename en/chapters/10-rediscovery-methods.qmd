@@ -1,0 +1,16 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/10-rediscovery-methods.qmd source-sha256:6abfc52bc8c1e89f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/10-rediscovery-methods.qmd and run tools/translate -->
+# Rediscovering Methodologies {#sec-rediscovery-methods}
+
+The last 50 years of software engineering are being rediscovered one by one in the age of AI. Each section of this part takes a single classic concept, reads the original source, and contrasts it with its reappearance in the age of AI. This chapter covers methodologies for how we work: waterfall and agile, pair programming, code review, and TDD.
+
+{{< include ../sections/10-1-waterfall-agile.qmd >}}
+
+{{< include ../sections/10-2-pair-programming.qmd >}}
+
+{{< include ../sections/10-3-code-review.qmd >}}
+
+{{< include ../sections/10-4-tdd-revival.qmd >}}

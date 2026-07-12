@@ -2,27 +2,13 @@
 authoritative-lang: ko
 ---
 
-<!-- MACHINE-TRANSLATED from ko/chapters/07-content-generation.qmd source-sha256:0e91db5913f1ce81 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/07-content-generation.qmd and run tools/translate -->
-# Content Generation: Images, Video, Audio {#sec-content}
+<!-- MACHINE-TRANSLATED from ko/chapters/07-content-generation.qmd source-sha256:5d36a7c035eabd46 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/07-content-generation.qmd and run tools/translate -->
+# Content Generation {#sec-content}
 
-::: {.callout-warning}
-## Writing status
-Pre-draft · Owner: TBD. The brief below is the direction set by the teaching team; the owner will research and rewrite it.
-:::
+The cycle of instructing in natural language and revising while watching the results spread beyond code. Images, video, audio, and the pipelines that weave these together with code. This chapter maps the landscape of content generation and analyzes what it shares with, and how it differs from, code generation.
 
-## What this chapter covers
+{{< include ../sections/07-1-image-generation.qmd >}}
 
-The sensibility of vibe coding, that is, the loop of instructing in natural language and fixing things while watching the results, has spread beyond code. This includes image generation, video generation, speech synthesis and music, and pipelines that weave these together with code (for example, automated shorts production from script generation to video rendering). This chapter maps the current landscape of content generation and analyzes what is the same and what is different from code generation (unverifiability, copyright, style control).
+{{< include ../sections/07-2-video-audio.qmd >}}
 
-## Seed questions
-
-- How do prompting practices for image and video generation differ from those for code?
-- How do we evaluate the quality of generated content, when there is nothing equivalent to "it works"?
-- What is the current state of the copyright and training-data debate? How far have the major lawsuits and policies gotten?
-- What new possibilities do content pipelines (orchestrating generation with code) open up?
-
-## Research pointers
-
-- Official documentation and usage policies of major generative models (image, video, and audio each)
-- Copyright litigation and regulatory trends (verify figures and dates against primary sources)
-- Case studies of building generation pipelines (accounts of running automated content channels)
+{{< include ../sections/07-3-content-pipelines.qmd >}}

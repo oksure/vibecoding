@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/vibe-coding.qmd source-sha256:82b889236d1c6244 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/vibe-coding.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## vibe coding {#gl-vibe-coding}
+
+This is an approach to building software by instructing an AI coding agent in natural language. In its narrow sense, it refers to a working style where you don't read the generated code directly and instead iterate by watching only the execution results; in its broad sense, it refers to AI-assisted development in general.
+
+Andrej Karpathy coined the term in a tweet from February 2025. The original text includes the phrase "fully give in to the vibes, embrace exponentials, and forget that the code even exists" ([original tweet](https://x.com/karpathy/status/1886192184808149383)). In a one-year retrospective tweet in February 2026, Karpathy looked back on this as a "shower of thoughts throwaway tweet" ([retrospective tweet](https://x.com/karpathy/status/2019137879310836075)).
+
+It became a common word after being named Collins Dictionary's Word of the Year in November 2025 ([announcement](https://www.collinsdictionary.com/us/woty), [coverage](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl)). Simon Willison proposed distinguishing between "the approach of not reading the code" and "AI-assisted development in general" ([post](https://simonwillison.net/2025/Mar/19/vibe-coding/)), but in actual usage the two meanings are used interchangeably.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Read the full Willison post and organize the spectrum he distinguishes
+- Check the full one-year retrospective tweet by Karpathy for the context at the time of the original tweet (which models and tools he was using)
+- Cross-check against the Wikipedia overview article ([link](https://en.wikipedia.org/wiki/Vibe_coding)) and gather additional examples of the term's meaning drifting
+:::

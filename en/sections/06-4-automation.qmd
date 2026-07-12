@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/06-4-automation.qmd source-sha256:6a20bbcf38c92ad8 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/06-4-automation.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Automation Scripts and Personal Tools {#sec-automation}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** Short scripts that take over repetitive tasks, glue code that stitches together multiple tools, and CLI tools that automate personal workflows are considered the category where vibe coding succeeds most reliably. This section covers why this category is said to have a particularly high success rate, what structural reasons make the risk of failure low, and why this success does not generalize to other categories (web apps, writing). It is also the most concrete realization of §4.2 (software for one).
+
+**Seed Questions**
+
+- What is the basis for the claim that automation scripts and glue code have a high success rate in vibe coding? Is there quantitative research, or is it just anecdotal impression?
+- Why is verification easy in this category? (Easy to undo, execution results are immediately visible, low cost of failure, etc.)
+- In what form are actual cases of personal workflow automation tools (CLI, cron jobs, notification pipelines, etc.) reported?
+- Under what conditions does failure occur in this category? (External API changes, permission issues, etc.)
+- Record an automation script or personal tool you made yourself as a case study. What did it automate, and how long did you actually keep using it?
+
+**Research Pointers**
+
+- Collect cases from personal automation tool sharing communities (Hacker News Show HN, Reddit, etc.)
+- Empirical research on vibe coding success rates (check primary sources if available)
+- Accumulate a list of automation scripts made by each student as case data

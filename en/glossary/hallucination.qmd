@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/hallucination.qmd source-sha256:824dc496aa992f8f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/hallucination.qmd and run tools/translate -->
+
+## 환각 (hallucination) {#gl-hallucination}
+
+A term for when a language model plausibly generates content that is not factual or does not exist. A representative case in coding contexts is generating a function, library, or API that does not exist as though it were real.
+
+The term is known to have moved from earlier use in the machine learning field to large language models, but the exact original usage and timing need verification.
+
+This is directly connected to slopsquatting (G14) in that coding agents generating nonexistent package names can lead to supply chain attacks. It is covered in a security context in §9.2.
+
+::: {.callout-note collapse="true"}
+## Expansion pointers
+- Identify the earliest paper or writing where "hallucination" began to be used to refer to language model errors
+- Collect empirical studies on hallucination in the code generation context (e.g., rates of generating nonexistent packages)
+- Cross-check §9.2 (Security: New Attack Surfaces) and the slopsquatting entry
+:::

@@ -1,0 +1,23 @@
+<!-- authoritative-lang: ko -->
+
+## 용어의 확산과 뜻의 표류 {#sec-semantic-drift}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** 하나의 트윗에서 시작된 말이 몇 달 사이 원래 정의보다 훨씬 넓은 뜻으로 쓰이게 되었다. 이 꼭지는 그 확산과 뜻의 표류를 다룬다. Simon Willison이 "모든 AI 보조 프로그래밍이 바이브 코딩은 아니다"라고 선을 그은 이유, 좁은 뜻(코드를 읽지 않고 전적으로 맡기는 것)과 넓은 뜻(AI 도구를 쓰는 코딩 전반)이 어떻게 동시에 유통되었는지, Collins 사전이 올해의 단어로 선정하며 이 확산을 어떻게 공인했는지를 다뤄야 한다. 2장에서 §2.1이 발화의 순간을 다룬다면 이 꼭지는 그 이후의 유통 과정을 다룬다.
+
+**시드 질문**
+
+- Simon Willison이 그은 경계선의 구체적 기준은 무엇인가, 그는 어떤 사례를 "진짜 바이브 코딩"과 "AI 보조 프로그래밍"으로 나눴나?
+- 좁은 뜻과 넓은 뜻이 공존하는 상태는 실무 현장에서 어떤 혼란("이거 바이브 코딩이야?" 류의 논쟁)을 낳았나?
+- Collins 사전의 선정 사유문은 이 말을 어떻게 정의했나, 그 정의는 원 트윗과 Willison의 구분 중 어느 쪽에 가까운가?
+- 시기별 스냅샷(트윗 직후, 몇 달 뒤, 사전 등재 시점)을 비교하면 뜻의 표류에 어떤 패턴이 보이는가?
+
+**조사 포인터**
+
+- Simon Willison, ["Not all AI-assisted programming is vibe coding"](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19) 전문을 읽을 것
+- Collins Word of the Year 2025 발표문(https://www.collinsdictionary.com/us/woty)과 보도(https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl)의 정의 문구를 대조할 것
+- 위키피디아 개관(https://en.wikipedia.org/wiki/Vibe_coding)의 편집 이력에서 정의 변화를 추적할 수 있는지 확인할 것

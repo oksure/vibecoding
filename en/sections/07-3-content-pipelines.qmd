@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/07-3-content-pipelines.qmd source-sha256:d08930ce1c83372d model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/07-3-content-pipelines.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Content Pipelines: Weaving Generation into Code {#sec-content-pipelines}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** Generating a single image or video is a different problem from running an entire channel by weaving planning, generation, editing, and distribution together in code. This section covers cases where content generation has been automated into a pipeline, an automated content production process that runs from script writing through video rendering to publishing. Where §7.1 and §7.2 covered individual generation techniques, this section looks at what becomes newly possible when those techniques are orchestrated in code.
+
+**Seed Questions**
+
+- What structure do actual cases of running a content channel that weaves planning, generation, editing, and distribution into a single pipeline actually have?
+- How does pipeline automation manage quality instead of just increasing content volume? What differences between the output of automated channels and channels where a person intervenes every time have been reported?
+- Where in the content pipeline does a person necessarily have to intervene (final approval, editing, etc.), and why has that step not been automated?
+- How does the low-effort content problem created by content generation automation connect to the discussion of slop in Part 3?
+- Record as a case study your own experience building, or attempting to build, a content pipeline. How far did you automate it, and where did you get stuck?
+
+**Research Pointers**
+
+- Accounts of running automated content channels (production reports on YouTube Shorts, newsletter automation, etc.)
+- Examples of open-source tools or frameworks for content generation pipelines
+- If this book's author group or students run a content channel, record its pipeline structure as a case study

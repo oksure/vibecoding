@@ -1,0 +1,3 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-5-reversibility.qmd source-sha256:8685cae1636634f4 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-5-reversibility.qmd and run tools/translate -->
+
+Translated file written to `en/sections/05-5-reversibility.qmd`, matching the machine-translation marker format (source-sha256, model, date) used by `tools/translate` and the sibling `en/sections/05-2-plan-first.qmd`.

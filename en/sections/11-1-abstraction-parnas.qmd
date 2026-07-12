@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/11-1-abstraction-parnas.qmd source-sha256:97cdb197dfab2b04 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/11-1-abstraction-parnas.qmd and run tools/translate -->
+
+## Abstraction and Information Hiding: Why Parnas Was Right, Again {#sec-abstraction-parnas}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. See TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** This section contrasts Parnas's (1972) information-hiding criterion, the argument that modules should be divided not by function but by decisions likely to change, with codebase design in the era of AI agents with finite context windows. It is written in three parts. First, it reads precisely the two module decomposition approaches that Parnas's original paper compared. Second, it gathers cases where the way AI agents handle code demands this same criterion anew. Third, it argues whether a principle devised for human cognitive limits holds in the same form for a model's context limits.
+
+**Seed Questions**
+
+- What exact examples did Parnas (1972) use to compare the two module decomposition approaches he discussed, namely flowchart-based decomposition and information-hiding-based decomposition? (verify against the original)
+- Parnas grounded information hiding in ease of change, an argument aimed at reducing the cognitive burden on human programmers. Does this argument carry over directly to AI agents with finite context windows, or do agents' limits differ in kind, requiring a different decomposition criterion? (verify against the original)
+- Are there cases where official documentation or practical guides for agentic coding tools explicitly recommend codebase structures that are easy for agents to work with, and if so, how much do they overlap with Parnas's information-hiding criterion? (collect rediscovery cases)
+- How many refactoring cases or discussions claiming to produce "AI-friendly" repository structures (small files, clear filenames, preference for pure functions, etc.) can be found? (collect rediscovery cases)
+- Compared to other modularization principles developed after Parnas (cohesion and coupling, SOLID, etc.), why does the AI-era rediscovery concentrate specifically on information hiding?
+- Is the question of what to show, as discussed under context engineering (§3.2 of this book), the same problem as Parnas's module boundary problem under a different name, or a different problem altogether?
+
+**Research Pointers**
+
+- Parnas, "On the Criteria to Be Used in Decomposing Systems into Modules" (1972), original text
+- Points of contact with §3.2 (Context Engineering) and §5.3 (The Art of Context Management) of this book; avoid duplicating content
+- Guides recommending repository structures for agentic coding tools (official documentation, engineering blogs)
+- Comparative materials on later modularization theories such as cohesion and coupling

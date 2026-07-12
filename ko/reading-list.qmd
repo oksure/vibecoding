@@ -17,7 +17,12 @@ authoritative-lang: ko
 - Simon Willison, [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19). 용어의 좁은 뜻과 넓은 뜻을 가른 대표 글.
 - Collins Dictionary, [Word of the Year 2025 발표](https://www.collinsdictionary.com/us/woty) (2025-11). 일반어로의 편입. 관련 보도: [CNN](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl).
 - CodeRabbit, [A semantic history of vibe coding](https://www.coderabbit.ai/blog/a-semantic-history-how-the-term-vibe-coding-went-from-a-tweet-to-prod) . 용어의 의미 변천 정리.
+- Karpathy, [컨텍스트 엔지니어링 지지 트윗](https://x.com/karpathy/status/1937902205765607626) (2025-06). Tobi Lütke의 명명(2025-06-19)을 정식화한 계기. 정리 글: [Simon Willison](https://simonwillison.net/2025/Jun/27/context-engineering/), [Phil Schmid](https://www.philschmid.de/context-engineering).
+- GitHub, [Spec-driven development with AI: Spec Kit 공개](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (2025-09). 바이브의 반작용으로서의 명세 우선 워크플로.
+- Simon Willison, [Vibe engineering](https://simonw.substack.com/p/vibe-engineering) (2025년 가을). 책임지는 가속이라는 재정의 시도.
 - ADTmag, [Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01). 루프 엔지니어링 개념의 부상 보도.
+- Faros AI, [Harness Engineering](https://www.faros.ai/blog/harness-engineering) (2026). "Agent = Model + Harness", 프롬프트→컨텍스트→하네스 3단계론.
+- O'Reilly Radar 팟캐스트, [Vibe Coding with Steve Yegge](https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-vibe-coding-with-steve-yegge/). CHOP(chat-oriented programming)의 명명자 인터뷰. Gene Kim·Steve Yegge의 단행본 "Vibe Coding"도 함께 볼 것(출간 정보 확인 후 추가).
 
 ## 실무
 

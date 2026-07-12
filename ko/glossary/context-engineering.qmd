@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 컨텍스트 엔지니어링 (context engineering) {#gl-context-engineering}
+
+프롬프트 한 줄이 아니라 모델이 보는 컨텍스트 전체, 즉 파일, 문서, 대화 이력, 도구 출력을 설계하는 기술이다. 프롬프트 엔지니어링의 병목이 "말을 어떻게 하나"에서 "무엇을 보여주나"로 이동했음을 반영한다.
+
+Tobi Lütke(Shopify CEO)가 2025년 6월 19일 트윗으로 이름을 붙였고 Karpathy가 이를 승인하는 트윗을 남겼다 ([Karpathy 트윗](https://x.com/karpathy/status/1937902205765607626)). Simon Willison과 Phil Schmid가 각각 개념을 정리하는 글을 썼다 ([Willison](https://simonwillison.net/2025/Jun/27/context-engineering/), [Schmid](https://www.philschmid.de/context-engineering)).
+
+2025년 하반기부터 널리 쓰이기 시작했고, 현재는 CLAUDE.md, AGENTS.md 같은 컨텍스트 파일 설계 관행을 가리키는 실무 용어로 자리 잡았다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- Lütke 원 트윗 전문과 스레드 반응 확인
+- Willison·Schmid 두 정리 글의 정의 차이 비교
+- §3.2, §5.3 섹션에서 다루는 실무 사례와 교차 확인
+:::

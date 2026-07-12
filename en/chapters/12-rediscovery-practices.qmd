@@ -1,0 +1,19 @@
+<!-- MACHINE-TRANSLATED from ko/chapters/12-rediscovery-practices.qmd source-sha256:f9cfcaac1650b34e model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/12-rediscovery-practices.qmd and run tools/translate -->
+
+# 도구와 관행의 재발견 → translation below
+
+---
+authoritative-lang: ko
+---
+
+# Rediscovering Tools and Practices {#sec-rediscovery-practices}
+
+Version control, continuous integration, documentation, open source collaboration. Tools and practices built for human collaboration are taking on new roles in loops that agents have now joined. This chapter covers that shift in roles.
+
+{{< include ../sections/12-1-version-control.qmd >}}
+
+{{< include ../sections/12-2-ci-gates.qmd >}}
+
+{{< include ../sections/12-3-documentation.qmd >}}
+
+{{< include ../sections/12-4-open-source.qmd >}}

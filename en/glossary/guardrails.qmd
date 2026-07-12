@@ -1,0 +1,16 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/guardrails.qmd source-sha256:12de45bdbe2ea4f3 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/guardrails.qmd and run tools/translate -->
+
+## 가드레일 (guardrails) {#gl-guardrails}
+
+A term referring to mechanisms that constrain the inputs and outputs of an AI system to prevent unintended behavior or dangerous outcomes. It is implemented at several layers, including prompt filtering, output validation, and execution permission restrictions.
+
+This is a general technical term with no origin attributable to a specific person or point in time.
+
+In coding agents, it is implemented in forms such as restricting file access scope, blocking dangerous commands, and requiring approval before execution, and it overlaps considerably with human in the loop (G11). It is discussed in the context of security and accountability in §9.2 and §9.5 respectively.
+
+::: {.callout-note collapse="true"}
+## Extension pointers
+- Compare how guardrails are implemented across different coding agent tools (permission systems, sandboxes, etc.)
+- Clarify the relationship with guardrail bypass cases (prompt injection, etc.)
+- Cross-check facts against §9.2, §9.5
+:::

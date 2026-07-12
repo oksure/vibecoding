@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## CHOP (chat-oriented programming) {#gl-chop}
+
+채팅 인터페이스로 대화하듯 AI에게 지시해 코드를 만드는 방식을 가리키는 말이다. 바이브 코딩과 인접한 개념으로, 코드를 직접 다루기보다 대화로 작업을 진행한다는 점을 강조한다.
+
+Steve Yegge가 바이브 코딩이라는 말이 나오기 전에 만든 용어다 ([O'Reilly 팟캐스트](https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-vibe-coding-with-steve-yegge/)). 정확한 최초 사용 시점은 확인이 필요하다. Yegge는 Gene Kim과 함께 "Vibe Coding"이라는 단행본을 공저했는데, 정확한 출간 정보는 확인이 필요하다.
+
+바이브 코딩이라는 말이 대중화된 뒤로는 CHOP이 더 이전 세대 용어, 또는 바이브 코딩의 동의어에 가깝게 쓰이는 경우가 많다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- CHOP 최초 사용 시점과 맥락(어떤 글, 어떤 발표)을 원 출처에서 확인
+- Kim·Yegge 공저 "Vibe Coding" 출간일, 출판사 확인
+- CHOP과 바이브 코딩을 같은 말로 쓰는 사례와 구분해 쓰는 사례를 각각 수집 (§3.1과 연계)
+:::

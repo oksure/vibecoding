@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/04-2-personal-software.qmd source-sha256:5b0ce2cc8c2bd585 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/04-2-personal-software.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Software for One, Disposable Software {#sec-personal-software}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check the repository root's TOPICS.md for owner and status.
+:::
+
+**Brief.** When the marginal cost of building software falls, a new category emerges: software built and discarded for just one person, or for a single task. This section addresses whether this kind of personal, disposable tool is actually increasing, and if so, in what form it appears. The existing software industry has been designed around the premise of reuse and economies of scale; when that premise is shaken, the key question is what remains and what newly emerges. This is also an answer to what the people who came in through the door opened by §4.1 are actually building.
+
+**Seed questions**
+
+- Where can we find the terminology and discussion around personal, disposable software?
+- In which domains do actual examples of disposable software (scripts and tools used once and discarded) appear most often?
+- When the marginal cost of custom software falls, how do the existing SaaS and general-purpose software markets respond?
+- How much maintenance, security, and documentation does disposable software actually need? Is the claim that none is needed at all valid?
+- Record a case study of a disposable or personal tool you made yourself. What was it built for, and what happened to it afterward (still in use, discarded, shared with others)?
+
+**Research pointers**
+
+- Search practitioner blogs and talks using keywords like "software for one," "disposable software"
+- Collect similar cases from communities where people share personal tools (e.g., Hacker News Show HN-type posts)
+- Gather and organize personal tools made by students through surveys or interviews

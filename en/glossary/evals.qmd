@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/evals.qmd source-sha256:65c2f69475f86417 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/evals.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## evals (evaluation) {#gl-evals}
+
+This term refers to the procedure of scoring the output of an AI model or agent against a fixed set of criteria, or to the set of tests used for that scoring. It is a concept analogous to unit tests in software, used to quantitatively check model performance or detect regressions.
+
+It is a general technical term with no origin attributable to a specific person or point in time.
+
+In evaluating coding agents, evals that measure task success rates in real repositories are used alongside benchmark scores. This connects with §5.4 (Creating Verifiable Units).
+
+::: {.callout-note collapse="true"}
+## Expansion Pointers
+- Confirm the methodology of representative benchmarks for coding agents (e.g., measuring repository-based task success rates)
+- Summarize the differences between evals and traditional software testing (such as handling non-determinism)
+- Cross-check facts against §5.4
+:::

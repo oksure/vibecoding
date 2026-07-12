@@ -1,0 +1,15 @@
+---
+authoritative-lang: ko
+---
+
+# 방법론의 재발견 {#sec-rediscovery-methods}
+
+지난 50년의 소프트웨어 엔지니어링은 AI 시대에 하나씩 다시 발견되고 있다. 이 부(部)의 각 꼭지는 고전 개념 하나를 잡고 원전을 읽은 뒤, AI 시대의 재등장과 대조한다. 이 장은 일하는 방식의 방법론들이다. 폭포수와 애자일, 페어 프로그래밍, 코드 리뷰, TDD.
+
+{{< include ../sections/10-1-waterfall-agile.qmd >}}
+
+{{< include ../sections/10-2-pair-programming.qmd >}}
+
+{{< include ../sections/10-3-code-review.qmd >}}
+
+{{< include ../sections/10-4-tdd-revival.qmd >}}

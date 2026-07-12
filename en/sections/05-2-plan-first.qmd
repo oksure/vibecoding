@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-2-plan-first.qmd source-sha256:72431004c2cfef34 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-2-plan-first.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Plan First: Starting with Spec and Plan Documents {#sec-plan-first}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check the repository root's TOPICS.md for owner and status.
+:::
+
+**Brief.** The original meaning of the word vibe leans toward going by feel without a plan, but the practice that has settled in the field moved in the opposite direction. Before writing code, you have the AI write a plan document or spec first, and only after a human reviews it does the work move to the execution stage. This section covers how this plan-first workflow came to be established, what tool-level mechanisms like plan mode were trying to solve, and how this practice differs from or overlaps with the spec-driven development covered in §3.3.
+
+**Seed questions**
+
+- When and in which tools did tool features that explicitly support plan-first workflows (plan mode, plan approval steps, etc.) first appear?
+- What is the appropriate level of detail for a plan document? What is lost if it is too detailed, and what goes wrong if it is too sparse?
+- How do practitioners report their experiences of intervening to change direction at the plan stage?
+- Are the spec-driven development in §3.3 and the plan-first practice in this section the same thing, or do they differ in degree of formality?
+- Record as a case study your own experience comparing having a plan document written first against having code written directly.
+
+**Research pointers**
+
+- Official documentation for Claude Code plan mode and other tools' planning and approval features
+- Plan document templates or prompt examples published by practitioners
+- Comparing outcome differences with and without a plan document in students' own projects

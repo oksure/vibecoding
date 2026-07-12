@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-6-when-to-stop.qmd source-sha256:888d27e1877c8fc5 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-6-when-to-stop.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## When to Stop and Read the Code Yourself {#sec-when-to-stop}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The difference between people who are good at vibe coding and those who are not mostly comes down to a sense of when to trust the AI and when to step in directly. This section works to turn that sense into as explicit a list of signals as possible. It covers the situations in which practitioners actually stop and read the code themselves, and what cases where that judgment was delayed and the problem grew larger show us. As the final section of Chapter 5, it closes out the practical principles carried through since §5.1 with the question of when these principles break down.
+
+**Seed Questions**
+
+- What signals do practitioners commonly cite as requiring direct intervention? (security-related code, data deletion, payment logic, etc.)
+- What patterns appear in real cases (post-mortems) where missing this signal caused a problem to grow larger?
+- Does the standard for when to stop change depending on experience or domain knowledge? What is the difference in standards between beginners and experts?
+- At the team level, are there attempts to replace this judgment with a process (review, gates) rather than leaving it to the individual?
+- Record, as a case, a moment when you yourself actually stopped and read the code directly during vibe coding. What made you stop?
+
+**Research Pointers**
+
+- Post-mortem articles on vibe coding failure cases, security incident reports
+- Team-level AI coding governance policy documents (cross-referenceable with §9.5)
+- Have students record their own moments of intervention to derive common signals

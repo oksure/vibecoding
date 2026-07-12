@@ -1,0 +1,16 @@
+<!-- authoritative-lang: ko -->
+
+## 에이전틱 코딩 (agentic coding) {#gl-agentic-coding}
+
+AI가 한 번 답하고 끝나는 것이 아니라 도구를 호출하고 코드를 실행하고 결과를 확인한 뒤 다음 행동을 정하는 루프를 돌며 작업하는 방식이다. 바이브 코딩을 실제로 가능하게 만든 기술 형태다.
+
+"에이전틱 코딩"이라는 표현을 누가 언제 처음 썼는지는 확인이 필요하다. 다만 이 루프 구조 자체를 정리한 참고 문헌으로 Anthropic의 "Building Effective Agents"(2024년 12월)가 있다 ([링크](https://www.anthropic.com/research/building-effective-agents)).
+
+CLI형 코딩 에이전트(Claude Code 등)와 IDE 통합형 에이전트가 이 방식을 구현하는 대표 도구로 꼽힌다. §2.3, §8.2 섹션에서 도구 계보와 루프 구조를 각각 다룬다.
+
+::: {.callout-note collapse="true"}
+## 확장 포인터
+- "agentic coding" 용어의 최초 사용례 확인
+- Anthropic "Building Effective Agents"의 워크플로/에이전트 구분과 이 책의 용법 대조
+- §8.2(코딩 에이전트의 해부학)와 정의 정합성 확인
+:::

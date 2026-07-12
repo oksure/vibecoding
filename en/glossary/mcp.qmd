@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/mcp.qmd source-sha256:71b7de12b39a6a46 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/mcp.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## MCP (Model Context Protocol) {#gl-mcp}
+
+A protocol that standardizes how AI models communicate with external tools, data sources, and services. Implementing a server that follows this standard lets different AI applications reuse the same tool integration code.
+
+Anthropic released this protocol. The exact release date needs to be verified.
+
+It has become the standard path for coding agents to access tools outside the file system (browsers, databases, internal company systems, etc.). In practice, some cases are also emerging where teams switch from MCP servers to direct API calls instead.
+
+::: {.callout-note collapse="true"}
+## Expansion Pointers
+- Confirm the exact release date of MCP and the original announcement materials (Anthropic's official blog/documentation)
+- Summarize the differences from tool integration methods that existed before MCP (function calling, plugins, etc.)
+- Collect the current state of MCP adoption (which companies/tools support it)
+:::

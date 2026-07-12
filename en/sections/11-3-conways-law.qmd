@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/11-3-conways-law.qmd source-sha256:05c86108e91edcd0 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/11-3-conways-law.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Conway's Law and Human-AI Organizations {#sec-conways-law}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. See TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** This section contrasts the thesis of Conway's (1968) original paper, the observation that system design mirrors the communication structure of the organization that built it, with the code structure of organizations that mix humans and agents. It is written in three parts. First, read the exact claim and evidence of Conway's original paper. Second, gather cases related to the code structure of organizations that mix humans and AI. Third, argue whether the mechanism of communication cost that Conway presupposed operates the same way for AI agents, actors fundamentally different from humans.
+
+**Seed Questions**
+
+- What exactly were the cases and arguments Conway actually used in his 1968 paper, that is, the observation that a committee's design output resembles the committee's own structure? (verify original source)
+- Did Conway himself coin the name "Conway's Law" and the term "inverse Conway maneuver" (the strategy of designing the organization first to match the desired architecture), or were these terms attached later by others? (verify original source)
+- In a work structure where one person directs multiple agents at once, what should the thesis that organizational structure resembles code structure be understood as resembling: the cognitive structure of the single director, or the communication protocol among the agents?
+- Has there been any reported case of an organization operating a multi-agent system deliberately applying the inverse Conway maneuver, that is, designing the agent organization structure first in order to obtain the desired software architecture? (gather rediscovery cases)
+- Communication cost, commonly cited as the mechanism behind Conway's Law, consists among humans of meetings, documentation, and trust-building; what does communication cost among agents consist of, and does this change whether the law holds?
+- Is the design of multi-agent frameworks itself already conscious of Conway's Law, that is, are there cases where tool designers cited this law to justify their architecture? (gather rediscovery cases)
+
+**Research Pointers**
+
+- Conway, "How Do Committees Invent?" (1968), the original paper (verify original publication venue)
+- The origin of the term "inverse Conway maneuver" (verify whether it was Conway himself or a later compiler)
+- Design documents of multi-agent coding systems, practitioners' accounts of operating agent organizations
+- Points of overlap with related sections in Chapter 14 of this book (The Reorganization of Work); avoid role duplication

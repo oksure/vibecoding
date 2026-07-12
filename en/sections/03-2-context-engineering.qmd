@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/03-2-context-engineering.qmd source-sha256:9b4051de57289bce model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/03-2-context-engineering.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Context Engineering {#sec-context-engineering}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section covers the naming and formalization of the concept of context engineering. Shopify CEO Tobi Lütke coined the term in a June 2025 tweet, and Karpathy lent weight to its formalization by endorsing it. The core claim is that the bottleneck has shifted from the skill of writing a single good prompt to the skill of designing the entire construction of the context window — what the agent sees and doesn't see on each turn. In Chapter 3, this section covers the concept that directly succeeds prompt engineering (Part 1).
+
+**Seed Questions**
+
+- In exactly which tweet did Tobi Lütke propose this term, and what problem awareness did it arise from?
+- In what way did Karpathy agree with this naming, and what role did his endorsement play in the term's spread?
+- What is the substantive difference between "prompt engineering" and "context engineering," and where do they overlap?
+- How did Simon Willison and Phil Schmid each summarize this concept, and is there a difference in emphasis between the two summaries?
+- What development practices has the concept of context engineering actually changed (documents like CLAUDE.md and AGENTS.md, context window budget management, etc.)?
+
+**Research Pointers**
+
+- Check Tobi Lütke's naming tweet (2025-06-19) and [Karpathy's endorsement tweet](https://x.com/karpathy/status/1937902205765607626)
+- Read Simon Willison's [summary post](https://simonwillison.net/2025/Jun/27/context-engineering/) (2025-06-27)
+- Read Phil Schmid's [summary post](https://www.philschmid.de/context-engineering)

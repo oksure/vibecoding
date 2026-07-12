@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/10-1-waterfall-agile.qmd source-sha256:bbbb7d7a79aec31d model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/10-1-waterfall-agile.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Waterfall and Agile, Again {#sec-waterfall-agile}
+
+::: {.callout-warning}
+## Writing Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section asks whether the conflict between spec-driven development and vibe coding is a rerun of the waterfall-versus-agile debate. It is written in three parts. First, it reads closely what Royce's (1970) original paper actually argued, and what the four values and twelve principles of the Agile Manifesto (2001) actually say in the original text. Next, it gathers recent cases to see which side spec-driven development in the style of GitHub Spec Kit is closer to, and which side vibe coding practice, which starts with a prompt and iterates through repeated checking, is closer to. Finally, it argues by distinguishing the points that are genuinely the same, such as the length of the iteration cycle and the placement of the specification, from the points where the agent, as a new actor, changes the premises of both models.
+
+**Seed Questions**
+
+- Reading Royce's (1970) original paper directly, did he really advocate for waterfall as a pure sequential model, or was he already warning about the need for iteration? (verify against the primary source)
+- Among the Agile Manifesto's four values and twelve principles, which clauses are most often cited today as the justifying logic for vibe coding? (verify against the primary source)
+- Do proponents of spec-driven development (Spec Kit and others) frame their workflow as a revival of waterfall, or as a variant within agile? (collect rediscovery cases)
+- In what ways is vibe coding practice, which starts with a prompt and iterates through repeated checking, the same as or different from agile's iteration cycle, and does the theory still hold even when the unit of iteration shrinks to seconds?
+- How much do the criticisms from the waterfall-versus-agile debate at the time (excessive documentation, the fiction of planning) overlap with today's criticisms of spec-driven development?
+- If there are cases of practitioners mixing the two workflows, what criteria do they use to divide them? (collect rediscovery cases)
+
+**Research Pointers**
+
+- Royce's 1970 original paper (search by author name and year to verify the original text)
+- agilemanifesto.org original text (four values, twelve principles)
+- The GitHub Spec Kit announcement post and practitioner blogs on its adoption and criticism
+- Points of contact with §3.3 (spec-driven development) and §2.2 (spread of terminology) in this book; avoid duplicate exposition

@@ -8,11 +8,14 @@ _pdfbuild/<lang>/main.qmd, which is then rendered with `quarto render --to typst
 Usage: tools/_pdf_assemble.py <ko|en>
 """
 
+import re
 import shutil
 import sys
 from pathlib import Path
 
 import yaml
+
+INC_RE = re.compile(r"\{\{<\s*include\s+(\S+)\s*>\}\}")
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -61,9 +64,15 @@ format:
 ---
 """]
 
+    def read_expanded(path):
+        # Quarto include shortcodes resolve relative to the including file;
+        # expand them here because the concatenated document moves to _pdfbuild/.
+        body = split_frontmatter(path.read_text())[1]
+        return INC_RE.sub(
+            lambda m: read_expanded((path.parent / m.group(1)).resolve()), body)
+
     def add_file(rel):
-        body = split_frontmatter((src_dir / rel).read_text())[1]
-        parts.append(body.strip() + "\n")
+        parts.append(read_expanded(src_dir / rel).strip() + "\n")
 
     for item in book["chapters"]:
         if isinstance(item, str):

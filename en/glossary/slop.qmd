@@ -1,0 +1,18 @@
+<!-- MACHINE-TRANSLATED from ko/glossary/slop.qmd source-sha256:b43548f11aaf5e02 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/glossary/slop.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Slop (slop / workslop) {#gl-slop}
+
+It refers to low-quality AI output generated in bulk without quality review. Workslop is a narrower term used specifically for output in a work context, such as reports, documents, or code, that colleagues or an organization must consume.
+
+Origin needs verification. Both who coined the term and when, and when the variant "workslop" separately emerged, need to be checked and verified against original sources.
+
+The term is commonly used to describe the phenomenon of generation speed outpacing review speed, and it connects to the issue covered in §9.3 (Quality Debt and Maintenance).
+
+::: {.callout-note collapse="true"}
+## Expansion Pointers
+- Verify the earliest usage and origin of "slop" and "workslop" respectively from original sources
+- Check whether there is empirical research on workslop (e.g., productivity loss estimates)
+- Cross-check facts against §9.3
+:::

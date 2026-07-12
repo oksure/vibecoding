@@ -1,0 +1,26 @@
+<!-- MACHINE-TRANSLATED from ko/sections/05-1-small-steps.qmd source-sha256:56f8647a62f0c6ab model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/05-1-small-steps.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## Start Small and Check Often {#sec-small-steps}
+
+::: {.callout-warning}
+## Drafting Status
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** The most frequently repeated advice among vibe coding practitioners is not to ask for too much at once. The rule of thumb is that the smaller the unit of each request and the more often the result is checked, the higher the quality of the final output. This section covers why this principle holds, what size is appropriate, and how this principle coexists with the original definition of vibe coding as "leaving it to the AI and just looking at the result." It is the first principle of Chapter 5 (Best Practices) and serves as the premise for the following §5.2 and §5.4.
+
+**Seed Questions**
+
+- Are there practitioners or tool documentation that quantitatively specify an appropriate size for a "small step"? (e.g., number of files, lines changed, time spent)
+- What is the trade-off between keeping the iteration loop short and delegating a long task wholesale to an agent and waiting (handing the agent a long task in one piece)?
+- What specifically does "checking the result often" mean? Is reading the code a different principle from just looking at the execution result?
+- When this principle fails, under what conditions do cases arise where quality still deteriorates even after breaking work into small steps?
+- Record, as a case study, your own experience comparing vibe coding sessions where you took large steps versus small steps.
+
+**Research Pointers**
+
+- Recommended workflow descriptions from official documentation of tools such as Claude Code and Cursor
+- Collect descriptions related to iteration loop size from practitioner blog posts of the "how to code with AI" genre
+- If students have their own session logs, directly compare the relationship between step size and result quality

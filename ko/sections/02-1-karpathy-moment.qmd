@@ -1,0 +1,27 @@
+<!-- authoritative-lang: ko -->
+
+## Karpathy의 트윗과 그 순간의 조건 {#sec-karpathy-moment}
+
+::: {.callout-warning}
+## 집필 상태
+초안 전. 담당·상태는 저장소 루트의 TOPICS.md에서 확인.
+:::
+
+**브리프.** 2025년 2월, Andrej Karpathy가 올린 트윗 하나가 이후 한 해 동안 소프트웨어 업계에서 가장 많이 인용된 용어를 낳았다. 이 꼭지는 그 원문을 해부한다. 정확히 무엇을 정의했고 무엇을 정의하지 않았는지, 트윗 작성 시점의 기술적 조건(모델 세대, 에이전트형 코딩 도구의 성숙도, 개발자 커뮤니티의 분위기)이 이 정의의 확산에 어떻게 기여했는지, 왜 하필 그 시점이었는지를 다뤄야 한다. 2장 전체의 출발점이 되는 꼭지다.
+
+> There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
+>
+> — Andrej Karpathy, [X, 2025년 2월](https://x.com/karpathy/status/1886192184808149383)
+
+**시드 질문**
+
+- Karpathy의 원문이 실제로 정의한 범위는 무엇이고, 이후 널리 쓰인 뜻과 어떻게 다른가?
+- 트윗 발화 시점에 이용 가능했던 코딩 에이전트·도구는 무엇이었나, 그 성숙도가 이 개념의 수용에 어떤 역할을 했나?
+- Karpathy는 1년 뒤 회고 트윗에서 이 트윗을 "샤워하다 떠오른 생각을 던진 트윗"이라 불렀다. 이 자기 평가는 실제 영향력과 어떻게 어긋나는가?
+- 트윗이 확산되던 초기 며칠간 어떤 반응(환영, 냉소, 반박)이 지배적이었나?
+
+**조사 포인터**
+
+- 원 트윗(https://x.com/karpathy/status/1886192184808149383)과 1주년 회고 트윗(https://x.com/karpathy/status/2019137879310836075)의 전문과 주요 인용 반응을 수집할 것
+- 트윗 발화 시점 전후 주요 코딩 에이전트 도구의 출시·업데이트 이력을 확인할 것
+- 위키피디아 개관(https://en.wikipedia.org/wiki/Vibe_coding)에서 초기 수용 관련 서술을 확인할 것

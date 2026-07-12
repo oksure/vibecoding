@@ -19,12 +19,17 @@ cd ko && quarto preview     # 실시간 미리보기
 
 ## 집필 워크플로
 
-1. **이슈 또는 배정**: 수업에서 배정받았거나, 이슈로 제안해 승인받은 범위만 작업한다.
-2. **브랜치**: `ch05-best-practices`처럼 범위가 드러나는 이름으로 딴다.
-3. **작성**: 담당 파일(주로 `ko/chapters/NN-*.qmd`)을 수정한다. 새 챕터는 `tools/new-chapter`로 만든다.
+1. **꼭지 self-select**: [TOPICS.md](TOPICS.md)에서 담당이 빈 꼭지를 골라, 담당 칸에 자기 이름을 적는 PR을 올린다. 이것이 첫 PR이다. 이때 `contributors.qmd`에도 이름을 추가한다.
+2. **브랜치**: `05-4-verifiable-units`처럼 꼭지가 드러나는 이름으로 딴다.
+3. **작성**: 자기 꼭지 파일(`ko/sections/NN-M-slug.qmd` 또는 `ko/glossary/slug.qmd`)만 수정한다. 다른 사람의 파일은 PR 리뷰로만 관여한다. 새 꼭지 제안은 이슈로 논의 후 `tools/new-section`으로 만든다.
 4. **로컬 확인**: `tools/build html ko`가 깨지지 않는지 본다.
-5. **PR**: 템플릿을 채워 연다. 동료 리뷰 1건 이상을 받아야 머지된다. 머지는 티칭 팀이 한다.
-6. **첫 PR이 머지되면** `contributors.qmd`에 자기 이름을 추가한다.
+5. **PR**: 템플릿을 채워 연다. 동료 리뷰 1건 이상을 받아야 머지된다. 머지는 티칭 팀이 한다. 머지 후 TOPICS.md의 상태 칸을 갱신한다.
+
+### 섹션 파일 규칙
+
+- 섹션 파일은 챕터 파일에 include되므로 **YAML frontmatter를 쓸 수 없다**. 첫 줄은 `<!-- authoritative-lang: ko -->` 주석이다.
+- 섹션 제목은 `## 제목 {#sec-slug}` (H2). 앵커 slug는 파일명에서 `NN-M-` 프리픽스를 뗀 부분과 같게 유지한다.
+- 챕터 파일(`ko/chapters/`)의 리드 문단과 include 순서는 티칭 팀이 관리한다.
 
 ## 문체 가이드
 

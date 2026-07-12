@@ -1,0 +1,18 @@
+---
+authoritative-lang: ko
+---
+
+<!-- MACHINE-TRANSLATED from ko/chapters/11-rediscovery-principles.qmd source-sha256:7525ec894dc82e84 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/chapters/11-rediscovery-principles.qmd and run tools/translate -->
+# Rediscovering Principles {#sec-rediscovery-principles}
+
+Beneath methodology lie principles: abstraction and information hiding, technical debt, the isomorphism between organizational structure and system structure, essential complexity and accidental complexity, and the exchange law of people and time. This chapter is about how papers from half a century ago read anew in the age of context windows and agents.
+
+{{< include ../sections/11-1-abstraction-parnas.qmd >}}
+
+{{< include ../sections/11-2-technical-debt.qmd >}}
+
+{{< include ../sections/11-3-conways-law.qmd >}}
+
+{{< include ../sections/11-4-no-silver-bullet.qmd >}}
+
+{{< include ../sections/11-5-mythical-man-month.qmd >}}

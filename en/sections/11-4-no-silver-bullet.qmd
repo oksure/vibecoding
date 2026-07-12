@@ -1,0 +1,28 @@
+<!-- MACHINE-TRANSLATED from ko/sections/11-4-no-silver-bullet.qmd source-sha256:dcc6aa92c6e70789 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/11-4-no-silver-bullet.qmd and run tools/translate -->
+
+<!-- authoritative-lang: ko -->
+
+## No Silver Bullet, Revisited {#sec-no-silver-bullet}
+
+::: {.callout-warning}
+## Writing Status
+Pre-draft. Check TOPICS.md at the repository root for owner and status.
+:::
+
+**Brief.** This section contrasts the distinction Brooks (1986) drew between essential and accidental complexity, along with his claim that no single technology will yield a tenfold productivity gain, with which kind of complexity LLM coding tools actually reduce. It is written in three parts. First, it reads closely the original Brooks paper's distinction between the two kinds of complexity and his assessment of the promising techniques he reviewed. Second, it gathers empirical studies on the productivity of LLM coding tools as cases. Third, it argues whether the grounds on which Brooks concluded there is no silver bullet still apply to LLMs, or whether LLMs are a kind of solution he did not anticipate.
+
+**Seed Questions**
+
+- What were the exact definitions of essential and accidental complexity that Brooks distinguished in "No Silver Bullet" (1986), and what examples did he give for each? (verify against the original)
+- In the paper, Brooks already considered artificial intelligence as a candidate silver bullet and rejected it. What exactly were his grounds for rejecting it, and do those grounds still hold for today's LLMs? (verify against the original)
+- Do empirical studies measuring the productivity gains of LLM coding tools distinguish whether the gains come from reducing essential complexity or accidental complexity (typing, syntax, boilerplate)? (gather rediscovery cases)
+- Are claims that LLMs are finally the silver bullet actually contending with counterarguments that LLMs, in the end, only reduce accidental complexity? If so, what is the core argument on each side? (gather rediscovery cases)
+- One of the reasons Brooks concluded there is no silver bullet was that software's essential difficulties (complexity, conformity, changeability, invisibility) do not disappear even when the form of representation changes. Which of these four difficulties, if any, does the new representational form of natural-language prompting actually reduce?
+- Has Brooks himself, in later interviews or writings, revisited his 1986 predictions? If so, what did he reaffirm or revise?
+
+**Research Pointers**
+
+- Brooks, "No Silver Bullet: Essence and Accidents of Software Engineering" (1986), original text
+- Later software engineering literature dealing with the distinction between essential and accidental complexity
+- Empirical studies on LLM coding productivity (industry and academic surveys)
+- Points of contact with Chapter 4 (Opportunities and Potential) and Chapter 8 (How It Works) of this book; this section focuses on a reassessment through Brooks's framework

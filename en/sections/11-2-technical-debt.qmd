@@ -1,0 +1,30 @@
+<!-- MACHINE-TRANSLATED from ko/sections/11-2-technical-debt.qmd source-sha256:af3136ad425a226f model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/11-2-technical-debt.qmd and run tools/translate -->
+
+I have enough convention examples ("verify against the original source" for 원전 확인, "collect rediscovery cases" for 재발견 사례 수집). Now producing the translation.
+
+<!-- authoritative-lang: ko -->
+
+## Technical Debt: When a Metaphor Met an Interest Rate {#sec-technical-debt}
+
+::: {.callout-warning}
+## Drafting Status
+Not yet drafted. Check ownership and status in TOPICS.md at the repository root.
+:::
+
+**Brief.** This section contrasts the original meaning of the technical debt metaphor, first used by Cunningham in his OOPSLA 1992 experience report, with its revival in the age of AI coding, where the speed of generation has sharply outpaced the speed of debt accumulation. The section is structured in three parts. First, it reads closely what Cunningham actually said and how the metaphor has since been misused. Second, it gathers case studies of debt-related discussions in the AI era and empirical investigations into the maintenance costs of generated code. Third, it argues whether the original metaphor's distinction between deliberate debt with a repayment plan and reckless debt still applies to AI-generated code.
+
+**Seed Questions**
+
+- What exactly did Cunningham say and in what context in his 1992 OOPSLA experience report, and if he later commented on the misuse of this metaphor, what did he say? (verify against the original source)
+- Cunningham's original argument was closer to saying that taking on debt is not itself bad, but that the debt must be recognized and a repayment plan must be set. How much of this conditional character survives in how the term technical debt is used today? (verify against the original source)
+- Does empirical research or data exist to support the claim that technical debt is rising sharply for code generated quickly by AI? (collect rediscovery cases)
+- Are there cases that literally extend the interest rate metaphor to quantitatively discuss the interest rate of AI-generated code, and if so, what metrics did they use? (collect rediscovery cases)
+- Is the distinction between deliberately taking on debt (for rapid prototyping) and recklessly taking on debt (accepting AI output as-is without verification) actually observed in AI coding workflows?
+- The concept of technical debt has a history of attempts at quantification (debt metrics, static analysis tools). Are there similar attempts at quantification for AI-generated code?
+
+**Research Pointers**
+
+- The original text of Cunningham's OOPSLA 1992 experience report (verify the exact title and quotations)
+- Check whether Cunningham himself commented on the misuse of the metaphor in later interviews
+- Division of labor with §9.3 (Quality Debt and Maintenance) of this book. That section focuses on the current state of affairs; this section focuses on the history and revival of the metaphor itself
+- Recent empirical research or industry reports on the maintenance costs of AI-generated code
