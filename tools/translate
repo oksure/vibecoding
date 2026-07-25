@@ -140,7 +140,11 @@ def translate_one(rel, model, force):
     prompt = PROMPT_TMPL.format(direction=direction, glossary=GLOSSARY,
                                 style=STYLE[(src_lang, dst_lang)], body=text)
     print(f"  ...  {rel} ({src_lang} -> {dst_lang}, model={model})", flush=True)
+    # ANTHROPIC_API_KEY must not reach the child: the CLI prefers it over the
+    # Max subscription OAuth token and silently bills the prepaid API account
+    # instead (2026-04-23 incident, ~4 weeks undetected).
     env = dict(os.environ, CLAUDE_CODE_SAFE_MODE="1")
+    env.pop("ANTHROPIC_API_KEY", None)
     try:
         out = subprocess.run(["claude", "-p", "--model", model],
                              input=prompt, capture_output=True, text=True,
