@@ -29,6 +29,10 @@ authoritative-lang: ko
 - Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents) (2024-12). 에이전트 설계 원칙의 기준 문서.
 - Anthropic, [Prompt engineering 공식 가이드](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). 전사(前史) 쪽 기준 문서.
 
+## 교육과 학습
+
+- David Deming, Lucy Swedberg, [The Value of Human Skills in an AI Economy](https://hbsp.harvard.edu/webinars/the-value-of-human-skills-in-an-ai-economy/) (Harvard Business Impact Education 웨비나, 2026-07-28, 2026-07-29 확인). 인간의 비교우위를 빠른 사회적 학습과 전략적 상호작용에서 찾고, 수업에서는 먼저 스스로 씨름한 뒤 AI를 비판과 피드백에 쓰는 순서를 제안한다.
+
 ::: {.callout-note}
 ## 수집 대기
 루프 엔지니어링의 원 포스트(Addy Osmani, 2026-06)와 그 원류가 된 실무자 글들, 국내 논의 자료, 각 챕터별 핵심 문헌. 담당자가 챕터 조사와 함께 채울 것. 링크는 반드시 접속 확인 후 추가한다.

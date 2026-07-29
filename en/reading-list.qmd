@@ -1,33 +1,37 @@
-<!-- MACHINE-TRANSLATED from ko/reading-list.qmd source-sha256:bc69e868b43cd2a0 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/reading-list.qmd and run tools/translate -->
+<!-- MACHINE-TRANSLATED from ko/reading-list.qmd source-sha256:8ad006f7b43dbf67 model:sonnet date:2026-07-29 | DO NOT EDIT: edit ko/reading-list.qmd and run tools/translate -->
 
 # Reading List {#sec-reading}
 
-This is a list of materials that form the common foundation for the course and the writing. Presenters add materials for their own chapter here. Rule: prioritize primary sources, note the date checked, and add a one-line summary.
+This is the list of materials that forms the common foundation for the course and the writing. Presenters add materials for their own chapter here. Rule: prioritize primary sources, note the date checked, and add a one-line summary.
 
 ## Primary Sources
 
-- Andrej Karpathy, [the original vibe coding tweet](https://x.com/karpathy/status/1886192184808149383) (X, 2025-02). The birth of the term. "fully give in to the vibes, embrace exponentials, and forget that the code even exists."
-- Andrej Karpathy, [one-year retrospective tweet](https://x.com/karpathy/status/2019137879310836075) (X, 2026-02). His own look back at how the term spread. "shower of thoughts throwaway tweet."
+- Andrej Karpathy, [The original vibe coding tweet](https://x.com/karpathy/status/1886192184808149383) (X, 2025-02). The birth of the term. "fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+- Andrej Karpathy, [One-year retrospective tweet](https://x.com/karpathy/status/2019137879310836075) (X, 2026-02). His own look back at how the term spread. "shower of thoughts throwaway tweet."
 - Andrej Karpathy, [Software 2.0](https://karpathy.medium.com/software-2-0-a64152b37c35) (Medium, 2017). The origin of the discussion that neural networks replace code.
 
 ## Discourse
 
-- Simon Willison, [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19). A representative piece distinguishing the narrow and broad senses of the term.
+- Simon Willison, [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025-03-19). The definitive piece distinguishing the narrow and broad senses of the term.
 - Collins Dictionary, [Word of the Year 2025 announcement](https://www.collinsdictionary.com/us/woty) (2025-11). Its entry into everyday vocabulary. Related coverage: [CNN](https://www.cnn.com/2025/11/06/tech/vibe-coding-collins-word-year-scli-intl).
-- CodeRabbit, [A semantic history of vibe coding](https://www.coderabbit.ai/blog/a-semantic-history-how-the-term-vibe-coding-went-from-a-tweet-to-prod). A summary of the term's semantic evolution.
-- Karpathy, [tweet endorsing context engineering](https://x.com/karpathy/status/1937902205765607626) (2025-06). The occasion that formalized Tobi Lütke's coining of the term (2025-06-19). Summary pieces: [Simon Willison](https://simonwillison.net/2025/Jun/27/context-engineering/), [Phil Schmid](https://www.philschmid.de/context-engineering).
-- GitHub, [Spec-driven development with AI: Spec Kit released](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (2025-09). A spec-first workflow as a reaction against vibe coding.
-- Simon Willison, [Vibe engineering](https://simonw.substack.com/p/vibe-engineering) (Fall 2025). An attempt to redefine it as responsible acceleration.
-- ADTmag, [Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01). Reporting on the rise of the loop engineering concept.
+- CodeRabbit, [A semantic history of vibe coding](https://www.coderabbit.ai/blog/a-semantic-history-how-the-term-vibe-coding-went-from-a-tweet-to-prod) . A summary of how the term's meaning changed over time.
+- Karpathy, [Tweet endorsing context engineering](https://x.com/karpathy/status/1937902205765607626) (2025-06). The moment that formalized Tobi Lütke's coinage of the term (2025-06-19). Summary pieces: [Simon Willison](https://simonwillison.net/2025/Jun/27/context-engineering/), [Phil Schmid](https://www.philschmid.de/context-engineering).
+- GitHub, [Spec-driven development with AI: Spec Kit release](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (2025-09). A spec-first workflow as a reaction against vibe coding.
+- Simon Willison, [Vibe engineering](https://simonw.substack.com/p/vibe-engineering) (fall 2025). An attempt to redefine it as accountable acceleration.
+- ADTmag, [Loop Engineering Emerges as Developers Put AI Coding Agents on Repeat](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx) (2026-07-01). Coverage of the emergence of the loop engineering concept.
 - Faros AI, [Harness Engineering](https://www.faros.ai/blog/harness-engineering) (2026). "Agent = Model + Harness," a three-stage theory of prompt → context → harness.
 - O'Reilly Radar podcast, [Vibe Coding with Steve Yegge](https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-vibe-coding-with-steve-yegge/). An interview with the person who coined CHOP (chat-oriented programming). Also see the book "Vibe Coding" by Gene Kim and Steve Yegge (add publication details once confirmed).
 
 ## Practice
 
 - Anthropic, [Building effective agents](https://www.anthropic.com/research/building-effective-agents) (2024-12). The reference document for agent design principles.
-- Anthropic, [official prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). The reference document for the prehistory side.
+- Anthropic, [Official prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview). The reference document for the prehistory side.
+
+## Education and Learning
+
+- David Deming, Lucy Swedberg, [The Value of Human Skills in an AI Economy](https://hbsp.harvard.edu/webinars/the-value-of-human-skills-in-an-ai-economy/) (Harvard Business Impact Education webinar, 2026-07-28, checked 2026-07-29). They locate humans' comparative advantage in rapid social learning and strategic interaction, and propose that in the classroom students should wrestle with material on their own first, then use AI for critique and feedback.
 
 ::: {.callout-note}
 ## Pending Collection
-The original post on loop engineering (Addy Osmani, 2026-06) and the practitioner writings that were its source, domestic discussion materials, and key literature for each chapter. To be filled in by the person in charge along with chapter research. Links must only be added after confirming access.
+The original post on loop engineering (Addy Osmani, 2026-06) and the practitioner writings that were its origin, Korean discussion materials, and the key literature for each chapter. Presenters should fill this in as part of their chapter research. Add links only after confirming they work.
 :::

@@ -1,4 +1,4 @@
-<!-- MACHINE-TRANSLATED from ko/sections/13-3-expertise-ladder.qmd source-sha256:ac967a9a73c75d9e model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/13-3-expertise-ladder.qmd and run tools/translate -->
+<!-- MACHINE-TRANSLATED from ko/sections/13-3-expertise-ladder.qmd source-sha256:9d93f53059ab02fa model:sonnet date:2026-07-29 | DO NOT EDIT: edit ko/sections/13-3-expertise-ladder.qmd and run tools/translate -->
 
 <!-- authoritative-lang: ko -->
 
@@ -6,21 +6,23 @@
 
 ::: {.callout-warning}
 ## Writing Status
-Pre-draft. For owner and status, check TOPICS.md at the repository root.
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
 :::
 
-**Brief.** The basic premise of deliberate practice theory is that experts build their skills by repeating easy tasks. If AI does those easy tasks instead, what happens to this ladder? This section summarizes the core claims of deliberate practice theory, and seeks out research and observations on how beginners actually learn in AI-assisted environments to argue where the two conflict. It pairs with §9.4 (The Junior's Paradox), but this section places more weight on learning theory. Directly interviewing developers with different levels of experience is an important method.
+**Brief.** The basic premise of deliberate practice theory is that experts build their skills by repeating easy tasks. What happens to this ladder if AI does those easy tasks instead? This section summarizes the core claims of deliberate practice theory, and seeks out research and observations on how beginners actually learn in AI-assisted environments to argue where they conflict. It pairs with §9.4 (The Junior's Paradox), but this section places more weight on learning theory. Directly interviewing developers with different levels of experience is an important method.
 
 **Seed Questions**
 
-- Are the conditions required by deliberate practice theory (immediate feedback, gradual increase in difficulty, repetition) met or undermined in AI-assisted learning environments?
+- Are the conditions required by deliberate practice theory (immediate feedback, gradually increasing difficulty, repetition) met or undermined in AI-assisted learning environments?
 - Is there research comparing the speed and quality of skill acquisition between beginners who learned using AI tools and those who learned without them?
-- Is there evidence for the concern that "delegating easy tasks to AI leaves only verification ability while generation ability atrophies"?
-- When experts look back on their own learning path, what do they say would have been different if AI had been available?
-- What recent academic criticisms or revisions of deliberate practice theory itself exist?
+- Even with the same AI tool, do long-term learning outcomes differ between being assisted from the start versus first solving problems on one's own to establish a baseline and only then using AI for feedback?
+- Is there evidence for the concern that "delegating easy tasks to AI leaves only verification ability intact while generative ability atrophies"?
+- When experts look back on their own learning path, what do they say would have been different if AI had existed?
+- What recent academic critiques or revisions of deliberate practice theory itself exist?
 
 **Research Pointers**
 
-- Check academic databases for the original research on deliberate practice and subsequent critical literature.
-- Prioritize searching empirical research in educational psychology and computer science education on AI-assisted learning.
-- Interview developers with less than 3 years of experience and those with 10+ years respectively to compare as primary sources.
+- Check academic databases for the original research on deliberate practice and the critical literature that followed it
+- Prioritize searching empirical research in educational psychology and computer science education on AI-assisted learning
+- Track down experimental studies testing the claim David Deming presented in the [The Value of Human Skills in an AI Economy](https://hbsp.harvard.edu/webinars/the-value-of-human-skills-in-an-ai-economy/) webinar (2026-07-28), that one should "first go through productive struggle and only then use AI as a thinking partner"
+- Interview developers with under 3 years of experience and developers with over 10 years of experience separately, and compare them as primary sources

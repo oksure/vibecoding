@@ -1,26 +1,28 @@
-<!-- MACHINE-TRANSLATED from ko/sections/13-1-what-to-learn.qmd source-sha256:52df823a949a0a94 model:sonnet date:2026-07-12 | DO NOT EDIT: edit ko/sections/13-1-what-to-learn.qmd and run tools/translate -->
+<!-- MACHINE-TRANSLATED from ko/sections/13-1-what-to-learn.qmd source-sha256:f942128171bce57c model:sonnet date:2026-07-29 | DO NOT EDIT: edit ko/sections/13-1-what-to-learn.qmd and run tools/translate -->
 
 <!-- authoritative-lang: ko -->
 
-## What Should We Learn? {#sec-what-to-learn}
+## What to Learn {#sec-what-to-learn}
 
 ::: {.callout-warning}
 ## Drafting Status
-Pre-draft. Check assignment and status in TOPICS.md at the repository root.
+Pre-draft. Check ownership and status in TOPICS.md at the repository root.
 :::
 
-**Brief.** What should be taught and learned in an era when AI writes syntax and boilerplate for us? This section examines the claim that the center of gravity in programming education is shifting from syntax memorization to the abilities of problem definition, decomposition, and verification, and organizes the positions that clash in actual curriculum debates. The task of this section is to verify the grounds for each position through interviews and primary sources, without prejudging a conclusion. This corresponds to the introduction of Part 5 as a whole, and it should be kept in mind that this course itself is one experimental answer to this debate.
+**Brief.** In an age when AI writes syntax and boilerplate for us, what should we teach and learn? This section examines the claim that the center of gravity in programming education is shifting from memorizing syntax toward the abilities to define problems, decompose them, and verify solutions, and it maps out which positions clash in actual curriculum debates. Its task is not to reach a conclusion in advance but to check the grounds for each position against interviews and primary sources. This section serves as the introduction to all of Part 5, and it keeps in mind that this course itself is one experimental answer to this debate.
 
 **Seed Questions**
 
-- What grounds does each side offer: the claim that "syntax memorization no longer matters" and the counterargument that "without basic syntax you cannot even verify"?
+- What grounds does each side offer: the claim that "memorizing syntax no longer matters" versus the counterargument that "without basic syntax you cannot even verify"?
 - Do curriculum efforts that explicitly try to teach problem definition, decomposition, and verification actually exist, and what form do they take?
+- Should human capacities such as collaboration, building trust, reasoning about others' perspectives, and dealing with uncertainty be taught as separate course content, or should they be cultivated through pedagogical methods such as team assignments and discussion?
 - How does the shape of this debate differ between data science education and traditional computer science education?
-- How much do educators actually agree on what should be taught in the AI era, and where do opinions diverge sharply?
-- What position does this course's own curriculum design (seminar-style, collaborative book writing) take in this debate?
+- How much do educators actually agree on what should be taught in the age of AI, and where do opinions diverge sharply?
+- What position does this course's own curriculum design (seminar format, collaborative book writing) take within this debate?
 
 **Research Pointers**
 
-- Verify cases of curriculum reform at universities and bootcamps through primary documents (syllabi, department announcements).
-- Interview programming education researchers and current professors/instructors to collect primary sources.
-- Divide roles with §13.2 (Experiments in the Field of Education): this section covers the debate over "what" to teach, while §13.2 covers actual experimental cases.
+- Verify cases of curriculum reform at universities and bootcamps using primary documents (syllabi, department announcements).
+- Starting from David Deming's webinar [The Value of Human Skills in an AI Economy](https://hbsp.harvard.edu/webinars/the-value-of-human-skills-in-an-ai-economy/) (2026-07-28), verify the claim about the comparative advantage of social learning and that human capacities should be addressed through pedagogy, using the original paper and follow-up research.
+- Interview programming education researchers and current professors and instructors to gather primary sources.
+- Divide roles with §13.2 (Experiments in the Classroom): this section covers the debate over "what" to teach, while §13.2 covers actual experimental cases.

@@ -163,13 +163,18 @@ def translate_one(rel, model, force):
     if result.startswith("```"):
         result = re.sub(r"^```[a-z]*\n", "", result)
         result = re.sub(r"\n```$", "", result)
+    # Models occasionally ignore the style rule. Preserve source quotations
+    # that already use an em dash, but do not introduce new ones.
+    if "—" not in text:
+        result = result.replace("—", "-")
     marker = (f"<!-- MACHINE-TRANSLATED from {src_lang}/{rel} "
               f"source-sha256:{h} model:{model} date:{date.today()} "
               f"| DO NOT EDIT: edit {src_lang}/{rel} and run tools/translate -->")
     fm, body = split_frontmatter(result)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    dst.write_text(f"{fm}\n{marker}\n{body.lstrip()}" if fm
-                   else f"{marker}\n\n{result}\n")
+    rendered = (f"{fm}\n{marker}\n{body.lstrip()}" if fm
+                else f"{marker}\n\n{result}\n")
+    dst.write_text(rendered.rstrip() + "\n")
     print(f"  DONE {rel}")
     return True
 
