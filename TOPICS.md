@@ -16,7 +16,7 @@
 
 | # | 꼭지 | 파일 | 방향 한 줄 | 담당 | 상태 |
 |---|---|---|---|---|---|
-| §1.1 | 자연어 프로그래밍이라는 오래된 꿈 | `sections/01-1-natural-language-dream.qmd` | COBOL의 "영어처럼"부터 4GL, CASE까지, 반복돼온 약속과 좌절의 역사 | | 미배정 |
+| §1.1 | 자연어 프로그래밍이라는 오래된 꿈 | `sections/01-1-natural-language-dream.qmd` | COBOL의 "영어처럼"부터 4GL, CASE까지, 반복돼온 약속과 좌절의 역사 | 이한결 | 조사 중 |
 | §1.2 | 엔드유저 프로그래밍: 스프레드시트라는 선례 | `sections/01-2-end-user-programming.qmd` | 비프로그래머가 프로그래밍하는 시대는 이미 있었다. 스프레드시트에서 배우는 교훈 | | 미배정 |
 | §1.3 | 프롬프트 엔지니어링의 짧은 전성기 | `sections/01-3-prompt-engineering.qmd` | GPT-3 이후 기법의 발견(few-shot, CoT), 직함의 탄생과 소멸 | | 미배정 |
 
