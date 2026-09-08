@@ -86,7 +86,7 @@
 | # | 꼭지 | 파일 | 방향 한 줄 | 담당 | 상태 |
 |---|---|---|---|---|---|
 | §8.1 | 다음 토큰 예측에서 코드까지 | `sections/08-1-next-token.qmd` | 수학 없이 정확하게: LLM이 코드를 잘 쓰는 이유와 못 쓰는 이유 | | 미배정 |
-| §8.2 | 코딩 에이전트의 해부학 | `sections/08-2-agent-anatomy.qmd` | 도구 호출·실행·피드백 루프 한 턴의 분해, 오픈소스 에이전트 소스 읽기 | | 미배정 |
+| §8.2 | 코딩 에이전트의 해부학 | `sections/08-2-agent-anatomy.qmd` | 도구 호출·실행·피드백 루프 한 턴의 분해, 오픈소스 에이전트 소스 읽기 | 양호열 | 조사 중 |
 | §8.3 | 검증 비대칭: 왜 하필 코드였나 | `sections/08-3-verification-asymmetry.qmd` | 실행 가능성이 주는 자동 검증 신호, 다른 분야로의 일반화 조건 | | 미배정 |
 
 ### 9장 한계와 리스크
@@ -166,7 +166,7 @@
 | G9 | spec-driven development | `glossary/spec-driven-development.qmd` | | 시드 있음 |
 | G10 | subagent / 멀티에이전트 | `glossary/subagent.qmd` | | 미배정 |
 | G11 | human-in-the-loop | `glossary/human-in-the-loop.qmd` | | 미배정 |
-| G12 | hallucination | `glossary/hallucination.qmd` | | 미배정 |
+| G12 | hallucination | `glossary/hallucination.qmd` | 양호열 | 조사 중 |
 | G13 | slop / workslop | `glossary/slop.qmd` | | 미배정 |
 | G14 | slopsquatting | `glossary/slopsquatting.qmd` | | 미배정 |
 | G15 | MCP (Model Context Protocol) | `glossary/mcp.qmd` | | 미배정 |
