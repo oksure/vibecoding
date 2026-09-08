@@ -25,7 +25,7 @@
 | # | 꼭지 | 파일 | 방향 한 줄 | 담당 | 상태 |
 |---|---|---|---|---|---|
 | §2.1 | Karpathy의 트윗과 그 순간의 조건 | `sections/02-1-karpathy-moment.qmd` | 2025-02 원문 해부, 왜 하필 그때였나 (모델·도구·분위기) | | 미배정 |
-| §2.2 | 용어의 확산과 뜻의 표류 | `sections/02-2-semantic-drift.qmd` | Willison의 구분, Collins 올해의 단어, 좁은 뜻과 넓은 뜻의 공존 | | 미배정 |
+| §2.2 | 용어의 확산과 뜻의 표류 | `sections/02-2-semantic-drift.qmd` | Willison의 구분, Collins 올해의 단어, 좁은 뜻과 넓은 뜻의 공존 | 김한결 | 조사 중 |
 | §2.3 | 도구의 계보: 자동완성에서 에이전트까지 | `sections/02-3-tool-genealogy.qmd` | Copilot(2021)→챗→에이전트형 CLI/IDE, 도구 형태가 방법론을 규정해온 과정 | | 미배정 |
 
 ### 3장 담론의 진화
