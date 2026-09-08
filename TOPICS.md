@@ -68,7 +68,7 @@
 | §6.1 | 글쓰기: 보고서, 논문, 문서 | `sections/06-1-writing.qmd` | 검증이 어려운 아티팩트의 대표. 학술 규범과 AI 문체 문제 포함 | | 미배정 |
 | §6.2 | 데이터 분석과 시각화 | `sections/06-2-data-analysis.qmd` | 탐색적 분석의 가속과 "그럴듯한 그래프"의 함정 | | 미배정 |
 | §6.3 | 웹 애플리케이션: 프론트에서 배포까지 | `sections/06-3-web-apps.qmd` | 풀스택 바이브 코딩의 실전 경로와 막히는 지점들 | | 미배정 |
-| §6.4 | 자동화 스크립트와 개인 도구 | `sections/06-4-automation.qmd` | 가장 성공률 높은 카테고리: 글루 코드, CLI, 개인 워크플로 자동화 | | 미배정 |
+| §6.4 | 자동화 스크립트와 개인 도구 | `sections/06-4-automation.qmd` | 가장 성공률 높은 카테고리: 글루 코드, CLI, 개인 워크플로 자동화 | 송우정 | 조사 중 |
 | §6.5 | 슬라이드와 조판물: 이 책의 사례 | `sections/06-5-typesetting.qmd` | 발표 자료·책 조판의 AI 제작, 이 책 빌드 파이프라인의 자기 기록 | | 미배정 |
 
 ### 7장 콘텐츠 생성
@@ -169,7 +169,7 @@
 | G12 | hallucination | `glossary/hallucination.qmd` | | 미배정 |
 | G13 | slop / workslop | `glossary/slop.qmd` | | 미배정 |
 | G14 | slopsquatting | `glossary/slopsquatting.qmd` | | 미배정 |
-| G15 | MCP (Model Context Protocol) | `glossary/mcp.qmd` | | 미배정 |
+| G15 | MCP (Model Context Protocol) | `glossary/mcp.qmd` | 송우정 | 조사 중 |
 | G16 | RAG (retrieval-augmented generation) | `glossary/rag.qmd` | | 미배정 |
 | G17 | 토큰과 컨텍스트 윈도 | `glossary/tokens-context-window.qmd` | | 미배정 |
 | G18 | evals (평가) | `glossary/evals.qmd` | | 미배정 |
