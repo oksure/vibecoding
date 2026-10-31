@@ -35,7 +35,7 @@
 | --- | --- | --- | --- | --- | --- |
 | §3.1 | AI 코딩과 프롬프트 엔지니어링 | `sections/03-1-prompt-engineering.qmd` | few-shot과 chain-of-thought의 발견에서 프롬프트 전문 직무의 등장, 그리고 관심의 이동까지 | 조원빈 | 배정 |
 | §3.2 | 에이전틱 코딩의 등장 | `sections/03-2-chop-and-agentic-coding.qmd` | 대화 중심 프로그래밍에서 도구를 직접 사용하는 코딩 에이전트로 이어진 변화 | 김도환 | 배정 |
-| §3.3 | Context Engineering : 에이전트에게 일을 시키는 법 | `sections/03-3-context-engineering.qmd` | 좋은 질문을 만드는 일에서 필요한 정보를 골라 보여주는 일로 중심이 옮겨간 이유 | 이경민 | 배정 |
+| §3.3 | Context Engineering : 에이전트에게 일을 시키는 법 | `sections/03-3-context-engineering.qmd` | 좋은 질문을 만드는 일에서 필요한 정보를 골라 보여주는 일로 중심이 옮겨간 이유 | 이경민 | 작성중 |
 | §3.4 | 계획부터 시작하는 AI 개발 | `sections/03-4-spec-driven-development.qmd` | 빠른 코드 생성에서 생기는 불확실성을 줄이기 위해 등장한 명세 중심 개발과 계획 우선 작업 방식 | 김수민 | 배정 |
 | §3.5 | AI 코딩 도구의 유형과 선택 | `sections/03-5-coding-tool-landscape.qmd` | 일반 chat, AI IDE, terminal agent, background agent의 차이를 비교하고 작업 범위와 자동화 수준에 맞는 도구를 고른다 | 한유종 | 배정 |
 
