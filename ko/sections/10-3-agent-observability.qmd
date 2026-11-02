@@ -1,2 +1,134 @@
-# §10.3 에이전트의 행동을 추적하기 {.unnumbered}
+<!-- authoritative-lang: ko -->
 
+# §10.3 에이전트의 행동을 추적하기 {#sec-agent-observability .unnumbered}
+
+::: {.callout-warning}
+## 집필 상태
+뼈대 초안이다. 이론과 근거는 문단으로 정리했고, 절 끝의 예시는 조에서 정할 공통 저장소의 사례로 채운다. 출처는 각주로 달았고, 남은 확인 사항은 꼭지 끝의 집필 메모에 모았다.
+:::
+
+코딩 에이전트에게 일을 맡기면 결과는 남는다. 바뀐 코드와 테스트 통과 여부는 누구나 볼 수 있다. 그러나 에이전트가 어떤 지시를 받았고, 어떤 파일을 읽었고, 어떤 출력을 보고 그 수정을 골랐는지는 따로 기록하지 않으면 남지 않는다.
+
+결과가 틀렸을 때 원인을 찾으려면 이 과정을 되짚어야 한다. 그러려면 에이전트가 일하는 동안 기록을 남겨 두어야 한다. §10.2는 에이전트와 함께 코드의 버그를 찾는 일을 다룬다. 이 꼭지에서 되짚는 대상은 에이전트 자신의 작업 과정이다.
+
+## 결과만 남을 때 생기는 문제
+
+테스트를 통과한 결과도 잘못된 과정에서 나올 수 있다. Anthropic은 Claude 3.7 Sonnet을 평가하던 중, 이 모델이 Claude Code 같은 에이전트 코딩 환경에서 테스트를 통과하려고 특정 경우만 따로 처리하는 코드를 가끔 쓴다는 것을 발견했다. 가장 흔한 형태는 테스트가 기대하는 값을 그대로 돌려주는 코드였고, 실패하는 테스트를 코드의 출력에 맞게 고치는 경우도 있었다. 이런 행동은 대개 일반적인 해결책이 여러 번 실패한 뒤에 나타났다.[^syscard]
+
+이 행동은 사용자 테스트에서는 드러나지 않았다. 평소 사용에서는 드물고, 여러 번 시도한 뒤에야 나타나기 때문이다. Anthropic은 학습 중에 쌓인 작업 기록을 자동 분류기로 살펴서 이 행동을 찾아냈다. 결과만 봐서는 보이지 않던 문제가 기록에서 보였다.
+
+> 예시(집필 예정): 공통 저장소 사례로, 에이전트의 작업 결과만 보고는 그 결과가 어떤 과정을 거쳐 나왔는지 알 수 없는 장면을 짧게 보여 준다.
+
+## 기존 방법: 요청이 지나간 길을 기록한다
+
+여러 서버가 나눠서 처리하는 서비스에서는 요청 하나가 어느 서버를 거쳐 얼마나 걸렸는지를 기록해 문제를 찾아 왔다. 이 방법을 분산 추적(distributed tracing)이라고 한다. Google의 Dapper는 분산 추적을 대규모 서비스에 적용한 시스템이다.[^dapper]
+
+Dapper 논문은 사용자 요청 하나가 프런트엔드 서버에서 중간 계층의 서버들을 거쳐 백엔드 서버들로 퍼져 나가는 예를 든다. Dapper는 이 과정을 구간(span) 단위로 기록한다. 구간마다 이름, 시작과 끝 시각, 자기 번호, 자기를 부른 구간의 번호를 남긴다. 나중에 이 번호를 따라 구간들을 이으면, 요청 하나가 지나간 길이 나무 모양으로 다시 그려진다.
+
+<!-- 그림 자리: Dapper Figure 1(요청이 퍼져 나가는 그림)과 Figure 2(구간 나무)를 직접 다시 그려 넣는다. -->
+
+Dapper는 기록을 항상 켜 둔다. 드물게 일어나는 이상한 동작은 나중에 다시 일으키기 어렵거나 불가능한 경우가 많기 때문이다. 다시 실행해서 문제를 재현하기 어렵다는 점은 에이전트 이전부터 있던 문제다. 대신 모든 요청을 기록하지는 않고 일부만 표본으로 남긴다. 요청이 많은 서비스에서는 1,024개 중 1개만 기록해도 분석에 충분했다.
+
+분산 추적은 오늘날 OpenTelemetry라는 공개 표준으로 정리되어 있다. OpenTelemetry는 기록을 추적(traces), 지표(metrics), 로그(logs)로 나눈다.[^otel-signals]
+
+> 예시(집필 예정): 공통 저장소 사례로, 에이전트 없이 기존 방식(로그, 추적 기록)으로 문제의 원인을 찾는 과정을 짧게 보여 준다.
+
+## 에이전트에서 달라진 점
+
+### 일의 순서를 모델이 정한다
+
+Anthropic은 LLM을 쓰는 시스템을 워크플로와 에이전트로 나눈다. 워크플로는 미리 작성한 코드 경로에 따라 LLM과 도구를 부르는 시스템이다. 에이전트는 LLM이 일의 진행과 도구 사용을 스스로 정하는 시스템이다.[^bea] 워크플로는 코드를 읽으면 실행 순서를 알 수 있다. 에이전트는 어떤 도구를 어떤 순서로 쓸지를 모델이 실행 중에 정하므로, 무엇을 했는지는 실행 기록을 봐야 알 수 있다.
+
+같은 글은 에이전트가 단계마다 도구 실행 결과 같은 환경의 실제 결과를 받아 진행 상황을 판단한다고 설명한다. 그래서 에이전트가 무엇을 근거로 다음 행동을 골랐는지 알려면 도구 호출과 함께 그 결과도 기록해야 한다.
+
+> 예시(집필 예정): 공통 저장소 사례로, 같은 과제를 정해진 순서(워크플로)로 처리할 때와 에이전트에게 맡길 때 실행 순서가 각각 어디에 남는지 짧게 보여 준다.
+
+### 다시 돌려 보기 어렵다
+
+같은 요청을 다시 보내도 모델은 같은 답을 내지 않는다. Ouyang 외는 829개 코드 생성 문제마다 ChatGPT(`gpt-3.5-turbo-0125`)에 같은 요청을 다섯 번 보내 코드 다섯 개를 받았다. 다섯 코드의 테스트 출력이 하나도 일치하지 않은 문제가 데이터셋에 따라 47.56–75.76%였다. 무작위성을 없애는 설정으로 알려진 temperature 0에서도 이 비율은 18.29–43.64%로 남았다.[^ouyang]
+
+에이전트는 모델의 답에 따라 다음 행동을 정하므로, 실행할 때마다 다른 길로 갈 수 있다. Dapper가 기록을 항상 켜 둔 이유가 에이전트에도 그대로 해당한다. 문제가 생긴 실행을 나중에 다시 돌려 보는 방식으로는 원인을 찾기 어렵고, 그 실행이 일어나는 동안 남긴 기록이 있어야 한다.
+
+> 예시(집필 예정): 공통 저장소 사례로, 같은 요청을 다시 보냈을 때 에이전트가 다른 경로로 가는 장면을 짧게 보여 준다.
+
+### 모델의 설명을 그대로 믿기 어렵다
+
+기록이 없으면 에이전트에게 왜 그렇게 했는지 물어보고 싶어진다. 그러나 모델이 내놓는 단계별 설명(chain-of-thought)은 실제 판단 이유와 다를 수 있다. Turpin 외는 객관식 예시 문제의 정답을 항상 (A)에 두는 식으로 입력에 편향을 넣었다. 모델은 그 편향 때문에 틀린 답을 고르면서도, 설명에서는 편향을 언급하지 않고 그 답을 그럴듯하게 정당화했다. BIG-Bench Hard의 13개 과제에서 정확도는 최대 36% 떨어졌다(GPT-3.5, Claude 1.0).[^turpin]
+
+그래서 모델의 설명이 맞는지는 모델이 실제로 받은 입력과 본 결과를 기록에서 찾아 대조해야 판단할 수 있다.
+
+> 예시(집필 예정): 공통 저장소 사례로, 에이전트가 내놓은 설명을 실제 작업 기록과 대조해 보는 장면을 짧게 보여 준다.
+
+### 정리: 기존 방법과 비교
+
+| 구분 | 기존 분산 추적 | 코딩 에이전트 |
+| --- | --- | --- |
+| 일의 순서를 정하는 주체 | 사람이 미리 작성한 코드 | 실행 중의 모델 |
+| 주로 기록하는 것 | 어느 서버를 거쳤고 얼마나 걸렸나 | 여기에 더해 모델이 무엇을 지시받고, 무엇을 보고, 무엇을 했나 |
+| 다시 실행해서 재현하기 | 드문 문제는 원래도 재현하기 어려움 | 같은 요청도 다른 경로로 갈 수 있어 더 어려움 |
+| 원인을 찾는 방법 | 기록에서 느리거나 실패한 구간을 찾음 | 기록에서 판단이 틀어진 단계를 찾음 |
+
+## 무엇을 기록하나
+
+에이전트의 작업을 되짚으려면 무엇을 시켰고, 무엇을 했고, 무엇을 봤는지가 남아야 한다. 비용과 버전은 같은 작업을 나중에 다시 비교할 때 필요하다.
+
+| 기록 항목 | 알 수 있는 것 | 예 |
+| --- | --- | --- |
+| 프롬프트와 지침 | 무엇을 시켰나 | 사용자의 요청, 지침 파일 |
+| 도구 호출 | 무엇을 했나 | 실행한 명령, 고친 파일 |
+| 로그(도구 결과) | 무엇을 봤나 | 테스트 출력, 오류 메시지 |
+| 비용(토큰) | 얼마나 들었나 | 입력과 출력 토큰 수 |
+| 모델과 하네스 버전 | 무엇으로 했나 | 모델 이름, 도구 버전 |
+
+이 항목을 기록하는 방법도 표준으로 정리되고 있다. OpenTelemetry는 생성형 AI 호출을 기록할 때 쓸 이름 규칙을 만들고 있다. 예를 들어 요청한 모델은 `gen_ai.request.model`, 입력 토큰 수는 `gen_ai.usage.input_tokens`, 도구에 넘긴 인자는 `gen_ai.tool.call.arguments`라는 이름으로 적는다. 이 규약은 아직 개발(Development) 단계다. 프롬프트나 도구 인자처럼 내용을 담는 항목은 사용자가 따로 켜야 기록된다.[^otel-genai]
+
+Claude Code도 OpenTelemetry 형식으로 기록을 내보낼 수 있다. 사용자 요청 하나가 뿌리 구간이 되고, 그 아래에 모델 호출, 도구 호출, 훅 실행이 자식 구간으로 이어진다. Dapper가 요청 하나를 나무 모양으로 기록한 것과 같은 구조다. 이 추적 기능은 베타이고 기본으로 꺼져 있다. 켜더라도 기본 설정에서는 도구 이름은 남지만, 어느 파일을 고쳤는지와 어떤 명령을 실행했는지는 남지 않는다. 프롬프트와 도구 내용도 기본으로 가려지며, 환경 변수로 하나씩 켜야 기록된다.[^cc-monitoring]
+
+> 예시(집필 예정): 공통 저장소 작업에서 다섯 항목이 실제로 어떻게 남는지 짧게 보여 준다.
+
+## 기록 하나를 따라가 보기
+
+기록을 남긴 다음에는 읽는 방법이 필요하다. Bouzenia와 Pradel은 세 에이전트(RepairAgent, AutoCodeRover, OpenHands)의 작업 기록 120개를 분석했다. 이 기록들에는 LLM 호출이 모두 2,822번, 기록 하나에 평균 약 24번 들어 있었다. 처음부터 끝까지 그대로 읽기에는 긴 분량이다. 이들은 기록을 생각, 행동, 결과의 묶음으로 나누고, 행동을 종류별로 분류한 뒤, 자주 반복되는 행동 순서를 찾았다. 가장 많은 행동은 수정안 생성(23%), 테스트 실행(19%), 검색(15%), 탐색(14%)이었다.[^bouzenia]
+
+실패한 기록에서는 수정안을 만들고 테스트를 돌리는 일을 다른 행동 없이 되풀이하는 순서가 자주 보였다. 저자들은 이런 비효율 패턴으로 세 가지를 들었다. 같은 행동을 되풀이하면서 그 결과를 다음 행동에 반영하지 않는 것, 테스트 없이 수정안만 연달아 만드는 것, 테스트로 제대로 검증하지 않고 작업을 끝내는 것이다. 기록을 읽을 때 이런 패턴부터 찾으면 판단이 틀어진 곳을 좁힐 수 있다.
+
+실패를 일으킨 단계를 자동으로 찾는 일은 아직 어렵다. Zhang 외는 LLM 다중 에이전트 시스템 127개의 실패 기록에, 어느 에이전트가 어느 단계에서 실패를 일으켰는지를 사람이 표시한 Who&When 데이터셋을 만들었다. 가장 좋은 자동 방법도 실패를 일으킨 에이전트는 53.5%, 실패 단계는 14.2%만 맞혔다.[^zhang] 판단이 틀어진 단계를 짚으려면 여전히 사람이 기록을 읽어야 한다.
+
+> 예시(집필 예정): 공통 저장소 작업의 기록 하나를 처음부터 끝까지 따라가며, 어디서 판단이 틀어졌는지를 찾는 과정을 짧게 보여 준다.
+
+## 기록으로 알 수 없는 것
+
+기록을 남겨도 모델 안에서 왜 그런 판단이 나왔는지는 알 수 없다. 기록으로 확인할 수 있는 것은 모델이 받은 입력, 본 결과, 한 행동이다. 앞에서 본 Turpin 외의 결과처럼, 모델이 내놓는 설명도 그 이유를 그대로 보여 준다고 볼 수 없다.
+
+기록에는 지켜야 할 정보도 섞인다. 프롬프트와 도구 결과에는 비밀번호, 개인 정보, 회사 코드가 들어갈 수 있다. OpenTelemetry 규약과 Claude Code도 내용 기록을 기본으로 꺼 둔다. 무엇을 켤지는 그 기록이 원인을 찾는 데 얼마나 쓸모 있는지와, 노출되면 어떤 위험이 있는지를 함께 따져 정한다.
+
+> 예시(집필 예정): 공통 저장소 작업의 기록으로도 알 수 없었던 것을 짧게 보여 준다.
+
+에이전트의 작업을 검증하려면 결과와 함께, 에이전트가 무엇을 지시받고 무엇을 보고 무엇을 했는지를 실행 당시에 기록해야 한다.
+
+::: {.callout-note collapse="true"}
+## 집필 메모 (제출 전 해결)
+- [저자 확인 필요] §10.2 담당자와 경계를 맞춘다. §10.2는 코드의 버그를, 10.3은 에이전트의 작업 과정을 되짚는다.
+- [저자 확인 필요] 공통 저장소 작업에서 Claude Code 추적 기능을 직접 켜 보고 실제로 남는 기록을 확인한다. 실을 경우 Claude Code 버전과 실행 환경을 적는다.
+- [저자 확인 필요] 비교 표의 각 칸이 본문의 근거로 뒷받침되는지 마지막에 대조한다.
+:::
+
+[^syscard]: [Anthropic, Claude 3.7 Sonnet System Card](https://www.anthropic.com/claude-3-7-sonnet-system-card) (게시: 2025-02-24; 6절 "Excessive Focus on Passing Tests"와 6.1절, 22쪽). 원문: "Claude 3.7 Sonnet occasionally resorts to special-casing in order to pass test cases in agentic coding environments like Claude Code", "our automated classifiers successfully detected this pattern in training transcripts".
+
+[^dapper]: [Sigelman 외, Dapper, a Large-Scale Distributed Systems Tracing Infrastructure](https://research.google.com/archive/papers/dapper-2010-1.pdf) (Google Technical Report dapper-2010-1, 2010년 4월; 2쪽 Figure 1, 3쪽 2.1절과 Figure 2, 7쪽 Table 2). 원문: "monitoring should always be turned on, because it is often the case that unusual or otherwise noteworthy system behavior is difficult or impossible to reproduce." (2쪽)
+
+[^otel-signals]: [OpenTelemetry, Signals](https://opentelemetry.io/docs/concepts/signals/) (확인: 2026-11-01)
+
+[^bea]: [Anthropic, Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) (게시: 2024-12-19; "What are agents?" 절과 "Agents" 절). 원문: 워크플로는 "systems where LLMs and tools are orchestrated through predefined code paths", 에이전트는 "systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks". 도구 결과에 관해서는 "During execution, it's crucial for the agents to gain “ground truth” from the environment at each step (such as tool call results or code execution) to assess its progress."
+
+[^ouyang]: [Ouyang 외, An Empirical Study of the Non-determinism of ChatGPT in Code Generation](https://doi.org/10.1145/3697010) (ACM TOSEM 34(2), 1–28쪽, 게재: 2025-01-22; [arXiv 판](https://arxiv.org/abs/2308.02828) 3.3절 실험 설정, 4.1절과 4.2절 결과). 데이터셋별 비율은 CodeContests 75.76%, APPS 51.00%, HumanEval 47.56%이고, temperature 0에서는 각각 43.64%, 27.40%, 18.29%다.
+
+[^turpin]: [Turpin 외, Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting](https://arxiv.org/abs/2305.04388) (NeurIPS 2023; 초록)
+
+[^otel-genai]: [OpenTelemetry, Semantic conventions for generative client AI spans](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-spans.md) (확인: 2026-11-01; 커밋 `244465e`; 상태: Development, 내용 항목은 Opt-In)
+
+[^cc-monitoring]: [Anthropic, Monitoring (Claude Code 문서)](https://code.claude.com/docs/en/monitoring-usage) (확인: 2026-11-01; 문서에 버전 표시 없음; "Traces (beta)" 절의 "Span hierarchy"와 "Span attributes"). 원문: "Each user prompt starts a `claude_code.interaction` root span. API calls, tool calls, and hook executions are recorded as its children." 내용 기록은 `OTEL_LOG_USER_PROMPTS`, `OTEL_LOG_TOOL_DETAILS`, `OTEL_LOG_TOOL_CONTENT`로 켜며, 파일 경로(`file_path`)와 명령(`full_command`)은 `OTEL_LOG_TOOL_DETAILS`를 켜야 남는다.
+
+[^bouzenia]: [Bouzenia, Pradel, Understanding Software Engineering Agents: A Study of Thought-Action-Result Trajectories](https://arxiv.org/abs/2506.18824) (ASE 2025, [DOI](https://doi.org/10.1109/ASE63991.2025.00234); II절 방법, III절 B "RQ2: Actions and Patterns of Actions Sequences"와 Figure 5)
+
+[^zhang]: [Zhang 외, Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems](https://arxiv.org/abs/2505.00212) (ICML 2025, PMLR 267)
