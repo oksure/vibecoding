@@ -60,7 +60,7 @@ Context Engineering은 이러한 지시를 포함해 **모델이 현재 과제�
 
 프롬프트 자체도 컨텍스트의 일부이므로 두 영역은 겹친다. 예시의 내용과 배열을 개선하는 일은 프롬프트 설계이면서 컨텍스트 구성에도 해당하고, 그 예시를 어떤 과제에서 선택해 불러올지 정하는 일은 정보 공급의 설계와 연결된다. 따라서 두 개념을 짧은 문장과 긴 문장, 수동 작업과 자동 작업, 한 번의 호출과 여러 번의 호출과 같이 단순화하여 구분하는 것은 적절치 않다.
 
-이에 등장한 개념인 하네스(Harness)는 컨텍스트 구성을 지원하고 모델, 도구, 실행 결과를 연결하는 주변 실행 체계이며, 이를 설계하고 구현하는 일이 Harness Engineering이다([Lopopolo, 2026, 「Harness engineering: Leveraging Codex in an agent-first world」](https://openai.com/index/harness-engineering/)). 하네스의 구체적인 구성과 활용은 다음 장에서 이어서 살펴볼 예정이다.
+이에 등장한 개념인 하네스(Harness)는 컨텍스트 구성을 지원하고 모델, 도구, 실행 결과를 연결하는 주변 실행 체계이며, 이를 설계하고 구현하는 일이 Harness Engineering이다. 하네스의 구체적인 구성과 활용은 다음 장에서 이어서 살펴볼 예정이다.
 
 ## 참고문헌 {.unnumbered}
 
@@ -81,8 +81,6 @@ Khandelwal, U., He, H., Qi, P., & Jurafsky, D. (2018). Sharp nearby, fuzzy far a
 Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W.-t., Rocktäschel, T., Riedel, S., & Kiela, D. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. In H. Larochelle, M. Ranzato, R. Hadsell, M. F. Balcan, & H. Lin (Eds.), *Advances in neural information processing systems* (Vol. 33, pp. 9459–9474). Curran Associates. <https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html>
 
 Liu, N. F., Lin, K., Hewitt, J., Paranjape, A., Bevilacqua, M., Petroni, F., & Liang, P. (2023). *Lost in the middle: How language models use long contexts* (Version 3) [Preprint]. arXiv. <https://arxiv.org/abs/2307.03172v3>
-
-Lopopolo, R. (2026, February 11). *Harness engineering: Leveraging Codex in an agent-first world*. OpenAI. <https://openai.com/index/harness-engineering/>
 
 Lütke, T. [@tobi]. (2025, June 19). *I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing* [Post]. X. <https://x.com/tobi/status/1935533422589399127>
 
