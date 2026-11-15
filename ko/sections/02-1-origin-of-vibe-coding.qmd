@@ -1,6 +1,6 @@
 <!-- authoritative-lang: ko -->
 
-## 이름이 붙은 순간: 바이브 코딩의 등장 {#sec-origin-of-vibe-coding}
+## §2.1 이름이 붙은 순간: 바이브 코딩의 등장 {#sec-origin-of-vibe-coding .unnumbered}
 
 ### 들어가기
 
