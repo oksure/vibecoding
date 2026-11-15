@@ -31,7 +31,7 @@ AI가 코드를 작성한다는 사실만으로는 바이브 코딩을 구분할
 
 좁은 뜻을 지키려는 사람들은 검토와 책임이 포함된 AI 보조 개발에 다른 이름을 붙이려 했다. Willison은 2025년 10월에 '바이브 엔지니어링(vibe engineering)'이라는 말을 제안했다. 경험 있는 개발자가 LLM으로 작업 속도를 높이면서도 결과물에 책임을 지는 방식을 가리키며, 자동화된 테스트, 사전 계획, 문서화, 버전 관리, 코드 리뷰 같은 관행을 그 요소로 들었다([Simon Willison, Vibe engineering](https://simonwillison.net/2025/Oct/7/vibe-engineering/) (게시: 2025-10-07)). Karpathy도 처음 게시물을 올린 지 1년 뒤에, 더 많은 감독과 검토를 거치는 전문가의 작업을 바이브 코딩과 구분해 부를 이름으로 '에이전틱 엔지니어링(agentic engineering)'을 꼽았다([Andrej Karpathy, X 게시물 "A lot of people quote tweeted this as 1 year anniversary of vibe coding"](https://x.com/karpathy/status/2019137879310836075) (게시: 2026-02-04)).
 
-다만 실제 작업은 두 이름 중 하나로 깔끔하게 나뉘지 않는다. 2.2절에서 본 Sarkar와 Drosos의 연구에서 작업자들은 바이브 코딩을 한다고 말하면서도 변경된 코드를 빠르게 훑어보았다. 같은 연구에는 영상 시청자가 코드 리뷰는 바이브 코딩이 아니라고 지적한 사례와, 한 작업자가 Karpathy의 묘사를 그대로 따라 직접 디버깅하기를 거부한 사례가 함께 기록되어 있다([Advait Sarkar와 Ian Drosos, Vibe coding: programming through conversation with artificial intelligence](https://arxiv.org/abs/2506.23253) (버전 2 게시: 2025-10-03)). 코드를 전혀 보지 않는 작업과 모든 줄을 검토하는 작업 사이에는 여러 단계가 있고, 한 사람이 한 프로젝트 안에서도 그 사이를 오간다. 바이브 코딩의 경계는 이 연속선 위에서 사람이 코드를 확인하는 정도가 낮은 쪽을 가리킨다. 인접한 용어들의 계보는 3장과 개념 사전의 해당 항목에서 다룬다.
+다만 실제 작업은 두 이름 중 하나로 깔끔하게 나뉘지 않는다. 2.2절에서 본 Sarkar와 Drosos의 연구에서 작업자들은 바이브 코딩을 한다고 말하면서도 변경된 코드를 빠르게 훑어보았다. 같은 연구에는 영상 시청자가 코드 리뷰는 바이브 코딩이 아니라고 지적한 사례와, 한 작업자가 오류가 나도 직접 고치지 않겠다고 한 사례가 함께 기록되어 있다([Advait Sarkar와 Ian Drosos, Vibe coding: programming through conversation with artificial intelligence](https://arxiv.org/abs/2506.23253) (버전 2 게시: 2025-10-03)). 코드를 전혀 보지 않는 작업과 모든 줄을 검토하는 작업 사이에는 여러 단계가 있고, 한 사람이 한 프로젝트 안에서도 그 사이를 오간다. 바이브 코딩의 경계는 이 연속선 위에서 사람이 코드를 확인하는 정도가 낮은 쪽을 가리킨다. 인접한 용어들의 계보는 3장과 개념 사전의 해당 항목에서 다룬다.
 
 ## 이것도 프로그래밍인가
 
