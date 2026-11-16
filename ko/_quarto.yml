@@ -24,6 +24,7 @@ book:
         href: "/vibecoding/pdf/the-state-of-vibe-coding-ko.pdf"
   page-footer:
     left: "CC BY-SA 4.0 · 서울대학교 데이터사이언스 특강 〈바이브 코딩〉"
+    center: "문장 선택 → Annotate로 피드백 · [사용 안내](https://web.hypothes.is/help/annotation-basics/) · Hypothesis 로그인 필요"
     right: "[GitHub](https://github.com/oksure/vibecoding)"
   chapters:
     - index.qmd
@@ -148,3 +149,5 @@ format:
     toc: true
     number-sections: true
     code-copy: true
+    comments:
+      hypothesis: true

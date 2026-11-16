@@ -25,6 +25,21 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 
 전체 대, 중, 소주제 목록은 [TOPICS.md](TOPICS.md)에 있다.
 
+## 웹에서 문장별 피드백 남기기
+
+한국어판과 영어판 웹 페이지에는 [Hypothesis](https://web.hypothes.is/) 주석 기능이 연결되어 있다. 브라우저 확장 프로그램 설치 없이 사용할 수 있다.
+
+1. 읽고 있는 페이지 오른쪽의 Hypothesis 도구 모음을 열고 Hypothesis 계정으로 로그인한다. 계정이 없다면 가입한다.
+2. 피드백할 문장을 드래그해서 선택한 뒤 **Annotate**를 누른다.
+3. 오른쪽 패널에 댓글을 쓰고 공개 범위를 확인한 뒤 게시한다. 함께 볼 피드백은 **Post to Public**으로 게시한다. 공개 댓글은 누구나 볼 수 있다.
+4. 다른 사람의 주석을 누르면 해당 문장과 댓글을 함께 볼 수 있고, 로그인 후 **Reply**로 답글을 달 수 있다.
+
+**Highlight**만 선택한 강조 표시는 본인에게만 보인다. 다른 사람과 피드백을 공유하려면 **Annotate**로 댓글을 남겨야 한다. 수업 참여자끼리만 공유하려면 Hypothesis 비공개 그룹을 만들고 같은 그룹을 선택해 게시한다.
+
+댓글은 Hypothesis에 저장되며 한국어판과 영어판은 각 페이지 주소를 기준으로 구분된다. 원문이 크게 바뀌면 기존 댓글이 해당 문장에 연결되지 않을 수 있으므로, 수정 후 연결 상태를 확인한다. PDF 파일에 이 웹 주석 기능이 삽입되지는 않는다.
+
+사용법과 공개 범위는 [Annotation Basics](https://web.hypothes.is/help/annotation-basics/)와 [Who can see my annotations?](https://web.hypothes.is/help/who-can-see-my-annotations-in-the-web-app/)를 참고한다. 연결 설정은 `ko/_quarto.yml`과 `en/_quarto.yml`의 `format.html.comments.hypothesis`에 있다.
+
 ## 수업과 책
 
 이 책은 수업의 산출물이면서 동시에 수업 그 자체다.

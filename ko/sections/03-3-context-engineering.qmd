@@ -74,7 +74,7 @@ Dai, Z., Yang, Z., Yang, Y., Carbonell, J., Le, Q., & Salakhutdinov, R. (2019). 
 
 Kadiyala, R. M. R., Purbey, J., Gupta, S., Martini, G., Debnath, S., & Farooq, H. (2025). DSBC: Data science task benchmarking with context engineering. In K. Inui, S. Sakti, H. Wang, D. F. Wong, P. Bhattacharyya, B. Banerjee, A. Ekbal, T. Chakraborty, & D. P. Singh (Eds.), *Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics* (pp. 3392–3424). The Asian Federation of Natural Language Processing and The Association for Computational Linguistics. <https://doi.org/10.18653/v1/2025.ijcnlp-long.181>
 
-Karpathy, A. [@karpathy]. (2025, June 25). *+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your* [Post]. X. <https://x.com/karpathy/status/1937902205765607626>
+Karpathy, A. [\@karpathy]. (2025, June 25). *+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your* [Post]. X. <https://x.com/karpathy/status/1937902205765607626>
 
 Khandelwal, U., He, H., Qi, P., & Jurafsky, D. (2018). Sharp nearby, fuzzy far away: How neural language models use context. In I. Gurevych & Y. Miyao (Eds.), *Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)* (pp. 284–294). Association for Computational Linguistics. <https://doi.org/10.18653/v1/P18-1027>
 
@@ -82,7 +82,7 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 
 Liu, N. F., Lin, K., Hewitt, J., Paranjape, A., Bevilacqua, M., Petroni, F., & Liang, P. (2023). *Lost in the middle: How language models use long contexts* (Version 3) [Preprint]. arXiv. <https://arxiv.org/abs/2307.03172v3>
 
-Lütke, T. [@tobi]. (2025, June 19). *I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing* [Post]. X. <https://x.com/tobi/status/1935533422589399127>
+Lütke, T. [\@tobi]. (2025, June 19). *I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing* [Post]. X. <https://x.com/tobi/status/1935533422589399127>
 
 Mei, L., Yao, J., Ge, Y., Wang, Y., Bi, B., Cai, Y., Liu, J., Li, M., Li, Z.-Z., Zhang, D., Zhou, C., Mao, J., Xia, T., Guo, J., & Liu, S. (2025). *A survey of context engineering for large language models* (Version 2) [Preprint]. arXiv. <https://arxiv.org/abs/2507.13334v2>
 
