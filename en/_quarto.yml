@@ -24,7 +24,6 @@ book:
         href: "/vibecoding/pdf/the-state-of-vibe-coding-en.pdf"
   page-footer:
     left: "CC BY-SA 4.0 · SNU Special Topics in Data Science: Vibe Coding"
-    center: "Select text → Annotate to give feedback · [Help](https://web.hypothes.is/help/annotation-basics/) · Hypothesis sign-in required"
     right: "[GitHub](https://github.com/oksure/vibecoding)"
   chapters:
     - index.qmd
@@ -149,5 +148,3 @@ format:
     toc: true
     number-sections: true
     code-copy: true
-    comments:
-      hypothesis: true
