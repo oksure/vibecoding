@@ -22,6 +22,11 @@ test("HTML collection excludes code, scripts and explicitly untranslated content
   assert.equal(fragments(fixture.replace('lang="ko"','lang="en"')), null);
 });
 
+test("character references remain in the same text fragment as in a browser", () => {
+  const html = '<html lang="ko"><body><p>저자 외, Expectation vs.&nbsp;Experience &amp; Tools</p></body></html>';
+  assert.deepEqual(fragments(html), ["저자 외, Expectation vs.\u00a0Experience & Tools"]);
+});
+
 test("a second build reuses translations and an edit translates only the changed text", async () => {
   const cache = {}; const calls = [];
   const translator = async text => { calls.push(text); return `English:${text}`; };

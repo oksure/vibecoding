@@ -14,6 +14,7 @@
   "use strict";
   function init() {
     if (!document.documentElement.lang.startsWith("ko")) return;
+    document.body.normalize();
     const originalLang = document.documentElement.lang;
     const ui = document.createElement("aside");
     ui.className = "vc-language notranslate";

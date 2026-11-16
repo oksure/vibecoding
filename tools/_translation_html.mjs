@@ -11,6 +11,9 @@ export const keyFor = text => createHash("sha256").update(VERSION + "\0" + text)
 export function fragments(html) {
   const {document} = parseHTML(html);
   if (!document.documentElement.lang.startsWith("ko")) return null;
+  // Match browser parsing: linkedom initially leaves character references
+  // such as &nbsp; as separate adjacent text nodes.
+  document.body.normalize();
   const texts = new Set();
   const walker = document.createTreeWalker(document.body, 4);
   let node;
