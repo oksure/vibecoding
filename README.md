@@ -8,12 +8,24 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 
 | | 한국어 (원문) | English (AI-translated) |
 |---|---|---|
-| 웹 | <https://oksure.github.io/vibecoding/> | <https://oksure.github.io/vibecoding/en/> |
+| 웹 | <https://oksure.github.io/vibecoding/> | [같은 페이지에서 EN 선택](https://oksure.github.io/vibecoding/) |
 | PDF | [the-state-of-vibe-coding-ko.pdf](https://oksure.github.io/vibecoding/pdf/the-state-of-vibe-coding-ko.pdf) | [the-state-of-vibe-coding-en.pdf](https://oksure.github.io/vibecoding/pdf/the-state-of-vibe-coding-en.pdf) |
 
-한국어 웹 페이지 오른쪽 아래의 **KO / EN**에서 **EN**을 누르면, 현재 화면의 글을 영어로 기계 번역한다. 주소와 링크, 코드 블록은 유지하며 **KO**로 원문을 복원한다. 같은 탭에서 다른 글로 이동하면 영어 선택을 이어 간다. 이 읽기 기능은 별도 영어판 원고를 읽거나 수정하지 않는다.
+한국어 웹 페이지 오른쪽 아래의 **KO / EN**에서 **EN**을 누르면, 배포 전에 준비한 영어 번역을 즉시 표시한다. 주소와 링크, 코드 블록은 유지하며 **KO**로 원문을 복원한다. 같은 브라우저에서 다른 글로 이동하거나 다시 방문하면 선택한 언어를 이어 간다. 방문자의 브라우저에서 번역 모델을 실행하거나 내려받지 않는다.
 
-번역은 지원되는 브라우저의 내장 Translator API를 우선 사용하고, 사용할 수 없으면 [Transformers.js](https://huggingface.co/docs/transformers.js/)와 [OPUS-MT 한국어→영어 모델](https://huggingface.co/Xenova/opus-mt-ko-en)을 방문자의 기기에서 실행한다. 번역 API 키나 사용량 과금은 없고, 글을 번역 서버로 전송하지 않는다. 처음에는 100 MB 이상의 모델·실행 자료 다운로드와 준비 시간이 필요할 수 있으며, 기기 성능과 브라우저 저장 공간에 따라 속도가 달라진다. 다운로드 실패나 메모리 부족 등으로 완료할 수 없으면 원문으로 복원하고 재시도를 안내한다. 웹 즉석 번역은 기계 번역이므로 정확한 인용과 리뷰는 KO 원문을 기준으로 한다.
+웹 번역은 GitHub Actions의 배포 준비 단계에서 [Transformers.js](https://huggingface.co/docs/transformers.js/)와 [OPUS-MT 한국어→영어 모델](https://huggingface.co/Xenova/opus-mt-ko-en)을 실행해 만든다. 별도 유료 번역 API 키와 호출 요금은 없다. 공개 저장소의 빌드 실행 시간·캐시 사용은 GitHub Actions의 정책을 따른다. 기계 번역이므로 정확한 인용과 리뷰는 KO 원문을 기준으로 한다.
+
+### 번역 갱신 시점
+
+- `main`에 PR이 병합되거나 변경을 푸시하면 배포 과정에서 번역을 확인한다. 수동 배포 실행과 PR 빌드에서도 같은 검증을 수행한다.
+- 모든 글을 매번 다시 번역하지 않는다. 같은 원문 조각은 저장된 번역을 재사용하고, 새로 추가되거나 수정된 부분만 번역한다. 일반판과 리뷰판의 같은 글도 번역을 공유한다.
+- `.cache/page-translations/`는 배포 간 번역 캐시다. 모델 가중치는 `.cache/translation-models/`에 별도로 보관한다. 최초 준비 결과인 `translations/ko-en.seed.json`도 재사용하므로 캐시가 비워져도 초기 번역 전체를 다시 만들 필요는 없다. 시드 이후 수정분의 캐시까지 사라지면 그 부분은 다시 생성한다.
+- 새 번역은 각 한국어 HTML의 데이터로 함께 배포한다. 방문자가 EN을 누를 때 번역 서버에 요청하지 않는다. 번역이 누락되거나 생성에 실패하면 배포를 중단해 이전 사이트를 유지한다.
+- 수강생은 원문을 작성해 PR을 제출하면 된다. 이 웹 읽기용 영어 번역을 직접 작성하거나 수정할 필요는 없다.
+
+로컬에서 `npm ci`로 빌드 도구를 설치한 뒤 `tools/build`와 `npm run translate:web`을 차례로 실행한다. `node tools/pretranslate.mjs --check`는 모든 한국어 페이지의 번역 포함 여부를 검사하며, `--plan`은 번역할 새 조각 수만 확인한다. `npm test`는 캐시 재사용·원문 변경·KO/EN 복원·코드와 링크 보존을 검증한다. 생성된 시드는 자동 생성물이며 직접 편집하지 않는다. 주요 용어·고유명사에 대한 검토된 번역은 `translations/glossary.ko-en.json`에 저장하며, 원문이 정확히 일치하는 경우에만 적용한다.
+
+기존 `/en/` 페이지와 영문 PDF는 `en/` 원고를 사용하는 별도 판으로 유지한다. 그 원고의 번역 도구인 `tools/translate`와 웹 읽기용 사전 번역 도구인 `tools/pretranslate.mjs`는 구분한다.
 
 ## 이 책이 다루는 것
 

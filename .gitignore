@@ -6,3 +6,5 @@ _book/
 .quarto/
 *.quarto_ipynb
 /.luarc.json
+/node_modules/
+/.cache/

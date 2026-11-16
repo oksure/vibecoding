@@ -140,7 +140,7 @@ book:
 
 format:
   html:
-    include-after-body: ../assets/instant-translate.html
+    include-after-body: ../assets/language-toggle.html
     theme:
       light: cosmo
     toc: true

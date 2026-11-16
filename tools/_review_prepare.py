@@ -47,7 +47,7 @@ def main():
     cfg["format"]["html"]["comments"] = {"hypothesis": True}
     if lang == "ko":
         cfg["format"]["html"]["include-after-body"] = str(
-            ROOT / "assets" / "instant-translate.html"
+            ROOT / "assets" / "language-toggle.html"
         )
     (destination / "_quarto.yml").write_text(
         yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False)
