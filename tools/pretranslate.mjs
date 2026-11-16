@@ -18,14 +18,30 @@ async function htmlFiles(directory) {
   return output.sort();
 }
 
+function savedText(text, saved) {
+  if (Object.hasOwn(saved,text)) return saved[text];
+  // Quarto's date: today changes without a manuscript edit. Format only an
+  // isolated display date; prose still requires an exact saved translation.
+  const match = text.match(/^(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일$/);
+  if (!match) return undefined;
+  const [,year,month,day] = match;
+  const date = new Date(Date.UTC(Number(year),Number(month)-1,Number(day)));
+  if (date.getUTCFullYear() !== Number(year) || date.getUTCMonth() !== Number(month)-1 || date.getUTCDate() !== Number(day)) return undefined;
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  return `${months[Number(month)-1]} ${Number(day)}, ${year}`;
+}
+
 export function curatedTranslation(text, glossary) {
-  if (Object.hasOwn(glossary,text)) return glossary[text];
+  const exact = savedText(text,glossary);
+  if (exact !== undefined) return exact;
   // A title or label may be wrapped by an existing link or decorative span.
   const parts = text.split(/(<\/?v\d+\/?>)/g);
-  if (!parts.every(part => part.startsWith("<") || !part.trim() || Object.hasOwn(glossary,part.trim()) || !hasKorean(part))) return undefined;
+  if (!parts.every(part => part.startsWith("<") || !part.trim() || savedText(part.trim(),glossary) !== undefined || !hasKorean(part))) return undefined;
   return parts.map(part => {
-    if (part.startsWith("<") || !part.trim() || !Object.hasOwn(glossary,part.trim())) return part;
-    return part.match(/^\s*/)[0] + glossary[part.trim()] + part.match(/\s*$/)[0];
+    if (part.startsWith("<") || !part.trim()) return part;
+    const translated = savedText(part.trim(),glossary);
+    if (translated === undefined) return part;
+    return part.match(/^\s*/)[0] + translated + part.match(/\s*$/)[0];
   }).join("");
 }
 

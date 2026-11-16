@@ -122,3 +122,11 @@ test("Quarto heading permalinks added after initialization survive EN and KO", (
   assert.equal(window.document.querySelector('h1').textContent,'테스트 제목Anchor');
   assert.equal(window.document.querySelector('h1 a'),anchor);
 });
+
+
+test("Quarto publication dates can change without translating any new prose", async () => {
+  const page = {texts:["2026년 11월 17일"],translations:{}};
+  await prepare([page],{});
+  assert.equal(page.translations["2026년 11월 17일"],"November 17, 2026");
+  await assert.rejects(prepare([{texts:["새 원문은 2026년 11월 17일에 썼다."],translations:{}}],{}),/Missing saved English/);
+});
