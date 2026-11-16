@@ -38,7 +38,7 @@ Friedman, N. (2021, June 29). *Introducing GitHub Copilot: Your AI pair programm
 
 Karpathy, A. (n.d.). *Andrej Karpathy*. Retrieved November 15, 2026, from https://karpathy.ai/
 
-Karpathy, A. [@karpathy]. (2025, February 2). *There’s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials* [Post]. X. https://x.com/karpathy/status/1886192184808149383
+Karpathy, A. [\@karpathy]. (2025, February 2). *There’s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials* [Post]. X. https://x.com/karpathy/status/1886192184808149383
 
 Merriam-Webster. (n.d.). Vibe. In *Merriam-Webster.com dictionary*. Retrieved November 15, 2026, from https://www.merriam-webster.com/dictionary/vibe
 

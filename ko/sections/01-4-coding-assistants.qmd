@@ -1,6 +1,6 @@
 <!-- authoritative-lang: ko -->
 
-## Copilot, Cursor 등 AI 활용 코딩 {#sec-coding-assistants}
+## §1.4 Copilot, Cursor 등 AI 활용 코딩 {#sec-coding-assistants .unnumbered}
 
 > **AI 코딩 도구는 코드의 일부를 추천하는 데서 출발해, 구현을 생성하고 대화로 수정하며 파일 탐색과 실행까지 수행하는 방향으로 발전했다. 이 과정에서 사람이 도구에 맡기는 단위도 코드 한 줄에서 여러 단계로 이루어진 개발 작업으로 넓어졌다.**
 
