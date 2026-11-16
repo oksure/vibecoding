@@ -25,6 +25,23 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 
 전체 대, 중, 소주제 목록은 [TOPICS.md](TOPICS.md)에 있다.
 
+## 웹에서 문장별 피드백 남기기
+
+일반 읽기 페이지와 피드백용 리뷰 페이지는 주소가 분리되어 있다. [한국어 리뷰](https://oksure.github.io/vibecoding/reviews/)와 [영어 리뷰](https://oksure.github.io/vibecoding/reviews/en/)에서만 [Hypothesis](https://web.hypothes.is/) 주석 기능을 사용할 수 있다. 일반 `/vibecoding/` 및 `/vibecoding/en/` 페이지에는 이 기능이 없다.
+
+예를 들어 `/vibecoding/sections/03-3-context-engineering.html`의 리뷰 주소는 `/vibecoding/reviews/sections/03-3-context-engineering.html`이다. 리뷰 목차와 이전·다음 글 링크도 리뷰 페이지 안에서 이동한다. 두 버전은 같은 원고에서 자동 생성되므로 원고를 따로 관리하지 않는다.
+
+1. 리뷰 페이지를 연 뒤 오른쪽의 Hypothesis 도구 모음에서 Hypothesis 계정으로 로그인한다. 계정이 없다면 가입한다. 브라우저 확장 프로그램은 필요하지 않다.
+2. 피드백할 문장을 드래그해서 선택한 뒤 **Annotate**를 누른다.
+3. 오른쪽 패널에 댓글을 쓰고 공개 범위를 확인한 뒤 게시한다. 함께 볼 피드백은 **Post to Public**으로 게시한다. 공개 댓글은 누구나 볼 수 있다.
+4. 다른 사람의 주석을 누르면 해당 문장과 댓글을 함께 볼 수 있고, 로그인 후 **Reply**로 답글을 달 수 있다.
+
+**Highlight**만 선택한 강조 표시는 본인에게만 보인다. 다른 사람과 피드백을 공유하려면 **Annotate**로 댓글을 남겨야 한다. 수업 참여자끼리만 공유하려면 Hypothesis 비공개 그룹을 만들고 같은 그룹을 선택해 게시한다.
+
+댓글은 Hypothesis에 저장되며 한국어판과 영어판은 각 페이지 주소를 기준으로 구분된다. 원문이 크게 바뀌면 기존 댓글이 해당 문장에 연결되지 않을 수 있으므로, 수정 후 연결 상태를 확인한다. PDF 파일에 이 웹 주석 기능이 삽입되지는 않는다.
+
+사용법과 공개 범위는 [Annotation Basics](https://web.hypothes.is/help/annotation-basics/)와 [Who can see my annotations?](https://web.hypothes.is/help/who-can-see-my-annotations-in-the-web-app/)를 참고한다. 리뷰 페이지 생성과 Hypothesis 연결 설정은 `tools/_review_prepare.py`에 있다. 일반 페이지에서 작성했던 주석은 Hypothesis에 남으며 새 리뷰 주소로 자동 이동하지 않는다.
+
 ## 수업과 책
 
 이 책은 수업의 산출물이면서 동시에 수업 그 자체다.
@@ -86,7 +103,8 @@ tools/
 [Quarto](https://quarto.org) 1.8 이상과 Python(PyYAML)이 필요하다. PDF까지 빌드하려면 Noto Sans CJK 폰트가 있어야 한다.
 
 ```bash
-tools/build html ko    # 한국어 웹판만 (집필 중 확인용, 가장 빠름)
+tools/build html ko    # 한국어 일반 읽기판 + 리뷰판 HTML
+tools/build reviews ko # 한국어 리뷰판 HTML만
 tools/build            # 전체: ko+en HTML/PDF -> _site/
 tools/translate        # 변경된 챕터만 AI 번역 (claude CLI 필요)
 ```
