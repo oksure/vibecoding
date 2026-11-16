@@ -124,9 +124,6 @@
       document.documentElement.lang = lang === "en" ? "en" : originalLang;
       ko.setAttribute("aria-pressed", String(lang === "ko"));
       en.setAttribute("aria-pressed", String(lang === "en"));
-      note.textContent = lang !== "en" ? "" : location.pathname.includes("/reviews/")
-        ? "English translation · Leave feedback on the KO original."
-        : "English translation · Select KO to read the original.";
       if (remember) {
         try { localStorage.setItem("vc-reading-language", lang); } catch (_) {}
         try { sessionStorage.removeItem("vc-reading-language"); } catch (_) {}

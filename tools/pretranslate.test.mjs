@@ -65,7 +65,7 @@ test("the reader toggles synchronously, keeps the URL and markup, and persists t
   assert.equal(first.document.querySelector("a").getAttribute("href"),"/chapter#anchor");
   assert.equal(first.document.querySelector("code").textContent,'print("코드 보존")');
   assert.equal(first.location.href,"https://example.test/reviews/sections/example.html#anchor");
-  assert.match(first.document.querySelector('[role="status"]').textContent,/Leave feedback on the KO/);
+  assert.equal(first.document.querySelector('[role="status"]').textContent,"");
   assert.equal(boot().document.documentElement.lang,"en");
   ko.click();
   assert.equal(first.document.querySelector("h1").textContent,"테스트 제목");
