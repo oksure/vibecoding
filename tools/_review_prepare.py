@@ -45,6 +45,10 @@ def main():
         else "Review edition · Select text → Annotate · Hypothesis sign-in required"
     )
     cfg["format"]["html"]["comments"] = {"hypothesis": True}
+    if lang == "ko":
+        cfg["format"]["html"]["include-after-body"] = str(
+            ROOT / "assets" / "instant-translate.html"
+        )
     (destination / "_quarto.yml").write_text(
         yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False)
     )

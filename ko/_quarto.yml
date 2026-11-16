@@ -16,9 +16,6 @@ book:
   sidebar:
     collapse-level: 1
     tools:
-      - icon: globe
-        text: "English edition"
-        href: "/vibecoding/en/"
       - icon: file-pdf
         text: "PDF 내려받기"
         href: "/vibecoding/pdf/the-state-of-vibe-coding-ko.pdf"
@@ -143,6 +140,7 @@ book:
 
 format:
   html:
+    include-after-body: ../assets/instant-translate.html
     theme:
       light: cosmo
     toc: true
