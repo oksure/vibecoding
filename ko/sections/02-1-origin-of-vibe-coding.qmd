@@ -1,2 +1,52 @@
-# §2.1 바이브 + 코딩 = 바이브 코딩 {.unnumbered}
+<!-- authoritative-lang: ko -->
+
+## §2.1 이름이 붙은 순간: 바이브 코딩의 등장 {#sec-origin-of-vibe-coding .unnumbered}
+
+### 들어가기
+
+앞 장에서는 바이브 코딩이 등장할 수 있었던 기술적 배경과 사회적 배경을 살펴보았다. 자연어로 표현한 요구를 코드로 바꾸는 기술은 개발 도구와 결합하면서 새로운 작업의 가능성을 열었다. GitHub는 2021년 6월 Copilot의 기술 미리보기를 공개하며, 작업 중인 코드의 맥락을 바탕으로 코드 한 줄이나 함수 전체를 제안하는 도구라고 소개했다. 개발자가 구현하는 과정에 AI의 제안이 들어오기 시작한 것이다 ([Friedman, 2021](https://github.blog/news-insights/product-news/introducing-github-copilot-ai-pair-programmer/)).
+
+AI와 대화하며 개발하려는 시도도 이어졌다. Ross 등은 이전 대화와 코드의 맥락을 활용하는 개발 보조 도구 ‘Programmer’s Assistant’를 제시했다. 연구진은 프로그래밍 경험이 다양한 42명을 대상으로 이 시제품을 평가하며, 코드 생성에 그치지 않는 대화형 상호작용의 가능성을 탐색했다. 자연어를 개발의 인터페이스로 활용하려는 시도는 ‘바이브 코딩’이라는 이름이 등장하기 전부터 진행되고 있었다 ([Ross et al., 2023](https://research.ibm.com/publications/the-programmers-assistant-conversational-interaction-with-a-large-language-model-for-software-development)).
+
+이 장에서는 이러한 기술 위에서 새로운 작업 경험이 어떻게 하나의 이름을 얻고 확산되었는지 살펴본다. 용어의 등장, 작업 방식의 변화, 참여 확대의 이유를 살펴본 뒤, 바이브 코딩의 정의와 적용 범위를 검토한다.
+
+### ‘바이브 코딩’이라는 이름
+
+2025년 2월, AI 연구자 Andrej Karpathy는 X에 자신이 ‘바이브 코딩(vibe coding)’이라고 부르는 새로운 종류의 코딩이 있다며 작업 경험을 소개했다 ([Karpathy, 2025](https://x.com/karpathy/status/1886192184808149383)). 그는 OpenAI의 창립 멤버였으며, 이후 Tesla의 AI 책임자로 일하면서 Autopilot의 컴퓨터 비전 팀을 이끌었던 인물이다 ([Karpathy, n.d.](https://karpathy.ai/)).
+
+그가 묘사한 작업에서는 키보드로 코드를 작성하는 행동보다 AI에게 말을 건네는 행동이 두드러졌다. 음성 입력으로 요구를 전달하고, 생성된 변경사항은 ‘Accept All’로 받아들였다. 변경된 코드를 자세히 읽지 않았으며, 오류가 발생하면 오류 메시지를 복사해 다시 전달했다 ([Karpathy, 2025](https://x.com/karpathy/status/1886192184808149383)).
+
+코드 생성 자체가 새로운 현상은 아니었다. GitHub Copilot의 초기 발표도 함수 전체를 제안할 수 있다고 소개했다 ([Friedman, 2021](https://github.blog/news-insights/product-news/introducing-github-copilot-ai-pair-programmer/)). 바이브 코딩의 첫 용례에서 눈에 띄는 점은 AI가 코드를 만들었다는 사실에 더해, 사람이 생성된 코드와 거리를 두고 실행 결과를 중심으로 작업했다는 것이다. 개발자가 코드를 한 줄씩 작성하거나 제안된 코드를 검토하는 방식과 비교할 때, 사람의 개입 지점이 달라졌다는 점이 이 경험을 특징짓는다.
+
+그의 설명에는 구현을 맡기는 편리함과 함께 통제의 빈틈도 드러난다. 코드는 자신의 평소 이해 범위를 넘어 커졌고, AI가 고치지 못하는 오류는 우회하거나 여러 변경을 요청하며 해결하려 했다. 그는 이런 작업이 가볍게 만들고 버릴 주말 프로젝트에는 사용할 만하다고 적었다. 따라서 이 게시물은 특정한 조건에서 경험한 작업의 감각을 기록한 글로 읽는 편이 적절하다 ([Karpathy, 2025](https://x.com/karpathy/status/1886192184808149383)).
+
+‘Vibe’라는 말은 감지할 수 있는 특유의 느낌이나 성질을 뜻하며, 한국어의 ‘분위기’나 ‘느낌’에 가깝다 ([Merriam-Webster, n.d.](https://www.merriam-webster.com/dictionary/vibe)). 이 일상적 의미를 게시물과 함께 읽으면, ‘바이브 코딩’은 구현의 세부보다 작업이 흘러가는 감각을 앞세운 이름으로 해석할 수 있다. 처음부터 모든 구현 방법을 정해두기보다 AI와 주고받으며 결과를 바꾸어간다는 점에서 가벼움과 실험성이 느껴진다. 다만 이는 이름과 게시물에 대한 해석이며, 자연어로 개발하는 모든 사람이 막연한 느낌만 전달한다는 뜻은 아니다.
+
+이 이름은 새로운 가능성과 함께 논쟁도 불러왔다. Willison은 프로토타입 제작의 즐거움을 인정하면서도 결과물에 대한 이해와 책임이 필요하다고 강조했다. 바이브 코딩의 등장은 AI로 만드는 경험과 그 경험의 경계에 관한 질문이 하나의 이름 아래 논의되기 시작한 사건이었다 ([Willison, 2025a](https://simonwillison.net/2025/Mar/6/vibe-coding/)).
+
+Willison은 AI가 작성한 코드를 검토하지 않고 소프트웨어를 만드는 경우를 바이브 코딩이라고 설명했다. 반대로 사람이 생성된 코드를 검토하고 테스트하며 이해했다면, 자신의 기준에서는 일반적인 소프트웨어 개발이라고 보았다 ([Willison, 2025b](https://simonwillison.net/2025/Mar/19/vibe-coding/)). 다만 이것은 Willison이 제시한 구분이지 모두가 합의한 단일 정의는 아니다. Sarkar와 Drosos도 연구에서 개념의 범위가 형성되는 중이라는 점을 고려해, 엄격한 정의를 먼저 적용하기보다 작업자 자신이 바이브 코딩이라고 설명한 활동을 분석했다 ([Sarkar & Drosos, 2025](https://arxiv.org/html/2506.23253v2)). 이름의 등장은 논의의 출발점이 되었지만, 그 이름에 포함되는 작업의 범위까지 확정한 것은 아니다.
+
+### 서비스 제작에 참여한 개인 경험
+
+사회복지 서비스를 구상하던 나에게도 이러한 변화는 새로운 가능성으로 다가왔다. 이전까지는 필요한 서비스가 있으면 개발자와 협업해 구현해야 한다고 생각했다. 그러나 바이브 코딩을 배우고 직접 만들어보면서, 현장에서 발견한 문제를 바탕으로 서비스 제작에도 참여할 수 있겠다는 기대가 생겼다. 반복적인 행정업무를 줄이고 사람에게 더 많은 시간을 할애할 수 있지 않을까 하는 생각은 공부를 이어가는 계기가 되었다.
+
+현재 나는 다른 사회복지사들과 함께 40~64세 중장년 1인가구의 고립과 관계 단절 예방을 목표로 연결 포털을 만들고 있다. 여러 기관에서 제공하는 정보가 흩어져 있고, 이용자가 자신에게 필요한 서비스라고 느끼지 못하면 찾아보지 않을 수 있다는 문제에서 출발했다. 이에 신뢰할 수 있는 정보를 모으고, 혼자 살며 겪는 불편에 따라 필요한 자원으로 연결하는 공간을 구상했다. 처음부터 대면 활동에 참여하도록 요구하기보다, 필요한 도움을 찾는 데서 시작해 이용자가 원할 때 지역 프로그램과 커뮤니티로 연결되도록 하는 것이 목표다. 아직 구현 중인 이 시도에서 출발점이 되는 것은 사람들의 생활과 서비스 이용 과정에 대한 이해다. 누가 어떤 어려움을 겪고, 어떤 정보가 필요하며, 어떤 방식으로 접근해야 하는지를 구체화하는 일이다. 이 사례는 내가 경험한 제작 참여의 한 장면이며, 바이브 코딩의 보편적인 효과로 일반화할 수는 없다.
+
+### 참고문헌
+
+Friedman, N. (2021, June 29). *Introducing GitHub Copilot: Your AI pair programmer*. The GitHub Blog. https://github.blog/news-insights/product-news/introducing-github-copilot-ai-pair-programmer/
+
+Karpathy, A. (n.d.). *Andrej Karpathy*. Retrieved November 15, 2026, from https://karpathy.ai/
+
+Karpathy, A. [@karpathy]. (2025, February 2). *There’s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials* [Post]. X. https://x.com/karpathy/status/1886192184808149383
+
+Merriam-Webster. (n.d.). Vibe. In *Merriam-Webster.com dictionary*. Retrieved November 15, 2026, from https://www.merriam-webster.com/dictionary/vibe
+
+Ross, S. I., Martinez, F., Houde, S., Muller, M., & Weisz, J. D. (2023). The programmer’s assistant: Conversational interaction with a large language model for software development. In *Proceedings of the 28th International Conference on Intelligent User Interfaces* (pp. 491–514). Association for Computing Machinery. https://doi.org/10.1145/3581641.3584037
+
+Sarkar, A., & Drosos, I. (2025). *Vibe coding: Programming through conversation with artificial intelligence* (Version 2) [Preprint]. arXiv. https://arxiv.org/abs/2506.23253v2
+
+Willison, S. (2025a, March 6). *Will the future of software development run on vibes?* Simon Willison’s Weblog. https://simonwillison.net/2025/Mar/6/vibe-coding/
+
+Willison, S. (2025b, March 19). *Not all AI-assisted programming is vibe coding (but vibe coding rocks)*. Simon Willison’s Weblog. https://simonwillison.net/2025/Mar/19/vibe-coding/
 
