@@ -1,43 +1,25 @@
-import {createHash} from "node:crypto";
+import {readFileSync} from "node:fs";
+import vm from "node:vm";
+import {validateTranslation} from "./_translation_quality.mjs";
 import {parseHTML} from "linkedom";
 
-export const MODEL = "Xenova/opus-mt-ko-en";
-export const REVISION = "d9fa1ac6008242100fecb4fff9b0a5917a1be81f";
-export const VERSION = `opus-q8-${REVISION}-sentences-v1`;
+export const VERSION = "direct-ko-en-blocks-v1";
 export const EXCLUDED = 'script,style,noscript,pre,code,kbd,samp,svg,math,mjx-container,textarea,input,select,iframe,.notranslate,[translate="no"],.vc-language,#quarto-search-results,.quarto-search-panel,hypothesis-sidebar,hypothesis-adder,hypothesis-notebook';
 export const hasKorean = text => /[\uac00-\ud7a3\u3131-\u318e]/.test(text);
-export const keyFor = text => createHash("sha256").update(VERSION + "\0" + text).digest("hex");
 
-export function fragments(html) {
+// Use exactly the same collector/renderer at build time and in the reader.
+const helper = readFileSync(new URL("../assets/language-toggle.html", import.meta.url), "utf8").split("// BEGIN SHARED TRANSLATION DOM")[1].split("// END SHARED TRANSLATION DOM")[0];
+const makeDOM = vm.runInNewContext(helper + "; translationDOM");
+export function unitsFor(html) {
   const {document} = parseHTML(html);
   if (!document.documentElement.lang.startsWith("ko")) return null;
-  // Match browser parsing: linkedom initially leaves character references
-  // such as &nbsp; as separate adjacent text nodes.
   document.body.normalize();
-  const texts = new Set();
-  const walker = document.createTreeWalker(document.body, 4);
-  let node;
-  while ((node = walker.nextNode())) {
-    if (hasKorean(node.data) && node.parentElement && !node.parentElement.closest(EXCLUDED)) texts.add(node.data.trim());
-  }
-  return [...texts];
+  return makeDOM(document, EXCLUDED);
 }
-
-export function chunks(text, limit = 180) {
-  const output = [];
-  let current = "";
-  for (const {segment} of new Intl.Segmenter("ko", {granularity: "sentence"}).segment(text)) {
-    const points = Array.from(segment);
-    for (let i = 0; i < points.length; i += limit) {
-      const part = points.slice(i, i + limit).join("");
-      if (Array.from(current + part).length > limit) { output.push(current); current = ""; }
-      current += part;
-    }
-  }
-  if (current) output.push(current);
-  return output;
+export function fragments(html) {
+  const dom = unitsFor(html);
+  return dom === null ? null : [...new Set(dom.units.map(unit => unit.source))];
 }
-
 export function embed(html, translations) {
   const {document} = parseHTML(html);
   document.getElementById("vc-translation-data")?.remove();
@@ -46,7 +28,7 @@ export function embed(html, translations) {
   data.type = "application/json";
   // JSON is text, never executable HTML, even if a source or translation
   // contains a literal closing script tag.
-  data.textContent = JSON.stringify({version: 1, excluded: EXCLUDED, model: MODEL, translations}).replaceAll("<", "\\u003c");
+  data.textContent = JSON.stringify({version: 2, generation: VERSION, excluded: EXCLUDED, method: "direct-ko-en", translations}).replaceAll("<", "\\u003c");
   document.body.append(data);
   return document.toString();
 }
@@ -56,8 +38,13 @@ export function check(html) {
   if (texts === null) return;
   const {document} = parseHTML(html);
   const data = JSON.parse(document.getElementById("vc-translation-data")?.textContent || "null");
-  if (data?.version !== 1 || data.excluded !== EXCLUDED) throw new Error("Missing/invalid translation data");
+  if (data?.version !== 2 || data.generation !== VERSION || data.excluded !== EXCLUDED) throw new Error("Missing/invalid translation data");
+  const dom = unitsFor(html);
   for (const text of texts) {
     if (!Object.hasOwn(data.translations, text) || typeof data.translations[text] !== "string" || !data.translations[text].trim()) throw new Error(`Missing translation: ${text.slice(0, 80)}`);
+  }
+  for (const unit of dom.units) {
+    validateTranslation(unit.source, data.translations[unit.source]);
+    dom.render(unit, data.translations[unit.source]);
   }
 }

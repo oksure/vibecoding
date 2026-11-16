@@ -12,6 +12,66 @@
 <script>
 (() => {
   "use strict";
+  // BEGIN SHARED TRANSLATION DOM
+  function translationDOM(document, excluded) {
+    const korean = text => /[\uac00-\ud7a3\u3131-\u318e]/.test(text);
+    const escape = text => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    const selector = "p,h1,h2,h3,h4,h5,h6,td,th,figcaption,dt,dd,li";
+    const blocks = [...document.querySelectorAll(selector)].filter(node =>
+      !node.closest(excluded) && !node.querySelector(selector) && korean(node.textContent));
+    const owners = new Set(blocks);
+    function pack(node) {
+      const templates = [];
+      function visit(child) {
+        if (child.nodeType === 3) return escape(child.data);
+        if (child.nodeType !== 1 || child.matches(".anchorjs-link")) return "";
+        const id = templates.length;
+        const frozen = !!child.matches(excluded) || !korean(child.textContent);
+        templates.push({node:child, frozen});
+        return frozen ? `<v${id}/>` : `<v${id}>${[...child.childNodes].map(visit).join("")}</v${id}>`;
+      }
+      return {source:[...node.childNodes].map(visit).join("").trim(), templates};
+    }
+    const units = blocks.map(node => ({node, kind:"block", ...pack(node)}));
+    const walker = document.createTreeWalker(document.body, 4);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!korean(node.data) || !node.parentElement || node.parentElement.closest(excluded)) continue;
+      let parent = node.parentElement, owned = false;
+      while (parent) { if (owners.has(parent)) { owned = true; break; } parent = parent.parentElement; }
+      if (!owned) units.push({node, kind:"text", source:node.data.trim(), templates:[]});
+    }
+    function render(unit, translated) {
+      const root = document.createElement("span"), stack = [root], seen = new Set();
+      for (const token of translated.split(/(<[^>]*>)/g)) {
+        if (!token) continue;
+        if (!token.startsWith("<")) {
+          const decoder = document.createElement("span"); decoder.innerHTML = token;
+          stack.at(-1).append(document.createTextNode(decoder.textContent));
+          continue;
+        }
+        const match = token.match(/^<(\/?)v(\d+)(\/?)>$/);
+        if (!match) throw new Error("Unexpected translation markup");
+        const [, closing, number, selfClosing] = match, id = Number(number), template = unit.templates[id];
+        if (!template) throw new Error("Unknown translation marker");
+        if (closing) {
+          if (selfClosing || stack.length === 1 || stack.at(-1).__vcMarker !== id) throw new Error("Unbalanced translation marker");
+          stack.pop(); continue;
+        }
+        if (seen.has(id)) throw new Error("Repeated translation marker");
+        seen.add(id);
+        if (template.frozen && !selfClosing) throw new Error("Changed protected inline content");
+        if (!template.frozen && selfClosing) throw new Error("Dropped translated inline content");
+        const element = template.node.cloneNode(template.frozen);
+        stack.at(-1).append(element);
+        if (!selfClosing) { element.__vcMarker = id; stack.push(element); }
+      }
+      if (stack.length !== 1 || seen.size !== unit.templates.length) throw new Error("Missing translation marker");
+      return [...root.childNodes];
+    }
+    return {units, render};
+  }
+  // END SHARED TRANSLATION DOM
   function init() {
     if (!document.documentElement.lang.startsWith("ko")) return;
     document.body.normalize();
@@ -27,34 +87,46 @@
     let data;
     try {
       data = JSON.parse(document.getElementById("vc-translation-data").textContent);
-      if (data.version !== 1 || typeof data.excluded !== "string" || !data.translations) throw new Error("invalid payload");
+      if (data.version !== 2 || typeof data.excluded !== "string" || !data.translations) throw new Error("invalid payload");
     } catch (_) {
       en.disabled = true;
       note.textContent = "이 미리보기에는 영어 번역이 준비되지 않았습니다.";
       return;
     }
     const originals = [];
-    const walker = document.createTreeWalker(document.body, 4);
-    let node;
-    while ((node = walker.nextNode())) {
-      if (!/[\uac00-\ud7a3\u3131-\u318e]/.test(node.data) || !node.parentElement || node.parentElement.closest(data.excluded)) continue;
-      const source = node.data.trim();
-      const translated = Object.hasOwn(data.translations, source) ? data.translations[source] : null;
-      if (typeof translated !== "string" || !translated.trim()) {
-        en.disabled = true;
-        note.textContent = "이 글의 영어 번역을 준비 중입니다. 한국어 원문을 먼저 읽어 주세요.";
-        return;
+    const dom = translationDOM(document, data.excluded);
+    try {
+      for (const unit of dom.units) {
+        const translated = Object.hasOwn(data.translations, unit.source) ? data.translations[unit.source] : null;
+        if (typeof translated !== "string" || !translated.trim()) throw new Error("Missing translation");
+        if (unit.kind === "block") {
+          originals.push({...unit, original:[...unit.node.childNodes], english:dom.render(unit, translated)});
+        } else {
+          originals.push({...unit, original:unit.node.data, english:unit.node.data.match(/^\s*/)[0] + translated + unit.node.data.match(/\s*$/)[0]});
+        }
       }
-      originals.push({node, original: node.data, english: node.data.match(/^\s*/)[0] + translated + node.data.match(/\s*$/)[0]});
+    } catch (_) {
+      en.disabled = true;
+      note.textContent = "이 글의 영어 번역을 준비 중입니다. 한국어 원문을 먼저 읽어 주세요.";
+      return;
     }
     function select(lang, remember = true) {
-      for (const item of originals) if (item.node.isConnected) item.node.data = lang === "en" ? item.english : item.original;
+      for (const item of originals) if (item.node.isConnected) {
+        const content = lang === "en" ? item.english : item.original;
+        if (item.kind === "block") {
+          // Quarto adds heading permalinks after the initial document parse.
+          // Keep those live nodes on every switch, including auto-restored EN.
+          const decorations = [...item.node.children].filter(node => node.matches(".anchorjs-link"));
+          item.node.replaceChildren(...content, ...decorations.filter(node => !content.includes(node)));
+        }
+        else item.node.data = content;
+      }
       document.documentElement.lang = lang === "en" ? "en" : originalLang;
       ko.setAttribute("aria-pressed", String(lang === "ko"));
       en.setAttribute("aria-pressed", String(lang === "en"));
       note.textContent = lang !== "en" ? "" : location.pathname.includes("/reviews/")
-        ? "Machine translation · Leave feedback on the KO original."
-        : "Machine translation · Select KO to read the original.";
+        ? "English translation · Leave feedback on the KO original."
+        : "English translation · Select KO to read the original.";
       if (remember) {
         try { localStorage.setItem("vc-reading-language", lang); } catch (_) {}
         try { sessionStorage.removeItem("vc-reading-language"); } catch (_) {}

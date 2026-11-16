@@ -29,21 +29,8 @@ jobs:
       - name: Install translation build tools
         run: npm ci --no-audit --no-fund
 
-      - name: Test cached translation and language switching
+      - name: Test saved translations and language switching
         run: npm test
-
-      - name: Restore the translation model
-        uses: actions/cache@v4
-        with:
-          path: .cache/translation-models
-          key: translation-model-v1-${{ runner.os }}
-
-      - name: Restore previously translated text
-        uses: actions/cache/restore@v4
-        with:
-          path: .cache/page-translations
-          key: page-translations-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: page-translations-v1-${{ runner.os }}-
 
       - name: Install Korean fonts and PyYAML
         run: |
@@ -58,16 +45,8 @@ jobs:
       - name: Build book (HTML ko+en, PDF ko+en, assemble _site)
         run: tools/build
 
-      - name: Prepare English for changed text before publication
-        id: prepare-translations
+      - name: Attach saved English translations
         run: npm run translate:web
-
-      - name: Save translated text, including partial progress for a retry
-        if: always() && steps.prepare-translations.outcome != 'skipped'
-        uses: actions/cache/save@v4
-        with:
-          path: .cache/page-translations
-          key: page-translations-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Verify that every Korean page has a complete English translation
         run: node tools/pretranslate.mjs --check

@@ -6,7 +6,6 @@
     "translate:web": "node tools/pretranslate.mjs"
   },
   "dependencies": {
-    "@huggingface/transformers": "3.8.1",
     "linkedom": "0.18.12"
   }
 }
