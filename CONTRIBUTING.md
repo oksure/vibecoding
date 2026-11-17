@@ -19,6 +19,7 @@ Quarto 설치와 빌드 환경은 [README.md](README.md)를 참고한다. 기존
 ## 언어 정책
 
 - 기본 원문은 `ko/`이며 `en/`은 대부분 AI 번역 생성물이다.
+- 한국어 원고를 제출하는 수강생은 영어 번역을 함께 작성하지 않아도 된다. 웹 토글용 영어는 티칭 팀이 별도로 추가한다. 번역 누락은 PR 원고 빌드를 실패시키지 않으며, 번역 전에도 한국어로 게시할 수 있다.
 - 영어가 더 편한 저자는 담당 챕터의 `authoritative-lang` 설정을 티칭 팀과 조율해 `en`으로 바꾸고 영어 원문을 작성할 수 있다. 이때 한국어판이 번역 생성물이 된다.
 - `MACHINE-TRANSLATED` 마커가 있는 파일은 직접 수정하지 않는다. 원문을 고치고 `tools/translate`로 번역을 갱신한다. 번역 실행에는 Claude Code CLI가 필요하다.
 
@@ -61,3 +62,5 @@ AI 작업 지침은 [AGENTS.md](AGENTS.md)에 모아 둔다. CLAUDE.md는 이 �
 ## 빌드가 깨졌을 때
 
 `quarto render` 오류의 파일과 줄 번호를 먼저 확인한다. 콜아웃 블록의 `:::` 짝, frontmatter와 include 경로를 점검한다. 챕터를 추가하거나 삭제했다면 `ko/_quarto.yml`과 `en/_quarto.yml`을 모두 갱신했는지 확인한다.
+
+PR의 `build`는 원고의 HTML·PDF 생성을, `English translation readiness`는 저장된 웹 영어의 준비 상태를 확인한다. 영어가 없는 항목은 Actions 실행 요약과 `translation-backlog` 첨부 파일에 남고 한국어 원고 검사는 통과한다. 저장된 번역의 절 번호나 인라인 구조가 손상된 경우는 별도 오류이므로 티칭 팀에 알린다.

@@ -20,7 +20,7 @@ export function fragments(html) {
   const dom = unitsFor(html);
   return dom === null ? null : [...new Set(dom.units.map(unit => unit.source))];
 }
-export function embed(html, translations) {
+export function embed(html, translations, {pending = false} = {}) {
   const {document} = parseHTML(html);
   document.getElementById("vc-translation-data")?.remove();
   const data = document.createElement("script");
@@ -28,23 +28,26 @@ export function embed(html, translations) {
   data.type = "application/json";
   // JSON is text, never executable HTML, even if a source or translation
   // contains a literal closing script tag.
-  data.textContent = JSON.stringify({version: 2, generation: VERSION, excluded: EXCLUDED, method: "direct-ko-en", translations}).replaceAll("<", "\\u003c");
+  data.textContent = JSON.stringify({version: 2, generation: VERSION, excluded: EXCLUDED, method: "direct-ko-en", status: pending ? "pending" : "ready", translations}).replaceAll("<", "\\u003c");
   document.body.append(data);
   return document.toString();
 }
 
-export function check(html) {
+export function check(html, {allowMissing = false} = {}) {
   const texts = fragments(html);
   if (texts === null) return;
   const {document} = parseHTML(html);
   const data = JSON.parse(document.getElementById("vc-translation-data")?.textContent || "null");
-  if (data?.version !== 2 || data.generation !== VERSION || data.excluded !== EXCLUDED) throw new Error("Missing/invalid translation data");
+  if (data?.version !== 2 || data.generation !== VERSION || data.excluded !== EXCLUDED || !data.translations || typeof data.translations !== "object" || Array.isArray(data.translations)) throw new Error("Missing/invalid translation data");
+  if (data.status !== undefined && !["ready","pending"].includes(data.status)) throw new Error("Invalid translation status");
   const dom = unitsFor(html);
-  for (const text of texts) {
-    if (!Object.hasOwn(data.translations, text) || typeof data.translations[text] !== "string" || !data.translations[text].trim()) throw new Error(`Missing translation: ${text.slice(0, 80)}`);
-  }
+  const missing = texts.filter(text => !Object.hasOwn(data.translations, text));
+  if (missing.length && (!allowMissing || data.status !== "pending")) throw new Error(`Missing translation: ${missing[0].slice(0, 80)}`);
+  if (!missing.length && data.status === "pending") throw new Error("Complete translations must be marked ready");
   for (const unit of dom.units) {
+    if (!Object.hasOwn(data.translations, unit.source)) continue;
     validateTranslation(unit.source, data.translations[unit.source]);
     dom.render(unit, data.translations[unit.source]);
   }
+  return {pending: missing.length > 0, missing};
 }

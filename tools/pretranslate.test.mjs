@@ -1,10 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFile} from "node:fs/promises";
+import {readFile, writeFile, mkdir, mkdtemp, rm} from "node:fs/promises";
+import {tmpdir} from "node:os";
+import {join} from "node:path";
+import {fileURLToPath} from "node:url";
+import {execFile} from "node:child_process";
+import {promisify} from "node:util";
 import vm from "node:vm";
 import {parseHTML} from "linkedom";
 import {fragments, embed, check, unitsFor} from "./_translation_html.mjs";
-import {prepare} from "./pretranslate.mjs";
+import {prepare, translationReport} from "./pretranslate.mjs";
 
 const fixture = '<!doctype html><html lang="ko"><head><title>한국어 제목</title><script>const untouched="한국어 코드";</script></head><body><nav>목차</nav><main><h1>테스트 제목</h1><p>본문 <a href="/chapter#anchor">링크</a>입니다.</p><pre><code>print("코드 보존")</code></pre><span translate="no">번역 제외</span></main></body></html>';
 const toggle = (await readFile(new URL("../assets/language-toggle.html", import.meta.url), "utf8")).match(/<script>([\s\S]*)<\/script>/)[1];
@@ -145,4 +150,75 @@ test("Quarto publication dates can change without translating any new prose", as
   await prepare([page],{});
   assert.equal(page.translations["2026년 11월 17일"],"November 17, 2026");
   await assert.rejects(prepare([{texts:["새 원문은 2026년 11월 17일에 썼다."],translations:{}}],{}),/Missing saved English/);
+});
+
+test("missing English is reported separately without hiding invalid saved translations", async () => {
+  const pages = [
+    {file:"/site/ready.html",texts:["공통 제목"],translations:{}},
+    {file:"/site/new.html",texts:["공통 제목","새 원문"],translations:{}},
+    {file:"/site/reviews/new.html",texts:["공통 제목","새 원문"],translations:{}}
+  ];
+  const saved = {"공통 제목":"Shared title"};
+  await prepare(pages,saved,{allowMissing:true});
+  const report = translationReport(pages,saved);
+  assert.equal(report.readyPages,1);
+  assert.equal(report.pendingPages.length,2);
+  assert.deepEqual(report.missing.map(x=>x.source),["새 원문"]);
+  assert.equal(report.missing[0].pages.length,2);
+  assert.equal(pages[1].translations["공통 제목"],"Shared title");
+  await assert.rejects(prepare([{texts:["새 원문","§2.4 제목"],translations:{}}],{"§2.4 제목":"§2.5 Title"},{allowMissing:true}),/§2.4/);
+});
+
+test("pending pages stay entirely Korean without a banner or changing a saved EN preference", () => {
+  const partial = {...fixtureMap};delete partial["본문 <v0>링크</v0>입니다."];
+  const html = embed(fixture,partial,{pending:true});
+  assert.throws(()=>check(html),/Missing translation/);
+  assert.equal(check(html,{allowMissing:true}).pending,true);
+  assert.throws(()=>check(embed(fixture,partial),{allowMissing:true}),/Missing translation/);
+  assert.throws(()=>check(embed(fixture,{...partial,"테스트 제목":"<img src=x>"},{pending:true}),{allowMissing:true}),/Unexpected translation markup/);
+  assert.throws(()=>check(embed(fixture,{...partial,"테스트 제목":""},{pending:true}),{allowMissing:true}),/Empty translation/);
+  const storage=memoryStorage();storage.setItem("vc-reading-language","en");
+  const boot = input => {
+    const {window}=parseHTML(input);
+    vm.runInContext(toggle,vm.createContext({document:window.document,location:{pathname:"/new.html"},localStorage:storage,sessionStorage:memoryStorage()}));
+    return window.document;
+  };
+  const pending=boot(html);
+  assert.equal(pending.documentElement.lang,"ko");
+  assert.equal(pending.querySelector("h1").textContent,"테스트 제목");
+  assert.equal(pending.querySelector("main p").textContent,"본문 링크입니다.");
+  assert.equal(pending.querySelector('.vc-language button[lang="en"]').disabled,true);
+  assert.match(pending.querySelector('.vc-language button[lang="en"]').getAttribute("aria-label"),/pending/);
+  assert.equal(pending.querySelector('[role="status"]').textContent,"");
+  assert.equal(storage.getItem("vc-reading-language"),"en");
+  const ready=boot(embed(html,fixtureMap));
+  assert.equal(ready.documentElement.lang,"en");
+  assert.equal(ready.querySelector("h1").textContent,"Test title");
+});
+
+test("CLI publishes ready and pending pages, saves a deduplicated backlog, and retains strict checking", async () => {
+  const root=await mkdtemp(join(tmpdir(),"vibe-translation-"));
+  const run=promisify(execFile);
+  const cli=fileURLToPath(new URL("./pretranslate.mjs",import.meta.url));
+  const pending=fixture.replace("</main>","<p>새 원문</p></main>");
+  try {
+    await mkdir(join(root,"translations"));await mkdir(join(root,"site/reviews"),{recursive:true});
+    await writeFile(join(root,"translations/glossary.ko-en.json"),"{}");
+    await writeFile(join(root,"translations/reviewed.ko-en.json"),JSON.stringify(fixtureMap));
+    await writeFile(join(root,"site/ready.html"),fixture);
+    await writeFile(join(root,"site/pending.html"),pending);
+    await writeFile(join(root,"site/reviews/pending.html"),pending);
+    const opts={cwd:root,env:{...process.env,GITHUB_STEP_SUMMARY:join(root,"summary.md")}};
+    await assert.rejects(run(process.execPath,[cli,"site"],opts),/Missing saved English/);
+    assert.equal(await readFile(join(root,"site/pending.html"),"utf8"),pending);
+    await run(process.execPath,[cli,"site","--allow-missing","--report","reports/backlog.json"],opts);
+    await run(process.execPath,[cli,"site","--check","--allow-missing"],opts);
+    const report=JSON.parse(await readFile(join(root,"reports/backlog.json"),"utf8"));
+    assert.equal(report.totalPages,3);assert.equal(report.readyPages,1);
+    assert.equal(report.missing.length,1);assert.equal(report.missing[0].source,"새 원문");
+    assert.equal(report.missing[0].pages.length,2);
+    assert.match(await readFile(join(root,"summary.md"),"utf8"),/Missing English does not block/);
+    check(await readFile(join(root,"site/ready.html"),"utf8"));
+    await assert.rejects(run(process.execPath,[cli,"site","--check"],opts),/Missing translation/);
+  } finally {await rm(root,{recursive:true,force:true});}
 });

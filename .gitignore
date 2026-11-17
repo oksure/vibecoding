@@ -8,3 +8,4 @@ _book/
 /.luarc.json
 /node_modules/
 /.cache/
+/translation-backlog.json

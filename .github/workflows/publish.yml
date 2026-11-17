@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -45,20 +43,59 @@ jobs:
       - name: Build book (HTML ko+en, PDF ko+en, assemble _site)
         run: tools/build
 
-      - name: Attach saved English translations
-        run: npm run translate:web
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rendered-book
+          path: _site/
+          include-hidden-files: true
+          retention-days: 1
+          if-no-files-found: error
 
-      - name: Verify that every Korean page has a complete English translation
-        run: node tools/pretranslate.mjs --check
+  translations:
+    name: English translation readiness
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: rendered-book
+          path: _site/
+
+      - name: Attach available English and report untranslated pages
+        run: node tools/pretranslate.mjs --allow-missing --report translation-backlog.json
+
+      - name: Verify English-ready pages and Korean-only fallback pages
+        run: node tools/pretranslate.mjs --check --allow-missing
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: translation-backlog
+          path: translation-backlog.json
+          retention-days: 14
+          if-no-files-found: error
 
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: _site
 
   deploy:
     if: github.event_name != 'pull_request'
-    needs: build
+    needs: translations
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
