@@ -18,7 +18,7 @@
     const escape = text => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     const selector = "p,h1,h2,h3,h4,h5,h6,td,th,figcaption,dt,dd,li";
     const blocks = [...document.querySelectorAll(selector)].filter(node =>
-      !node.closest(excluded) && !node.querySelector(selector) && korean(node.textContent));
+      !node.closest(excluded) && !node.querySelector(selector + ",pre.text") && korean(node.textContent));
     const owners = new Set(blocks);
     function pack(node) {
       const templates = [];
@@ -33,6 +33,13 @@
       return {source:[...node.childNodes].map(visit).join("").trim(), templates};
     }
     const units = blocks.map(node => ({node, kind:"block", ...pack(node)}));
+    // Plain-text prompt/specification examples are prose. Executable code
+    // remains protected by the exclusions above.
+    for (const node of document.querySelectorAll("pre.text > code")) {
+      if (korean(node.textContent) && !node.closest('.notranslate,[translate="no"]')) {
+        units.push({node,kind:"block",source:escape(node.textContent).trim(),templates:[]});
+      }
+    }
     const walker = document.createTreeWalker(document.body, 4);
     let node;
     while ((node = walker.nextNode())) {

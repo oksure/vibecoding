@@ -16,6 +16,22 @@ test("HTML collection excludes code, scripts and explicitly untranslated content
   assert.equal(fragments(fixture.replace('lang="ko"','lang="en"')), null);
 });
 
+test("plain-text prompt examples switch languages while executable code remains intact", () => {
+  const html = '<html lang="ko"><body><ul><li>예시<pre class="text"><code>파일을 읽어 줘.\n단위는 유지해 줘.</code></pre></li></ul><pre class="python"><code>print("코드 보존")</code></pre><pre class="text" translate="no"><code>보호된 예시</code></pre></body></html>';
+  const map = {"예시":"Example", "파일을 읽어 줘.\n단위는 유지해 줘.":"Read the file.\nKeep the units."};
+  assert.deepEqual(new Set(fragments(html)),new Set(Object.keys(map)));
+  const {window} = parseHTML(embed(html,map));
+  vm.runInContext(toggle,vm.createContext({document:window.document,location:{pathname:"/example.html"},localStorage:memoryStorage(),sessionStorage:memoryStorage()}));
+  const [ko,en] = window.document.querySelectorAll(".vc-language button");
+  en.click();
+  assert.equal(window.document.documentElement.lang,"en");
+  assert.equal(window.document.querySelector("pre.text code").textContent,"Read the file.\nKeep the units.");
+  assert.equal(window.document.querySelector("pre.python code").textContent,'print("코드 보존")');
+  assert.equal(window.document.querySelector('[translate="no"] code').textContent,"보호된 예시");
+  ko.click();
+  assert.equal(window.document.querySelector("pre.text code").textContent,"파일을 읽어 줘.\n단위는 유지해 줘.");
+});
+
 test("character references remain in the same text fragment as in a browser", () => {
   const html = '<html lang="ko"><body><p>저자 외, Expectation vs.&nbsp;Experience &amp; Tools</p></body></html>';
   assert.deepEqual(fragments(html), ["저자 외, Expectation vs.\u00a0Experience &amp; Tools"]);
