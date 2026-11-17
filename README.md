@@ -20,10 +20,12 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 - 본문 번역은 `translations/reviewed.ko-en.json`, 목차·제목·공통 문구는 `translations/glossary.ko-en.json`에 저장한다. 키는 원문의 정확한 문구이며, 원문이 바뀌면 해당 번역도 갱신해야 한다.
 - 배포는 저장된 영어를 한국어 HTML에 연결한다. 같은 글의 일반판과 리뷰판은 같은 번역을 사용한다. EN을 누르면 즉시 전환되며 KO로 원문을 복원한다.
 - 문단 전체를 하나의 단위로 연결해 강조나 링크 사이에서 문장이 잘리거나 반복되는 일을 막는다. 원래 링크, 인라인 코드, 실행 코드 블록과 제목 바로가기를 보존한다. 자연어 프롬프트나 명세를 담은 `text` 예시 블록은 함께 번역한다.
-- 번역이 빠졌거나 절 번호·날짜·주요 인명과 도구명·인라인 표시가 손상되면 배포를 중단한다. 이 검사는 의미 검수를 대체하지 않는다.
-- 수강생은 원문을 작성해 PR을 제출한다. 웹 영어 번역의 추가·갱신은 티칭 팀이 관리한다. 배포할 때 AI가 자동으로 새 번역을 작성하는 구조는 아니다.
+- PR에서는 원고 빌드(`build`)와 영어 준비 상태(`English translation readiness`)를 별도로 검사한다. 영어가 없는 원고도 한국어 검사와 게시를 진행한다. 번역을 기다리는 글은 한국어로 게시하고 EN만 비활성화한다. 번역이 준비된 글의 EN은 계속 사용할 수 있다.
+- 번역 누락은 Actions 실행 요약과 `translation-backlog` 첨부 파일에 기록한다. 첨부 JSON에는 번역할 정확한 원문과 영향을 받는 일반판·리뷰판 경로가 들어 있다. PR 댓글이나 알림 메시지를 자동으로 작성하지 않는다.
+- 저장된 번역의 절 번호·날짜·주요 인명과 도구명·인라인 표시가 손상되면 오류로 처리한다. 번역이 없는 경우와 손상된 번역을 구분하며, 이 검사는 의미 검수를 대체하지 않는다.
+- 수강생은 원문만 작성해 PR을 제출한다. 웹 영어 번역의 추가·갱신은 티칭 팀이 요청에 따라 별도로 처리한다. PR 접수나 배포 시 번역 모델과 번역 API를 호출하지 않는다.
 
-로컬에서는 `npm ci`, `tools/build`, `npm run translate:web`을 차례로 실행한다. `node tools/pretranslate.mjs --plan`은 저장 번역 누락 수를, `--check`는 배포 HTML의 번역 완전성을 확인한다. `npm test`는 원문과 번역의 대응, KO/EN 복원, 문단과 링크·코드 보존을 검사한다.
+로컬에서는 `npm ci`, `tools/build`, `npm run translate:web -- --allow-missing --report translation-backlog.json`을 차례로 실행한다. `node tools/pretranslate.mjs --check --allow-missing`은 영어가 준비된 글과 한국어로 게시할 글을 함께 확인한다. `--allow-missing` 없이 실행하면 기존처럼 모든 번역이 있어야 통과하므로, 전체 번역 완료를 점검할 때 쓴다. `--plan`은 HTML을 수정하지 않고 번역 누락 현황을 확인한다. `npm test`는 원문과 번역의 대응, KO/EN 복원, 문단과 링크·코드 보존, 번역 대기 상태를 검사한다.
 
 기존 `/en/` 페이지와 영문 PDF는 `en/` 원고를 사용하는 별도 판으로 유지한다. 그 원고의 번역 도구인 `tools/translate`와 웹 읽기용 사전 번역 도구인 `tools/pretranslate.mjs`는 구분한다.
 

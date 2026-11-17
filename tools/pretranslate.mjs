@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Attach saved English to the rendered Korean web edition. This command does
 // not generate translations, call APIs, or run a translation model.
-import {readFile, writeFile, readdir} from "node:fs/promises";
-import {resolve, join} from "node:path";
+import {readFile, writeFile, readdir, mkdir, appendFile} from "node:fs/promises";
+import {resolve, join, relative, dirname} from "node:path";
 import {pathToFileURL} from "node:url";
 import {hasKorean, fragments, embed, check} from "./_translation_html.mjs";
 import {validateTranslation} from "./_translation_quality.mjs";
@@ -45,19 +45,56 @@ export function curatedTranslation(text, glossary) {
   }).join("");
 }
 
-export async function prepare(pages, saved) {
+export async function prepare(pages, saved, {allowMissing = false} = {}) {
   for (const text of new Set(pages.flatMap(page => page.texts))) {
     const english = curatedTranslation(text,saved);
+    if (english === undefined && allowMissing) continue;
     if (typeof english !== "string" || !english.trim()) throw new Error(`Missing saved English translation: ${text.slice(0,160)}`);
     validateTranslation(text,english);
     for (const page of pages) if (page.texts.includes(text)) page.translations[text] = english;
   }
 }
 
+export function translationReport(pages, saved) {
+  const missing = new Map();
+  const pendingPages = [];
+  for (const page of pages) {
+    const file = relative(process.cwd(),page.file).split("\\").join("/");
+    const texts = page.texts.filter(text => curatedTranslation(text,saved) === undefined);
+    if (texts.length) pendingPages.push({file,missingCount:texts.length});
+    for (const source of texts) {
+      if (!missing.has(source)) missing.set(source,{source,pages:[]});
+      missing.get(source).pages.push(file);
+    }
+  }
+  return {version:1,totalPages:pages.length,readyPages:pages.length-pendingPages.length,pendingPages,missing:[...missing.values()]};
+}
+
+export function reportSummary(report) {
+  const lines = ["## English translation readiness", "",
+    `- Pages ready for EN: ${report.readyPages}/${report.totalPages}`,
+    `- Pages awaiting translation: ${report.pendingPages.length}`,
+    `- Unique text units awaiting translation: ${report.missing.length}`, "",
+    "Missing English does not block the Korean manuscript build or publication. EN is disabled only on pages awaiting translation. Students submit the original manuscript; the teaching team adds English separately.", ""];
+  for (const page of report.pendingPages) lines.push(`- \`${page.file.replace(/[\r\n`]/g," ")}\`: ${page.missingCount} missing text units`);
+  lines.push("", "The translation-backlog artifact lists the exact source text and affected pages. No translation API or model was called.", "");
+  return lines.join("\n");
+}
+
 async function main() {
   const args = process.argv.slice(2);
-  for (const arg of args) if (arg.startsWith("--") && !["--check","--plan"].includes(arg)) throw new Error(`Unknown option: ${arg}`);
-  const directories = args.filter(arg => !arg.startsWith("--"));
+  const directories = [], flags = new Set();
+  let reportFile;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--report") {
+      reportFile = args[++i];
+      if (!reportFile || reportFile.startsWith("--")) throw new Error("--report requires a file path");
+    } else if (["--check","--plan","--allow-missing"].includes(arg)) flags.add(arg);
+    else if (arg.startsWith("--")) throw new Error(`Unknown option: ${arg}`);
+    else directories.push(arg);
+  }
+  const allowMissing = flags.has("--allow-missing");
   if (!directories.length) directories.push("_site");
   const pages = [];
   for (const directory of directories) {
@@ -67,27 +104,34 @@ async function main() {
     }
   }
   if (!pages.length) throw new Error("No Korean HTML pages found");
-  if (args.includes("--check")) {
-    for (const page of pages) check(page.html);
-    console.log(`Verified saved English on ${pages.length} Korean pages`);
+  if (flags.has("--check")) {
+    let pending = 0;
+    for (const page of pages) if (check(page.html,{allowMissing}).pending) pending++;
+    console.log(`Verified ${pages.length-pending} English-ready pages and ${pending} Korean pages awaiting translation`);
     return;
   }
   const saved = {
     ...JSON.parse(await readFile(resolve("translations/glossary.ko-en.json"),"utf8")),
     ...JSON.parse(await readFile(resolve("translations/reviewed.ko-en.json"),"utf8"))
   };
-  const texts = [...new Set(pages.flatMap(page => page.texts))];
-  const missing = texts.filter(text => !curatedTranslation(text,saved));
-  console.log(`${pages.length} pages, ${texts.length} unique text units, ${missing.length} missing saved translations`);
-  if (args.includes("--plan")) return;
-  await prepare(pages,saved);
+  const report = translationReport(pages,saved);
+  const texts = new Set(pages.flatMap(page => page.texts));
+  console.log(`${pages.length} pages, ${texts.size} unique text units, ${report.missing.length} missing saved translations`);
+  if (reportFile) {
+    await mkdir(dirname(resolve(reportFile)),{recursive:true});
+    await writeFile(resolve(reportFile),JSON.stringify(report,null,2)+"\n","utf8");
+  }
+  if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY,reportSummary(report),"utf8");
+  if (flags.has("--plan")) return;
+  await prepare(pages,saved,{allowMissing});
   // Validate every output before touching any deployable file.
   const outputs = pages.map(page => {
-    const html = embed(page.html,page.translations); check(html);
+    const pending = page.texts.some(text => !Object.hasOwn(page.translations,text));
+    const html = embed(page.html,page.translations,{pending}); check(html,{allowMissing});
     return {file:page.file,html};
   });
   for (const output of outputs) await writeFile(output.file,output.html,"utf8");
-  console.log(`English ready on ${pages.length} pages; no model or API used`);
+  console.log(`English ready on ${report.readyPages} pages; ${report.pendingPages.length} pages remain Korean until translated; no model or API used`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

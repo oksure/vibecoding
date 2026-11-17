@@ -100,6 +100,12 @@
       note.textContent = "이 미리보기에는 영어 번역이 준비되지 않았습니다.";
       return;
     }
+    if (data.status === "pending") {
+      en.disabled = true;
+      en.title = "영어 번역 준비 중 / English translation pending";
+      en.setAttribute("aria-label", en.title);
+      return;
+    }
     const originals = [];
     const dom = translationDOM(document, data.excluded);
     try {
