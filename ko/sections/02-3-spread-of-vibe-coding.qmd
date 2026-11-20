@@ -39,3 +39,21 @@ Willison은 바이브 코딩이 아이디어의 작동 가능성을 시험하는
 용어 자체에 대한 관심도 커졌다. Willison은 2025년 3월 뉴욕타임스와 Ars Technica, 가디언의 보도와 온라인 논의를 언급하며, 바이브 코딩이라는 말이 AI를 활용한 개발 전반에 쓰이기 시작했다고 지적했다 [Simon Willison, Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/) (2025). Collins는 같은 해 이를 올해의 단어로 선정했고 [Rachel Quin, Collins’ Word of the Year 2025: AI meets authenticity as society shifts](https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/) (2025), Merriam-Webster도 슬랭 항목에서 설명하고 있다 [Merriam-Webster, Vibe coding](https://www.merriam-webster.com/slang/vibe-coding) (수정: 2026-06-04). 이처럼 서비스 이용 규모, 언론 보도, 사전 등재는 서로 다른 현상을 보여주는 지표다. 이를 함께 보면 관심의 확대를 살펴볼 수 있지만, 각 요인이 확산에 얼마나 기여했는지를 측정할 수는 없다.
 
 진입장벽의 변화는 사람들이 바이브 코딩을 시도할 이유를 제공했고, 공개된 제작 경험과 미디어의 소개는 그 가능성을 더 널리 알렸다. 참여자의 확대와 함께 이름이 가리키는 작업도 넓어졌으며, 그 정의와 적용 범위는 2.4절에서 구분해 살펴본다.
+
+## 참고 자료
+
+[1] Cate Lawrence (2025-07-23). [Lovable becomes fastest software company ever to reach $100M ARR](https://tech.eu/2025/07/23/lovable-becomes-fastest-software-company-ever-to-reach-100m-arr/). Tech.eu.
+
+[2] Ivan Mehta (2025-03-06). [A quarter of startups in YC’s current cohort have codebases that are almost entirely AI-generated](https://techcrunch.com/2025/03/06/a-quarter-of-startups-in-ycs-current-cohort-have-codebases-that-are-almost-entirely-ai-generated/). TechCrunch.
+
+[3] Merriam-Webster (수정: 2026-06-04; 확인: 2026-11-15). [Vibe coding](https://www.merriam-webster.com/slang/vibe-coding). *Merriam-Webster.com*.
+
+[4] Rachel Quin (2025-11-06). [Collins’ Word of the Year 2025: AI meets authenticity as society shifts](https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/). Collins Dictionary Language Blog.
+
+[5] Linus Torvalds (확인: 2026-11-15). [AudioNoise: Random digital audio effects](https://github.com/torvalds/AudioNoise). GitHub 저장소.
+
+[6] Simon Willison (2025-03-19). [Not all AI-assisted programming is vibe coding (but vibe coding rocks)](https://simonwillison.net/2025/Mar/19/vibe-coding/). *Simon Willison’s Weblog*.
+
+[7] Simon Willison (2025-03-06). [Will the future of software development run on vibes?](https://simonwillison.net/2025/Mar/6/vibe-coding/). *Simon Willison’s Weblog*.
+
+[8] Kevin Roose (2025-02-27). [Not a coder? With A.I., just having an idea can be enough](https://www.nytimes.com/2025/02/27/technology/personaltech/vibecoding-ai-software-programming.html). *The New York Times*.
