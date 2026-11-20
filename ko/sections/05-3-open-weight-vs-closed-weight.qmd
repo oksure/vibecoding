@@ -1,2 +1,109 @@
-# §5.3 Open-weight와 Closed-weight 모델 사이 {.unnumbered}
+<!-- authoritative-lang: ko -->
 
+# §5.3 Open-weight와 Closed-weight 모델 사이 {#sec-open-weight-vs-closed-weight .unnumbered}
+
+바이브 코딩 도구를 쓰다 보면 “이 코드와 데이터를 외부 API로 보내도 되는가”라는 질문을 만나게 된다. GPT, Claude, Gemini 같은 모델은 가중치가 공개되지 않아 제공사나 제휴 클라우드 사업자의 서버에서만 실행된다. 반면 gpt-oss, DeepSeek-R1, Llama 같은 모델은 가중치 파일을 내려받아 직접 실행할 수 있다. 두 방식은 성능뿐 아니라 데이터가 가는 곳, 비용 구조, 모델을 고칠 수 있는 범위, 운영 책임이 다르다. 작업별 모델 선택(§5.1), 라우팅(§5.4), 비용 관리(§5.5)는 각 절에서 다루고, 여기서는 가중치 접근권, 데이터 통제, 호스팅 책임을 중심으로 본다.
+
+## 용어: open-weight는 오픈소스가 아니다
+
+가중치(weights)는 학습으로 정해진 모델 내부의 숫자 값이다. 이 절에서 closed-weight 모델은 가중치를 공개하지 않아 제공사의 API나 서비스로만 쓸 수 있는 모델을, open-weight 모델은 가중치를 내려받아 직접 실행할 수 있게 공개한 모델을 뜻한다. 오픈소스 이니셔티브(OSI)가 2024년 10월 28일 발표한 오픈소스 AI 정의 1.0(OSAID)은 사용, 연구, 수정, 공유의 네 가지 자유와 함께, 학습 데이터 정보(Data Information), 학습과 실행에 쓰인 전체 코드(Code), 모델 파라미터(Parameters)를 제공하라고 요구한다([OSI, The Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition); [TechCrunch, We finally have an ‘official’ definition for open source AI](https://techcrunch.com/2024/10/28/we-finally-have-an-official-definition-for-open-source-ai/) (게시: 2024-10-28)). OSI는 가중치만 공개하고 학습 코드와 데이터 정보를 내놓지 않는 방식을 “Open Weights”라 부르며 오픈소스 AI와 구분한다([OSI, Open Weights: not quite what you’ve been told](https://opensource.org/ai/open-weights) (게시: 2025-01-29)). 세 요소를 모두 공개한 예로는 약 6조 토큰 규모의 학습 데이터셋 Dolma 3와 학습 단계별 체크포인트까지 공개하고 모든 모델을 Apache 2.0으로 배포한 Ai2의 Olmo 3가 있다([Ai2, Olmo 3: Charting a Path Through the Model Flow to Lead Open Source AI](https://www.businesswire.com/news/home/20251120271934/en) (게시: 2025-11-20)).
+
+같은 open-weight라도 사용 조건은 라이선스마다 다르다. gpt-oss는 Apache 2.0([OpenAI, gpt-oss-120b 모델 카드](https://huggingface.co/openai/gpt-oss-120b) (확인: 2026-11-15)), DeepSeek-R1은 MIT 라이선스로([DeepSeek, DeepSeek-R1 LICENSE](https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE) (확인: 2026-11-15)) 상업적 이용과 수정을 폭넓게 허용한다. 반면 Llama 4 Community License는 출시일 기준 직전 달 월간 활성 사용자가 7억 명을 넘는 기업에 Meta의 별도 허가를 요구하고, “Built with Llama” 표시, Llama로 개선한 모델 이름 앞에 “Llama”를 붙이는 것, 사용 정책 준수를 조건으로 건다([Meta, LLAMA 4 COMMUNITY LICENSE AGREEMENT](https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE) (시행: 2025-04-05)). 이런 용도 제한은 OSAID가 요구하는 “어떤 목적으로든 허가 없이 사용할 자유”와 거리가 있다(이 비교는 이 절의 해석이다). 따라서 “open-weight인가”보다 “내 용도에 이 라이선스가 맞는가”를 먼저 확인하고, 모델의 용도와 한계, 학습 데이터, 평가 결과를 적은 모델 카드를 함께 읽는다([Hugging Face, Model Cards](https://huggingface.co/docs/hub/model-cards) (확인: 2026-11-15)).
+
+## 가중치 공개 여부와 호스팅 방식은 별개의 선택이다
+
+가중치를 공개했는지와 누가 모델을 실행하는지를 나누면 다음과 같은 조합이 나온다.
+
+|  | 제공사나 클라우드 사업자가 실행 | 사용자가 직접 실행 |
+| --- | --- | --- |
+| Closed-weight | 제공사 API(OpenAI API, Anthropic API 등), 클라우드 호스팅(Microsoft Foundry의 Azure OpenAI 모델 등) | 가중치가 없으므로 해당 없음 |
+| Open-weight | 관리형 API(Amazon Bedrock의 gpt-oss 등) | 개인 PC, 연구실 서버, 임대 GPU(Ollama, vLLM 등) |
+
+Microsoft는 Foundry에서 판매하는 모델(Azure OpenAI 모델 포함)을 자사 Azure 환경에서 호스팅하며, 사용자의 프롬프트와 출력은 OpenAI 같은 모델 제공사에 제공되지 않는다고 밝힌다. 다만 오남용 감시에 걸린 데이터는 Microsoft 직원이 검토할 수 있다([Microsoft, Data, privacy, and security for Foundry Models sold by Azure in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy) (확인: 2026-11-15)). 반대로 AWS는 2025년 8월 5일 gpt-oss를 Amazon Bedrock에서 제공한다고 발표했다([AWS, Amazon Bedrock now provides simplified access to OpenAI open weight models](https://aws.amazon.com/about-aws/whats-new/2025/08/amazon-bedrock-automatic-access-openai-open-weight-models) (게시: 2025-08-19)). 이 경우 모델은 open-weight이지만 사용자는 GPU를 운영하지 않는다. 아래 기준 가운데 데이터 통제와 운영 부담은 주로 “누가 실행하는가”에, 커스텀과 버전 유지는 주로 “가중치를 가졌는가”에 달려 있다.
+
+## 다섯 가지 기준으로 비교하기
+
+### 보안과 데이터 통제
+
+외부 API를 쓰면 프롬프트에 담긴 코드와 데이터가 제공사로 전송된다. OpenAI는 2023년 3월 1일부터 API 데이터를 사용자가 동의하지 않는 한 학습에 쓰지 않지만, 오남용 감시 로그는 기본 최대 30일 보관하고 이 로그에서 고객 콘텐츠를 빼는 Zero Data Retention은 사전 승인이 필요하다고 밝힌다. Files, Vector stores, Batches처럼 기능 수행을 위해 저장한 데이터는 사용자가 삭제할 때까지 보관된다([OpenAI, Data controls in the OpenAI platform](https://developers.openai.com/api/docs/guides/your-data) (확인: 2026-11-15)). Anthropic도 API 같은 상업용 제품의 입출력을 기본적으로 학습에 쓰지 않는다고 밝힌다([Anthropic, Is my data used for model training?](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training) (게시: 2026-08-18)). 이런 약속은 정책 문서에 근거하므로 바뀔 수 있고, 기관 규정이 외부 전송 자체를 금지한다면 충족되지 않는다. 미국 NTIA는 open-weight 모델의 이점으로 제3자와 데이터를 공유하지 않고 모델을 쓸 수 있다는 점을 꼽았다([NTIA, Dual-Use Foundation Models with Widely Available Model Weights](https://www.ntia.doc.gov/sites/default/files/publications/ntia-ai-open-model-report.pdf) (게시: 2024-07-30; Executive Summary)).
+
+직접 실행이 저절로 안전한 것은 아니다. JFrog는 Hugging Face에서 악성 모델 약 100개를 찾았는데, pickle 형식 모델은 불러오는 순간 심어진 코드가 실행될 수 있다([JFrog, Data Scientists Targeted by Malicious Hugging Face ML Models with Silent Backdoor](https://jfrog.com/blog/data-scientists-targeted-by-malicious-hugging-face-ml-models-with-silent-backdoor/) (게시: 2024-02-27)). 신뢰할 수 있는 배포처의 safetensors 형식 파일을 우선 쓴다([Hugging Face, Audit shows that safetensors is safe and ready to become the default](https://huggingface.co/blog/safetensors-security-audit) (게시: 2023-05-23)). 모델의 행동 특성도 모델마다 다르다. NIST 산하 CAISI의 평가에서 DeepSeek R1-0528 기반 에이전트는 비교한 미국 모델보다 악성 지시를 따를 가능성이 12배 높았고, 탈옥 기법을 쓰면 악의적 요청의 94%에 응답했다(미국 모델 8%). 비교 대상에는 open-weight 모델인 gpt-oss도 포함됐으므로, 이 결과는 open-weight 모델 전체의 문제로 일반화하지 말고, 모델마다 따로 평가해야 한다는 근거로 읽어야 한다([NIST, CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks](https://www.nist.gov/news-events/news/2025/09/caisi-evaluation-deepseek-ai-models-finds-shortcomings-and-risks) (게시: 2025-09-30)). 또한 NTIA는 open-weight 모델에 내장 안전장치가 훨씬 적고, 가중치를 공개한 개발자는 최종 사용자의 행동을 통제하거나 파악할 수 없다고 지적했다([NTIA, Open Model Weights Report: Background](https://www.ntia.doc.gov/programs-and-initiatives/artificial-intelligence/open-model-weights-report/background)). 직접 실행하면 제공사가 맡던 오남용 감시와 안전 필터를 사용자가 준비해야 한다.
+
+### 비용
+
+API는 보통 토큰 수에 따른 종량제라 사용량이 적거나 불규칙할 때 유리하다(구체적 가격은 §5.5). 직접 실행하면 GPU, 전기료, 관리 인력 비용이 요청이 없을 때도 들기 때문에 토큰당 비용은 GPU 가동률에 좌우된다. 서빙 소프트웨어도 비용을 바꾼다. vLLM 논문은 같은 지연 시간에서 처리량을 기존 시스템보다 2–4배 높였다고 보고했다([Woosuk Kwon 외, Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) (게시: 2023-09-12)). 필요한 메모리는 “파라미터 수 × 파라미터당 바이트”로 어림할 수 있다. 70B 모델은 16비트로 약 140GB, 4비트로 약 35GB가 필요하다(가중치만 어림한 값이며, 대화가 길어질수록 커지는 KV 캐시와 실행 환경용 메모리가 더 필요하다). 실제 예로 gpt-oss-120b는 80GB GPU 한 장에서, gpt-oss-20b는 16GB 메모리에서 실행된다([OpenAI, gpt-oss-120b 모델 카드](https://huggingface.co/openai/gpt-oss-120b)). 관리형 API로 open-weight 모델을 쓰면 GPU 없이 종량제로 시작하고, 나중에 직접 실행으로 옮길 선택지를 남길 수 있다.
+
+### 성능
+
+Epoch AI는 2024년 11월 open 모델이 프런티어 성능에 도달하기까지 약 1년이 걸렸다고 분석했다([Ben Cottier 외 (Epoch AI), How far behind are open models?](https://epoch.ai/publications/open-models-report) (게시: 2024-11-04)). 2026년 5월 분석에서는 2026년 1월 이후 최고 open-weight 모델이 프런티어 closed 모델보다 평균 4개월 뒤처졌다. 이 격차는 Epoch의 종합 능력 지표인 Epoch Capabilities Index(ECI)로 8점이며, Epoch는 이를 GPT-5와 GPT-5.5 사이의 차이와 비슷하다고 설명한다([Jack Edwards, Luke Emberson (Epoch AI), Open models lag state-of-the-art closed models by 4 months](https://epoch.ai/data-insights/open-closed-eci-gap) (게시: 2026-05-29)). 격차는 측정 대상에 따라 다르다. 사이버보안 능력에서는 6–7개월이었고([Jaeho Lee, Alexander Barry (Epoch AI), Open-weight models trail closed models in cyber capabilities by 6–7 months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap) (게시: 2026-10-16)), Håvard Tveit Ihle의 개인 분석에서는 문제가 공개된 벤치마크에서 4–6개월, 비공개 벤치마크에서 8–10개월이었다([Håvard Tveit Ihle, How far behind are open models? (LessWrong)](https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models) (게시: 2026-05-28)). 또 최고 open-weight 모델과 내가 돌릴 수 있는 모델은 다르다. DeepSeek-R1은 전체 6,710억 개 파라미터 모델이고, 개인 PC에서 돌리는 것은 대개 함께 공개된 1.5B–70B 증류 모델이다([DeepSeek, DeepSeek-R1 저장소](https://github.com/deepseek-ai/DeepSeek-R1)). 결국 후보 모델은 실제 맡길 작업으로 직접 시험하고, 모델 버전, 프롬프트, 실행 환경, 반복 횟수를 기록한다(§10.4).
+
+### 커스텀 가능성과 버전 유지
+
+가중치가 있으면 모델 자체를 바꿀 수 있다. 특정 분야 데이터로 추가 학습하는 파인튜닝(fine-tuning), 숫자의 정밀도를 낮춰 메모리를 줄이는 양자화(quantization), 큰 모델의 출력으로 작은 모델을 학습시키는 증류(distillation)가 대표적이다. LoRA는 기존 가중치를 고정하고 작은 저랭크 행렬만 학습해, GPT-3 175B 전체 파인튜닝 대비 학습 파라미터를 1만 배, GPU 메모리를 3배 줄였다([Edward J. Hu 외, LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) (게시: 2021-06-17)). gpt-oss-120b 모델 카드도 이 모델을 H100 노드 하나에서 파인튜닝할 수 있다고 적고 있다. closed-weight 모델은 프롬프트, 지침 파일, 제공사가 허용한 파인튜닝 범위 안에서만 조정할 수 있지만, 바이브 코딩의 맞춤화는 많은 경우 컨텍스트 수준에서 이뤄진다(§6.3). 버전 유지도 다르다. OpenAI는 안전이나 규정 준수 문제가 없는 한 정식 출시 모델은 최소 6개월, 특화 변형 모델은 최소 3개월 전에 종료를 알리고 프리뷰 모델은 2주 정도 예고로 종료할 수 있다고 밝히며, 예컨대 o1-preview는 2025년 4월 28일 공지 후 7월 28일 종료됐다([OpenAI, Deprecations](https://developers.openai.com/api/docs/deprecations) (확인: 2026-11-15)). 특정 모델에 맞춰 다듬은 프롬프트와 에이전트 설정은 모델이 바뀌면 다시 점검해야 한다. open-weight 모델은 파일을 보관하는 한 같은 버전을 계속 실행할 수 있어 실험을 재현하기 쉽다.
+
+### 운영 부담
+
+직접 실행하면 GPU 확보, 서빙 소프트웨어 업데이트, 모니터링, 보안, 라이선스 준수를 사용자가 맡는다. 혼자 쓰는 로컬 모델과 팀 전체가 쓰는 서비스는 부담의 크기가 크게 다르다(조직 단위 운영은 §17.2). 특히 서버 노출에 주의해야 한다. vLLM 문서는 --api-key가 /v1 경로만 보호하고 /invocations, /tokenize 같은 경로는 키 없이 접근된다며, 서버 앞단에서 요청을 받아 전달하는 리버스 프록시(nginx 등)로 허용할 경로만 열라고 권장한다([vLLM, Security](https://docs.vllm.ai/en/v0.19.1/usage/security/) (버전: v0.19.1)). 실제로 vLLM의 OpenAI 호환 서버에서 API 키 없이 접근할 수 있는 인증 우회 취약점(CVE-2026-48746)이 보고되었는데, 이 공격은 서버가 표준을 따르는 리버스 프록시 없이 외부에 직접 노출되어 있을 때 성립한다([Red Hat, CVE-2026-48746](https://access.redhat.com/security/cve/CVE-2026-48746) (확인: 2026-11-15)). 개인 수준의 시작은 간단하다. Ollama 문서에 따르면 Codex CLI를 --oss 옵션으로 실행하면 로컬 gpt-oss:20b 모델을 쓰고, 다른 모델은 -m 옵션으로 지정하며, 32K 토큰 이상의 컨텍스트 윈도가 권장된다([Ollama, Codex](https://docs.ollama.com/codex) (확인: 2026-11-15)).
+
+```bash
+codex --oss
+codex --oss -m gpt-oss:120b
+```
+
+위 명령은 문서에 나온 사용법을 옮긴 것이며, 이 원고를 쓰면서 실행한 결과가 아니다. 로컬 모델의 속도와 품질은 PC 사양과 모델에 따라 크게 달라지므로 자신의 작업으로 먼저 시험해 본다.
+
+## 기준별 비교 요약
+
+| 기준 | Closed-weight (제공사 API) | Open-weight (관리형 API) | Open-weight (직접 실행) |
+| --- | --- | --- | --- |
+| 데이터 위치 | 제공사 서버, 약관이 보관을 정함 | 클라우드 사업자 서버 | 사용자 인프라 안 |
+| 비용 구조 | 토큰 종량제 | 토큰 종량제 | 고정비 중심, 가동률이 단가 좌우 |
+| 최고 성능 | 프런티어 수준 | open-weight 최고 수준(평균 약 4개월 격차) | 보유 하드웨어로 돌릴 수 있는 수준 |
+| 커스텀, 버전 | 제공사 허용 범위, 제공사 일정에 따라 종료 | 서비스 허용 범위 | 파인튜닝 가능, 파일 보관 시 계속 사용 |
+| 운영 부담 | 낮음 | 낮음 | 높음 |
+| 보안 쟁점 | 데이터 외부 전송, 정책 변경 | 데이터 외부 전송 | 모델 파일 공급망, 서버 노출, 적은 안전장치 |
+
+## 상황에 맞게 고르는 순서
+
+1. 데이터가 외부로 나가도 되는가? 안 된다면 직접 실행이나 계약으로 조건을 확인한 클라우드 호스팅으로 좁힌다.
+2. 최신 프런티어 성능이 필요한 작업인가, 몇 개월 전 수준으로 충분한 반복 작업인가?
+3. 사용량이 적고 불규칙하면 종량제 API가, 많고 꾸준하면 직접 실행이 유리할 수 있다.
+4. 모델을 고치거나 같은 버전을 오래 유지해야 한다면 open-weight가 필요하다.
+5. 운영할 사람과 장비가 없다면 관리형 API부터 시작한다.
+
+이 질문이 답을 자동으로 정하지는 않는다. 민감한 데이터라도 서버를 안전하게 운영할 역량이 없다면 직접 실행이 더 안전하다고 단정할 수 없다. 반대로 API를 쓰더라도 계약과 데이터 보존 설정으로 필요한 통제 수준을 확보할 수 있다면, 운영 부담을 줄이는 쪽이 합리적일 수 있다.
+
+다음은 가상 사례다. 공개 전 실험 데이터를 다루는 연구실이 규정상 원본 데이터를 외부 서비스로 보낼 수 없다면, 원본 데이터가 들어가는 작업은 연구실 서버의 open-weight 모델에, 데이터가 없는 일반 코드 질문은 closed-weight API에 나눠 맡길 수 있다(§5.4 라우팅).
+
+이 선택은 한 번으로 끝나지 않는다. 성능 격차와 제공사 정책은 몇 개월 단위로 바뀌므로, 선택할 때 모델과 버전, 라이선스, 평가 조건, 데이터 보존 정책, 운영 책임자, 확인 날짜를 기록하고 주기적으로 다시 점검한다. 이 절의 수치와 정책은 2026년 11월 15일에 확인한 내용이다.
+
+## 참고문헌
+
+- [1] [OSI, The Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition) (확인: 2026-11-15)
+- [2] [TechCrunch, We finally have an ‘official’ definition for open source AI](https://techcrunch.com/2024/10/28/we-finally-have-an-official-definition-for-open-source-ai/) (게시: 2024-10-28)
+- [3] [OSI, Open Weights: not quite what you’ve been told](https://opensource.org/ai/open-weights) (게시: 2025-01-29; 수정: 2025-08-22)
+- [4] [Ai2, Olmo 3: Charting a Path Through the Model Flow to Lead Open Source AI](https://www.businesswire.com/news/home/20251120271934/en) (게시: 2025-11-20)
+- [5] [OpenAI, gpt-oss-120b 모델 카드](https://huggingface.co/openai/gpt-oss-120b) (확인: 2026-11-15; 모델: gpt-oss-120b, gpt-oss-20b)
+- [6] [DeepSeek, DeepSeek-R1 LICENSE](https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE) (확인: 2026-11-15)
+- [7] [DeepSeek, DeepSeek-R1 저장소](https://github.com/deepseek-ai/DeepSeek-R1) (확인: 2026-11-15)
+- [8] [Meta, LLAMA 4 COMMUNITY LICENSE AGREEMENT](https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE) (시행: 2025-04-05; 확인: 2026-11-15)
+- [9] [Jack Edwards, Luke Emberson (Epoch AI), Open models lag state-of-the-art closed models by 4 months](https://epoch.ai/data-insights/open-closed-eci-gap) (게시: 2026-05-29)
+- [10] [Ben Cottier 외 (Epoch AI), How far behind are open models?](https://epoch.ai/publications/open-models-report) (게시: 2024-11-04)
+- [11] [Jaeho Lee, Alexander Barry (Epoch AI), Open-weight models trail closed models in cyber capabilities by 6–7 months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap) (게시: 2026-10-16)
+- [12] [Håvard Tveit Ihle, How far behind are open models? (LessWrong)](https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models) (게시: 2026-05-28)
+- [13] [Microsoft, Data, privacy, and security for Foundry Models sold by Azure in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy) (수정: 2026-06-05; 확인: 2026-11-15)
+- [14] [AWS, Amazon Bedrock now provides simplified access to OpenAI open weight models](https://aws.amazon.com/about-aws/whats-new/2025/08/amazon-bedrock-automatic-access-openai-open-weight-models) (게시: 2025-08-19)
+- [15] [OpenAI, Data controls in the OpenAI platform](https://developers.openai.com/api/docs/guides/your-data) (확인: 2026-11-15)
+- [16] [Anthropic, Is my data used for model training?](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training) (게시: 2026-08-18; 확인: 2026-11-15)
+- [17] [NTIA, Dual-Use Foundation Models with Widely Available Model Weights](https://www.ntia.doc.gov/sites/default/files/publications/ntia-ai-open-model-report.pdf) (게시: 2024-07-30; Executive Summary)
+- [18] [NTIA, Open Model Weights Report: Background](https://www.ntia.doc.gov/programs-and-initiatives/artificial-intelligence/open-model-weights-report/background) (확인: 2026-11-15)
+- [19] [JFrog, Data Scientists Targeted by Malicious Hugging Face ML Models with Silent Backdoor](https://jfrog.com/blog/data-scientists-targeted-by-malicious-hugging-face-ml-models-with-silent-backdoor/) (게시: 2024-02-27)
+- [20] [Hugging Face, Audit shows that safetensors is safe and ready to become the default](https://huggingface.co/blog/safetensors-security-audit) (게시: 2023-05-23)
+- [21] [NIST, CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks](https://www.nist.gov/news-events/news/2025/09/caisi-evaluation-deepseek-ai-models-finds-shortcomings-and-risks) (게시: 2025-09-30)
+- [22] [Woosuk Kwon 외, Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) (게시: 2023-09-12)
+- [23] [Edward J. Hu 외, LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) (게시: 2021-06-17)
+- [24] [OpenAI, Deprecations](https://developers.openai.com/api/docs/deprecations) (확인: 2026-11-15)
+- [25] [Ollama, Codex](https://docs.ollama.com/codex) (확인: 2026-11-15)
+- [26] [vLLM, Security](https://docs.vllm.ai/en/v0.19.1/usage/security/) (버전: v0.19.1; 확인: 2026-11-15)
+- [27] [Red Hat, CVE-2026-48746](https://access.redhat.com/security/cve/CVE-2026-48746) (확인: 2026-11-15)
+- [28] [Hugging Face, Model Cards](https://huggingface.co/docs/hub/model-cards) (확인: 2026-11-15)
