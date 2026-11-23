@@ -63,4 +63,6 @@ AI 작업 지침은 [AGENTS.md](AGENTS.md)에 모아 둔다. CLAUDE.md는 이 �
 
 `quarto render` 오류의 파일과 줄 번호를 먼저 확인한다. 콜아웃 블록의 `:::` 짝, frontmatter와 include 경로를 점검한다. 챕터를 추가하거나 삭제했다면 `ko/_quarto.yml`과 `en/_quarto.yml`을 모두 갱신했는지 확인한다.
 
+그림 파일도 원고와 같은 PR에 포함한다. `sections/` 원고의 `images/example.png`는 `sections/images/example.png`를, `/images/example.png`는 해당 언어 폴더의 `images/example.png`를 가리킨다. PDF 생성 도구는 원고 위치를 기준으로 그림을 복사한다. `Validate manuscript image files` 단계에서 누락된 그림의 원고 경로와 파일명을 확인할 수 있다.
+
 PR의 `build`는 원고의 HTML·PDF 생성을, `English translation readiness`는 저장된 웹 영어의 준비 상태를 확인한다. 영어가 없는 항목은 Actions 실행 요약과 `translation-backlog` 첨부 파일에 남고 한국어 원고 검사는 통과한다. 저장된 번역의 절 번호나 인라인 구조가 손상된 경우는 별도 오류이므로 티칭 팀에 알린다.

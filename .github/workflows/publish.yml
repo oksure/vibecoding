@@ -36,6 +36,14 @@ jobs:
           sudo apt-get install -y -q fonts-noto-cjk rsync
           python3 -m pip install --quiet pyyaml
 
+      - name: Test PDF image paths
+        run: python3 -m unittest discover -s tools -p 'test_pdf_assemble.py'
+
+      - name: Validate manuscript image files
+        run: |
+          python3 tools/_pdf_assemble.py ko
+          python3 tools/_pdf_assemble.py en
+
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 1.8.27

@@ -100,7 +100,13 @@ Opus 5.5의 단가는 Haiku 5.5의 40배지만, 작업당 비용도 40배인 것
 
 두 사례에서 보듯, 어떤 설정이 충분한지는 완료 기준과 시간, 비용의 우선순위에 따라 달라진다. 후보를 두세 개로 좁힐 때는 제공사의 모델 비교 문서를 참고할 수 있다. OpenAI의 모델 선택 안내는 모델과 추론 수준의 조합 여덟 가지에 각각 맞는 작업을 적고, 업무 유형 여섯 가지에 대한 모델별 적합도를 그림으로 보여 준다. 예를 들어 GPT-6 Luna의 낮음은 기대하는 결과가 분명할 때 파일을 조금 고치거나 필드를 뽑아내는 일에, GPT-6.2 Sol의 Medium은 기존 코드베이스의 버그 수정과 기능 추가에 맞는다고 안내한다. 같은 페이지는 이 적합도가 벤치마크와 독립적으로 실행한 예시 작업, 사용자 피드백을 바탕으로 한 대략적인 추정이라고 밝힌다. [OpenAI, Model selection](https://developers.openai.com/codex/model-selection) (확인: 2026-11-21).
 
+::: {.callout-note title="그림 준비 중"}
+모델 선택 안내 화면을 비교한 그림은 원본 이미지가 추가되면 표시됩니다.
+:::
+
+<!-- Original figure reference retained; its image file was not included in the submission.
 ![OpenAI 모델 선택 안내의 모델과 추론 수준 목록 일부(왼쪽)와 모델별 강점 그림(오른쪽). 오른쪽 그림은 중심에서 멀수록 해당 업무 유형에 더 적합하다는 뜻이다.](images/05-1-openai-model-selection.png){fig-alt="OpenAI 모델 선택 안내 화면. 왼쪽은 모델과 추론 수준별로 맞는 작업을 적은 목록, 오른쪽은 업무 유형 여섯 가지에 대한 모델 네 개의 적합도를 겹쳐 그린 방사형 그림"}
+-->
 
 출처: [OpenAI, Model selection](https://developers.openai.com/codex/model-selection) (확인: 2026-11-21; 화면 캡처). 이 그림은 OpenAI의 자료이며, 이 책의 CC BY-SA 4.0 라이선스를 적용하지 않는다.
 
