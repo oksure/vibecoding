@@ -1,2 +1,196 @@
-# §4.3 웹 서비스를 만들고 배포하기 {.unnumbered}
+<!-- authoritative-lang: ko -->
+<!-- 담당: 양진원. 집필 상태: AI 보조 개정안, 저자 검토 및 수업 토론 반영 전. -->
 
+# §4.3 웹 서비스를 만들고 배포하기 {#sec-web-app-development .unnumbered}
+
+§4.1의 개인 도구와 §4.2의 분석 결과를 다른 사람도 사용할 수 있게 만들려면 필요한 기능을 연결하고 실제 사용 흐름을 검증해야 한다. 사용자별 데이터를 다루는 서비스라면 인증과 접근 권한도 정해야 한다. 이 절에서는 그 과정을 **딥 리서치 → 기획/구현 → 주석 피드백 → QA/배포 준비**의 네 단계로 설명한다. 앞 단계의 조사, 결정, 검증 기록을 다음 단계의 AI 입력으로 전달하고, 실행한 결과를 근거로 수정하는 흐름이다.
+
+설명을 위한 예시는 ‘행사를 찾아 신청하고 자기 신청 내역을 확인하는 웹 서비스’다. 개발은 Next.js, 배포와 호스팅은 Vercel, 데이터와 인증은 Supabase에 맡기고 GitHub로 변경 이력을 관리하는 구성을 예로 든다. 이 도구들은 프로젝트의 기능, 운영 환경, 팀의 경험에 맞게 선택할 수 있다.
+
+| 단계 | 진행할 일 | 다음 단계에 전달할 산출물 |
+|---|---|---|
+| 1. 딥 리서치 | 참고 웹사이트의 화면, 사용 흐름, 예외 상태를 분석한다 | 출처가 있는 비교표, 참고 화면, 적용할 설계 원칙 |
+| 2. 기획/구현 | 요구사항과 개발 환경을 정하고 기능을 구현하고 배포한다 | 기능 명세, 변경 이력, 데이터와 권한 구조, 검토용 배포 URL |
+| 3. 주석 피드백 | 실제 화면의 특정 요소에 수정 의견을 남긴다 | 위치, 문제, 기대 결과, 완료 기준이 담긴 수정 요청 |
+| 4. QA/배포 준비 | 시나리오를 실행하고 오류 수정과 회귀 테스트를 반복한다 | 실행 증거가 연결된 QA 보고서와 운영 배포본 |
+
+네 단계는 반복해서 연결된다. 주석을 반영하거나 QA에서 오류를 고치면 다시 구현과 배포 과정을 거친다. QA에서 기능 자체의 불명확함이 드러나면 기획으로 돌아가 요구사항을 수정한다.
+
+## 1. 딥 리서치
+
+### 좋은 홈페이지에서 분석할 대상을 정한다
+
+조사는 만들려는 서비스와 비슷한 사용자 과제를 가진 홈페이지에서 시작한다. 행사 서비스라면 행사 탐색, 상세 정보 확인, 신청, 신청 내역 조회까지 직접 따라가 본다. ‘보기 좋다’는 평가를 탐색의 편의성, 정보의 우선순위, 입력 부담, 오류에서 회복하는 방법으로 풀어 적는다. GOV.UK의 서비스 설계 지침도 사용자가 누구인지, 현재 어떤 서비스를 이용하는지, 어디에서 불편을 겪는지부터 조사하도록 안내한다. [[1]](https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs)
+
+참고 사이트 몇 개를 골라 같은 과제로 비교할 수 있다. 아래는 행사 서비스에 적용할 수 있는 조사 틀이며, 서비스의 핵심 과제에 맞춰 항목을 고르면 된다.
+
+| 분석 대상 | 실제로 확인할 것 | 기획에 옮길 질문 |
+|---|---|---|
+| 첫 화면과 정보 구조 | 설명, 주요 버튼, 메뉴의 순서와 관계 | 사용자가 어떤 서비스인지 알고 다음 행동을 찾을 수 있는가? |
+| 핵심 사용자 흐름 | 탐색부터 신청 완료까지 필요한 화면과 입력 | 첫 버전에 필요한 단계와 생략할 수 있는 단계는 무엇인가? |
+| 화면 상태 | 빈 목록, 검색 결과 없음, 입력 오류, 처리 중, 완료 | 각 상태에서 무엇을 설명하고 어떤 다음 행동을 제공할 것인가? |
+| 모바일과 접근성 | 좁은 화면의 배치, 키보드 이동, 초점과 글자 가독성 | 화면 크기나 입력 방식이 달라도 핵심 과제를 마칠 수 있는가? |
+
+실제 참고 자료로는 GOV.UK Design System의 신청 흐름을 살펴볼 수 있다. ‘Check answers’ 패턴은 제출 전에 입력 내용을 확인하고 수정하는 화면을 제공한다. ‘Error summary’는 페이지 상단의 오류 요약과 해당 입력란 옆의 오류 메시지를 연결한다. 행사 신청 서비스에 적용한다면 각각 ‘제출 전 확인 단계’와 ‘잘못 입력한 항목으로 돌아가는 방법’의 설계 근거가 된다. [[2]](https://design-system.service.gov.uk/patterns/check-answers/), [[3]](https://design-system.service.gov.uk/components/error-summary/)
+
+### 관찰 결과를 구현 가능한 요구사항으로 바꾼다
+
+조사에서는 직접 확인한 사실과 추정을 구분해야 한다. 기록 형식은 자유롭게 정할 수 있지만, 출처와 관찰 조건은 다시 확인할 수 있어야 한다. URL, 화면, 수행한 행동, 관찰 결과를 함께 남기는 방식이 한 예다. ‘오류 안내가 친절하다’보다 ‘오류 요약에서 항목을 누르면 잘못 입력한 입력란으로 이동한다’처럼 적으면 구현과 검증에 활용하기 쉽다. 스크린샷만으로 데이터 저장 방식이나 로그인 보안까지 판단해서는 안 된다.
+
+AI에 분석을 맡길 때는 참고 화면과 분석 기준을 함께 제공할 수 있다. ‘이 사이트처럼 만들어줘’라는 요청을 다음과 같이 구체화하는 방식이다.
+
+> 참고 사이트들의 행사 탐색과 신청 흐름을 비교하라. 각 화면에서 사용자가 해야 할 일, 필요한 입력, 오류와 완료 상태를 정리하고 출처를 연결하라. 우리 서비스에 적용할 요소와 그 이유를 제안한 뒤, 첫 버전의 화면 목록과 기능별 완료 기준으로 변환하라.
+
+시각 자료를 구현 기준으로 삼았다면 결과를 원래 기준과 대조해야 한다. 실제 웹페이지 484개를 사용한 Design2Code 연구는 스크린샷에서 코드를 생성할 때 시각 요소를 빠뜨리거나 배치를 잘못 구성하는 문제를 분석했다. [[4]](https://aclanthology.org/2025.naacl-long.199/) 조사 결과는 참고 화면과 채택할 설계 원칙을 담은 짧은 브리프로 정리할 수 있다. 형식보다 중요한 것은 어떤 관찰을 어떤 요구사항에 반영했는지 추적할 수 있어야 한다는 점이다.
+
+## 2. 기획/구현
+
+### 역할과 완료 기준을 먼저 정한다
+
+구현에 앞서 대상 사용자, 핵심 과제, 필요한 데이터, 권한, 완료 기준을 정해야 한다. 행사 서비스의 첫 버전은 ‘행사 조회 → 로그인 → 신청 → 내 신청 확인’으로 잡을 수 있다. 완료 기준은 사용자의 행동과 결과로 확인할 수 있어야 한다. 예를 들어 ‘신청서를 제출하면 내 신청 목록에 한 건이 나타나고, 재접속해도 유지되며, 다른 계정에서는 그 신청서를 조회하거나 수정할 수 없다’처럼 작성할 수 있다.
+
+기존 프로젝트를 이어서 작업한다면 현재 구현 상태부터 확인해야 한다. 박현우 교수님의 실습 영상에서는 AI에게 코드베이스를 검토하게 한 뒤, 기존 명세와 대조해 빠진 기능을 확인하고 이번에 구현할 항목을 고른다. [[5]](https://www.youtube.com/watch?v=2L9lltxG5sE) 같은 방식으로 요구사항별 구현 상태와 확인할 부분을 정리하도록 요청할 수 있다. 명세를 `SPEC.md` 같은 파일로 두는 것은 한 방법이며, 문서 형식과 관계없이 이번 작업 범위와 보류할 항목은 구분할 수 있어야 한다.
+
+도구를 선택할 때는 각 역할이 어디에서 수행되는지 확인해야 한다. 예시 구성에서는 Next.js로 화면과 서버 측 서비스 로직을 구현하고, Vercel에서 앱을 빌드하고 실행하며 호스팅한다. 이때, Supabase의 Postgres 데이터베이스와 Auth를 연결한다. Next.js는 서버와 클라이언트 컴포넌트를 함께 사용할 수 있다. 이 구성을 택했다면 데이터 조회와 비밀값 처리가 어느 환경에서 실행되는지 구분해야 한다. [[6]](https://nextjs.org/docs/app/getting-started/server-and-client-components), [[7]](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs)
+
+### 최초에 저장소와 배포 환경을 연결한다
+
+GitHub와 Vercel의 자동 배포를 사용한다면 다음과 같이 초기 설정을 구성할 수 있다. 선택한 환경에서 앱이 필요한 데이터와 인증 서비스에 연결되는지, 어떤 변경이 운영에 반영되는지는 확인해야 한다.
+
+1. **저장소 연결.** 프로젝트 소스를 GitHub에 두고 Vercel에서 가져오는 방식을 사용할 수 있다. 공동 작업에서는 기능별 브랜치와 Pull Request로 검토할 변경을 구분할 수 있다.
+2. **환경변수 등록.** 이 구성에 필요한 Supabase 프로젝트 URL과 키 등을 환경별로 등록한다. 공개 가능한 값과 서버 전용 비밀값, 검토용과 운영용 연결 정보는 구분해야 한다.
+3. **배포 브랜치 선정.** 예를 들어 `main`을 운영 브랜치로, 기능 브랜치를 Preview 검토용으로 둘 수 있다. 어느 브랜치의 변경이 운영 배포를 만드는지는 명확히 정해야 한다.
+4. **데이터와 인증 연결.** 예시에서는 행사와 신청 테이블과 사용자 인증을 연결한다. 사용자별 접근 정책과 로그인 뒤 돌아올 주소는 선택한 서비스의 설정에 맞게 확인해야 한다.
+
+배포 작업까지 AI에 맡기려면 앱의 설정과 함께 AI가 사용하는 작업 환경도 확인해야 한다. 실습 영상은 미리 설정한 배포용 인증 정보와 작업 환경이 자동화에 영향을 준다고 설명한다. [[5]](https://www.youtube.com/watch?v=2L9lltxG5sE) 계정 연결이나 배포 도구의 실행 준비가 갖추어졌는지에 따라 사람이 직접 처리할 단계가 달라질 수 있다.
+
+Vercel의 Git 연동을 설정하면 저장소에 올라온 변경으로 자동 배포를 만들 수 있다. 비운영 브랜치에서 Preview를 검토한 뒤 운영 브랜치에 반영해 Production을 배포하는 방식이 한 예다. Vercel을 사용하는 경우 새 프로젝트의 첫 배포는 Production으로 생성되므로, 초기 연결 때도 사용할 데이터와 설정을 확인해야 한다. [[8]](https://vercel.com/docs/git), [[9]](https://vercel.com/docs/deployments/environments)
+
+환경변수를 사용할 때는 값의 공개 범위까지 확인해야 한다. 예를 들어 Next.js의 `NEXT_PUBLIC_` 변수는 빌드 시 브라우저 코드에 포함될 수 있다. Supabase를 연결했다면 공개용 publishable key와 서버 전용 secret key를 구분하고, 비밀키에는 공개 접두사를 붙여서는 안 된다. Vercel에서 변수를 변경한 경우에는 새 배포를 만들어 반영해야 한다. [[10]](https://nextjs.org/docs/app/guides/environment-variables), [[11]](https://supabase.com/docs/guides/getting-started/api-keys), [[12]](https://vercel.com/docs/environment-variables)
+
+사용자별 데이터를 다룬다면 로그인 성공 여부와 ‘허용된 데이터만 읽고 수정할 수 있는가’를 각각 검증해야 한다. Supabase에서는 테이블 권한과 행 수준 보안(RLS) 정책으로 접근 범위를 설정할 수 있다. 시험 중 운영 데이터가 바뀌지 않도록 해야 하며, 이를 위해 별도 프로젝트나 분리된 시험 환경을 사용할 수 있다. Supabase Auth를 사용한다면 로그인이나 이메일 인증 뒤 돌아오는 주소를 허용 목록과 맞춰야 한다. [[13]](https://supabase.com/docs/guides/database/postgres/row-level-security), [[14]](https://supabase.com/docs/guides/auth/redirect-urls)
+
+### 코드 수정과 배포를 반복한다
+
+이 예시 구성에서의 흐름은 **코드 수정 → Git commit → GitHub push → Vercel 자동 빌드 및 배포 → 배포 URL 확인**이다. commit은 변경을 버전으로 기록하고, push는 그 기록을 GitHub 원격 저장소에 전달한다. 저장소 연동이 설정되어 있으면 Vercel이 변경을 받아 빌드를 수행한다. 변경을 작은 기능 단위로 나누어 기록하면 문제가 생긴 지점을 추적하기 쉽다. [[8]](https://vercel.com/docs/git)
+
+검토용 배포를 활용하면 실제 URL에서 주석 피드백과 QA를 진행할 수 있다. 도구와 관계없이, 공개할 변경은 기획한 완료 기준으로 검증해야 한다. 이 예시에서는 Preview 검토와 운영 브랜치 병합을 이용해 다음과 같이 연결한다.
+
+**기능 구현 → commit/push → Preview 자동 빌드 및 배포 → 주석 피드백과 QA → 수정 및 재배포 → 운영 브랜치 병합 → Production 자동 빌드 및 최종 배포 → 정식 URL 확인**
+
+빌드 오류가 나면 배포 로그의 오류 메시지와 관련 변경을 AI에 전달해 원인 분석을 요청할 수 있다. 빌드 성공 여부와 사용자 시나리오의 통과 여부는 각각 확인해야 한다. 데이터 구조가 바뀌었다면 앱과 데이터베이스의 변경이 맞물리는지도 확인해야 한다. Supabase에서는 마이그레이션으로 테이블, 열, 정책 변경을 기록하고 적용할 수 있다. 예시 구성에서 앱의 Git push와 데이터베이스 변경 적용은 별도 작업이므로, 함께 자동화하려면 데이터베이스 배포 절차도 연결해야 한다. [[15]](https://supabase.com/docs/guides/deployment/database-migrations)
+
+## 3. 주석 피드백
+
+### 수정할 위치와 원하는 결과를 함께 전달한다
+
+화면 피드백에서는 수정할 대상과 원하는 결과가 분명해야 한다. 요소에 번호, 핀, 영역 표시를 붙이고 의견을 작성하면 대상을 지정하기 편하다. 주석은 위치를, 프롬프트는 변경 내용과 완료 기준을 전달하는 데 사용할 수 있다. 특정 조건에서만 발생하는 문제라면 페이지 경로, 화면 크기, 로그인 상태 등 재현에 필요한 조건도 남겨야 한다.
+
+화면에 의견을 모으는 도구로는 Vercel Comments를 예로 들 수 있다. Agentation처럼 선택한 요소의 위치, 클래스, 주석을 구조화된 Markdown으로 내보내는 도구를 활용할 수도 있다. 캡처에 번호를 붙여 설명하는 방식도 가능하다. 주석을 남기는 방법은 달라도 AI가 수정할 위치와 요청을 식별할 수 있어야 한다. [[16]](https://vercel.com/docs/comments), [[17]](https://www.agentation.com/output)
+
+피드백은 **대상 위치 → 현재 문제 → 원하는 결과 → 완료 기준**의 순서로 정리할 수 있다. 예를 들어 행사 상세 화면의 신청 버튼을 다음처럼 지적하는 방식이다.
+
+> 주석 UI-03. 행사 상세 페이지의 모바일 화면에서 하단 신청 버튼이 본문 마지막 문장을 가린다. 첨부 화면의 표시 영역을 기준으로, 마지막 문장을 끝까지 읽고 버튼도 누를 수 있도록 배치를 수정하라. 좁은 화면과 큰 화면에서 겹치는 요소나 가로 스크롤이 없고, 키보드로 버튼에 접근할 수 있는지 확인하라. 신청과 로그인 동작은 유지하라.
+
+어느 배포본을 보고 남긴 의견인지 추적할 수 있어야 한다. 예시 구성에서는 Preview URL과 commit을 함께 남길 수 있다. 수정 후에는 같은 조건에서 다시 확인해야 한다. 댓글 도구의 내용을 AI에 별도로 전달할 수도 있고, 연동 도구를 사용할 수도 있다. 어느 쪽이든 필요한 화면 정보와 요청이 전달되었는지 확인해야 한다.
+
+### 피드백을 작은 수정 단위로 정리한다
+
+여러 의견은 기능 오류, 레이아웃과 가독성 문제, 문구와 간격 조정 등으로 묶어 우선순위를 정할 수 있다. 모순되는 지시는 정리해야 하며, 요청에는 검증할 수 있는 변경 범위가 있어야 한다. AI에 반영한 주석 번호, 변경 내용, 확인한 조건, 남은 문제를 반환하도록 요청하면 후속 검토에 활용할 수 있다.
+
+이 단계의 결과는 화면 주석과 연결된 수정 목록으로 정리할 수 있다. 예시 구성에서는 commit/push와 Preview 재배포를 거쳐 수정 결과를 확인한다. 주석의 완료 기준은 QA 시나리오로 옮길 수 있으며, ‘UI-03을 반영했다’는 답변은 실제 배포본에서 해당 조건을 재현해 검증해야 한다.
+
+## 4. QA/배포 준비
+
+### 시나리오 실행부터 회귀 테스트까지 반복한다
+
+QA는 **시나리오 실행 → 결과 검증 → 오류 수정 → 회귀 테스트**의 순서로 진행한다. 검증할 결과는 기획한 완료 기준과 연결되어야 한다. 행사 서비스라면 정상 신청, 잘못된 입력, 비로그인 접근, 다른 사용자의 기록 접근, 저장 실패, 모바일 신청 등을 시나리오로 구성할 수 있다. 세부 시험 범위는 기능과 변경의 영향에 맞게 정하되, 핵심 경로와 수정의 영향을 받는 기능은 확인해야 한다.
+
+1. **시나리오 실행.** 사용할 계정, 초기 데이터, 화면 크기를 정하고 순서대로 조작한다. 예를 들어 ‘A로 로그인 → 행사 신청 → 내 신청 조회 → 새로고침 → B로 로그인해 A의 기록 접근 시도’를 실행한다.
+2. **결과 검증.** 화면 표시와 저장, 조회, 권한 결과를 미리 정한 기대값과 비교한다. 통과, 실패, 미실행을 구분하고 오류 메시지와 화면과 요청 결과를 남긴다.
+3. **오류 수정.** 실패한 시나리오와 증거를 AI에 전달해 원인을 좁힌다. 수정 후 같은 초기 조건에서 원래의 실패를 다시 시험한다.
+4. **회귀 테스트.** 수정한 기능과 연결된 기존 기능도 다시 실행한다. 신청 버튼을 고쳤다면 모바일 배치와 함께 로그인 이동, 제출, 저장, 목록 재조회가 유지되는지 확인한다.
+
+상태가 바뀌는 화면에서는 연속 또는 반복 조작도 시험 대상으로 삼을 수 있다. 영상의 네트워크 시각화 실습에서는 마우스 호버 때 화면이 튀는 현상을 점검하고, 이후 초기화 키를 반복해서 누를 때 화면이 이동하는 등의 문제도 확인한다. [[5]](https://www.youtube.com/watch?v=2L9lltxG5sE) 행사 서비스라면 신청 버튼 반복 클릭이나 입력 후 뒤로 이동했다가 돌아오는 흐름 등을 살펴볼 수 있다. 이런 문제를 보고할 때는 조작 순서와 반복 조건, 화면의 전후 변화를 재현할 수 있게 남겨야 한다.
+
+시나리오는 직접 실행할 수도 있고, 반복되는 경로를 자동화할 수도 있다. 자동화 도구의 한 예인 Playwright는 사용자가 보는 동작을 중심으로 시험하고 테스트를 독립적으로 구성하도록 권고한다. 방식과 관계없이 시험의 초기 조건은 재현할 수 있어야 한다. 브라우저의 쿠키와 세션뿐 아니라 외부 데이터베이스의 시험 데이터도 준비하고 정리해야 한다. [[18]](https://playwright.dev/docs/best-practices)
+
+웹 생성 연구에서도 조작과 기대 결과를 짝짓는 평가를 사용한다. WebGen-Bench는 생성한 웹사이트에 대해 이러한 형태의 테스트 647개를 구성했다. 이 절에서는 그 방법을 가져와 ‘기능이 구현되어 있다’를 ‘어떤 조작 뒤 어떤 결과가 확인되어야 한다’로 바꿔 기록한다. [[19]](https://papers.nips.cc/paper_files/paper/2025/hash/6841eed8bb6a2ec49e49235c8115efee-Abstract-Datasets_and_Benchmarks_Track.html)
+
+### QA 보고서를 AI의 다음 입력으로 사용한다
+
+검증 결과를 다음 수정에 사용하려면 실행 조건과 판정 근거를 보고서로 남겨야 한다. 보고서의 형식은 문서, 표, 테스트 도구의 출력 등으로 선택할 수 있다. 어떤 버전에서 어떤 조건으로 실행했는지, 기대 결과와 실제 결과가 무엇인지는 확인할 수 있어야 한다. 아래는 그 정보를 정리하는 항목의 예다.
+
+| 항목 | 기록할 내용 |
+|---|---|
+| 실행 대상 | 배포 URL, 버전 식별 정보(예: commit SHA), 실행 시각, 브라우저, 화면 크기 |
+| 사전 조건 | 사용자 역할, 로그인 상태, 시험용 초기 데이터 |
+| 시나리오 | 시나리오 ID, 연결된 요구사항과 주석 번호, 조작 순서 |
+| 판정 | 기대 결과, 실제 결과, 통과, 실패, 미실행 |
+| 증거 | 문제에 맞게 선택한 스크린샷, 오류 메시지, 관련 요청과 응답, 실행 추적 기록(trace) |
+| 수정과 재시험 | 원인 분석, 변경 내용, 재실행 결과, 회귀 테스트 결과 |
+| 남은 작업 | 미해결 문제, 미실행 범위, 배포를 막는 항목 |
+
+Playwright를 선택한 경우 HTML 및 JSON 보고서를 함께 생성할 수 있다. HTML은 사람이 검토하고, JSON과 실패 요약은 AI에 전달하는 자료로 활용할 수 있다. 실패 흐름을 자세히 살펴봐야 한다면 trace 기록을 설정할 수도 있다. 이 기록에서는 동작 단계, DOM 상태, 네트워크 요청 등을 확인할 수 있다. [[20]](https://playwright.dev/docs/test-reporters), [[21]](https://playwright.dev/docs/trace-viewer)
+
+보고서를 AI에 다시 전달할 때는 수정과 재검증까지 요청한다.
+
+> 보고서의 실패 시나리오를 재현하고 관찰 결과와 원인 가설을 구분하라. 기대 결과를 유지하면서 오류를 수정한 뒤, 원래 시나리오와 연결된 회귀 테스트를 다시 실행하라. 변경 내용, 새 실행 증거, 남은 실패하거나 미실행한 항목을 보고서에 갱신하라. 실행할 수 없는 항목은 필요한 조건을 적어라.
+
+이렇게 **보고서 → AI 분석 및 수정 → 새 배포본 → 재실행 → 보고서 갱신**을 반복한다. 검증의 근거는 새 실행에서 얻은 결과다. 기존 보고서에 대한 AI의 설명이나 ‘수정 완료’ 응답만으로 통과 처리하지 않는다. 기대값을 바꾸거나 검사를 생략했다면 요구사항과 함께 검토한다.
+
+### 최종 배포 조건을 확인한다
+
+공개 전에는 기획한 핵심 시나리오와 수정 관련 회귀 테스트를 통과했는지 확인해야 한다. 선택한 구성에 맞춰 운영 설정, 데이터 접근 권한, 인증 흐름, 데이터베이스 변경 순서와 복구 방법도 점검해야 한다. 예시 구성에서는 Vercel의 운영 환경변수와 Supabase의 연결 대상, 권한 정책, 로그인 복귀 주소가 점검 대상이다. 접근성 검사는 자동화할 수 있지만 키보드 이동과 초점 표시 등 사용 흐름은 직접 확인하는 절차도 필요하다. Playwright 문서도 자동 검사만으로 모든 접근성 문제를 찾을 수는 없다고 설명한다. [[22]](https://playwright.dev/docs/accessibility-testing)
+
+예시 구성에서는 검증한 변경을 운영 브랜치에 병합해 Vercel의 Production 빌드 및 배포로 연결한다. 다른 배포 방식을 선택하더라도 정식 URL에서 핵심 경로를 다시 확인하고, 배포 버전과 결과를 기록해야 한다. 문제가 생겼을 때 변경을 되돌릴 방법도 준비해야 한다. 저장 데이터를 변경하는 서비스라면 데이터 복원 방법도 따로 확인해야 하며, 남은 문제는 영향과 후속 조치를 기록해 다음 수정으로 이어간다.
+
+QA 보고서에 남긴 실행 조건과 관찰 결과는 서비스 소개 문서나 발표 자료에서 기능을 설명하는 근거가 된다. 예를 들어 행사 신청 기능을 소개할 때는 확인한 사용자 유형과 신청 조건, 성공한 흐름과 남은 문제를 함께 전달할 수 있다. [4.4절](04-4-docs-and-media.qmd)은 이런 자료를 문서와 발표 자료로 옮길 때 사용할 제작 규칙과 검토 기준을 다룬다.
+
+## 참고문헌
+
+본문의 대괄호 번호는 아래 참고문헌과 대응한다. 웹 문서의 날짜는 확인한 발행일과 갱신일이며, 날짜를 제시하지 않은 문서는 ‘연도 미상’으로 표기했다.
+
+[1] User Research Community. (2016년 4월 4일 발행; 2017년 3월 23일 갱신). [Learning about users and their needs](https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs). *GOV.UK Service Manual*. 접속일: 2026년 11월 16일.
+
+[2] GOV.UK Design System. (연도 미상). [Check answers](https://design-system.service.gov.uk/patterns/check-answers/). *GOV.UK Design System*. 접속일: 2026년 11월 16일.
+
+[3] GOV.UK Design System. (연도 미상). [Error summary](https://design-system.service.gov.uk/components/error-summary/). *GOV.UK Design System*. 접속일: 2026년 11월 16일.
+
+[4] Si, C., Zhang, Y., Li, R., Yang, Z., Liu, R., & Yang, D. (2025). [Design2Code: Benchmarking Multimodal Code Generation for Automated Front-End Engineering](https://aclanthology.org/2025.naacl-long.199/). *Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)*. pp. 3956–3974. Association for Computational Linguistics. DOI: [10.18653/v1/2025.naacl-long.199](https://doi.org/10.18653/v1/2025.naacl-long.199).
+
+[5] 박현우 [Hyunwoo Park]. (2026년 10월 5일). [바이브 코딩 실전 3부: 배포와 브라우저 테스트](https://www.youtube.com/watch?v=2L9lltxG5sE) [동영상]. YouTube. 접속일: 2026년 11월 17일.
+
+[6] Next.js. (2026년 10월 5일 갱신). [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components). *Next.js Documentation*. 접속일: 2026년 11월 16일.
+
+[7] Supabase. (연도 미상). [Use Supabase with Next.js](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs). *Supabase Docs*. 접속일: 2026년 11월 16일.
+
+[8] Vercel. (2026년 9월 18일 갱신). [Deploying Git Repositories with Vercel](https://vercel.com/docs/git). *Vercel Documentation*. 접속일: 2026년 11월 16일.
+
+[9] Vercel. (2026년 9월 17일 갱신). [Environments](https://vercel.com/docs/deployments/environments). *Vercel Documentation*. 접속일: 2026년 11월 16일.
+
+[10] Next.js. (2026년 8월 25일 갱신). [How to use environment variables in Next.js](https://nextjs.org/docs/app/guides/environment-variables). *Next.js Documentation*. 접속일: 2026년 11월 16일.
+
+[11] Supabase. (연도 미상). [API keys](https://supabase.com/docs/guides/getting-started/api-keys). *Supabase Docs*. 접속일: 2026년 11월 16일.
+
+[12] Vercel. (2026년 9월 17일 갱신). [Environment variables](https://vercel.com/docs/environment-variables). *Vercel Documentation*. 접속일: 2026년 11월 16일.
+
+[13] Supabase. (연도 미상). [Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security). *Supabase Docs*. 접속일: 2026년 11월 16일.
+
+[14] Supabase. (연도 미상). [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls). *Supabase Docs*. 접속일: 2026년 11월 16일.
+
+[15] Supabase. (연도 미상). [Deploy database migrations](https://supabase.com/docs/guides/deployment/database-migrations). *Supabase Docs*. 접속일: 2026년 11월 16일.
+
+[16] Vercel. (2026년 8월 19일 갱신). [Comments Overview](https://vercel.com/docs/comments). *Vercel Documentation*. 접속일: 2026년 11월 16일.
+
+[17] Agentation. (연도 미상). [Output: How Agentation structures feedback for AI agents](https://www.agentation.com/output). *Agentation Documentation*. 접속일: 2026년 11월 16일.
+
+[18] Microsoft. (연도 미상). [Best Practices](https://playwright.dev/docs/best-practices). *Playwright Documentation*. 접속일: 2026년 11월 16일.
+
+[19] Lu, Z., Yang, Y., Ren, H., Hou, H., Xiao, H., Wang, K., Shi, W., Zhou, A., Zhan, M., & Li, H. (2025). [WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch](https://papers.nips.cc/paper_files/paper/2025/hash/6841eed8bb6a2ec49e49235c8115efee-Abstract-Datasets_and_Benchmarks_Track.html). *Advances in Neural Information Processing Systems*. Vol. 38, Datasets and Benchmarks Track, pp. 80192–80236. Neural Information Processing Systems Foundation, Inc. DOI: [10.52202/085713-2419](https://doi.org/10.52202/085713-2419).
+
+[20] Microsoft. (연도 미상). [Reporters](https://playwright.dev/docs/test-reporters). *Playwright Documentation*. 접속일: 2026년 11월 16일.
+
+[21] Microsoft. (연도 미상). [Trace viewer](https://playwright.dev/docs/trace-viewer). *Playwright Documentation*. 접속일: 2026년 11월 16일.
+
+[22] Microsoft. (연도 미상). [Accessibility testing](https://playwright.dev/docs/accessibility-testing). *Playwright Documentation*. 접속일: 2026년 11월 16일.

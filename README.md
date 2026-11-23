@@ -8,8 +8,26 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 
 | | 한국어 (원문) | English (AI-translated) |
 |---|---|---|
-| 웹 | <https://oksure.github.io/vibecoding/> | <https://oksure.github.io/vibecoding/en/> |
+| 웹 | <https://oksure.github.io/vibecoding/> | [같은 페이지에서 EN 선택](https://oksure.github.io/vibecoding/) |
 | PDF | [the-state-of-vibe-coding-ko.pdf](https://oksure.github.io/vibecoding/pdf/the-state-of-vibe-coding-ko.pdf) | [the-state-of-vibe-coding-en.pdf](https://oksure.github.io/vibecoding/pdf/the-state-of-vibe-coding-en.pdf) |
+
+한국어 웹 페이지 오른쪽 아래의 **KO / EN**에서 **EN**을 누르면, 배포 전에 준비한 영어 번역을 즉시 표시한다. 주소와 링크, 코드 블록은 유지하며 **KO**로 원문을 복원한다. 같은 브라우저에서 다른 글로 이동하거나 다시 방문하면 선택한 언어를 이어 간다. 방문자의 브라우저에서 번역 모델을 실행하거나 내려받지 않는다.
+
+웹 토글용 영어는 한국어 원문과 대조해 직접 작성한 번역을 저장해 사용한다. 배포 과정이나 방문자의 브라우저에서 번역 모델을 실행하거나 번역 API를 호출하지 않는다.
+
+### 번역 갱신과 배포
+
+- 본문 번역은 `translations/reviewed.ko-en.json`, 목차·제목·공통 문구는 `translations/glossary.ko-en.json`에 저장한다. 키는 원문의 정확한 문구이며, 원문이 바뀌면 해당 번역도 갱신해야 한다.
+- 배포는 저장된 영어를 한국어 HTML에 연결한다. 같은 글의 일반판과 리뷰판은 같은 번역을 사용한다. EN을 누르면 즉시 전환되며 KO로 원문을 복원한다.
+- 문단 전체를 하나의 단위로 연결해 강조나 링크 사이에서 문장이 잘리거나 반복되는 일을 막는다. 원래 링크, 인라인 코드, 실행 코드 블록과 제목 바로가기를 보존한다. 자연어 프롬프트나 명세를 담은 `text` 예시 블록은 함께 번역한다.
+- PR에서는 원고 빌드(`build`)와 영어 준비 상태(`English translation readiness`)를 별도로 검사한다. 영어가 없는 원고도 한국어 검사와 게시를 진행한다. 번역을 기다리는 글은 한국어로 게시하고 EN만 비활성화한다. 번역이 준비된 글의 EN은 계속 사용할 수 있다.
+- 번역 누락은 Actions 실행 요약과 `translation-backlog` 첨부 파일에 기록한다. 첨부 JSON에는 번역할 정확한 원문과 영향을 받는 일반판·리뷰판 경로가 들어 있다. PR 댓글이나 알림 메시지를 자동으로 작성하지 않는다.
+- 저장된 번역의 절 번호·날짜·주요 인명과 도구명·인라인 표시가 손상되면 오류로 처리한다. 번역이 없는 경우와 손상된 번역을 구분하며, 이 검사는 의미 검수를 대체하지 않는다.
+- 수강생은 원문만 작성해 PR을 제출한다. 웹 영어 번역의 추가·갱신은 티칭 팀이 요청에 따라 별도로 처리한다. PR 접수나 배포 시 번역 모델과 번역 API를 호출하지 않는다.
+
+로컬에서는 `npm ci`, `tools/build`, `npm run translate:web -- --allow-missing --report translation-backlog.json`을 차례로 실행한다. `node tools/pretranslate.mjs --check --allow-missing`은 영어가 준비된 글과 한국어로 게시할 글을 함께 확인한다. `--allow-missing` 없이 실행하면 기존처럼 모든 번역이 있어야 통과하므로, 전체 번역 완료를 점검할 때 쓴다. `--plan`은 HTML을 수정하지 않고 번역 누락 현황을 확인한다. `npm test`는 원문과 번역의 대응, KO/EN 복원, 문단과 링크·코드 보존, 번역 대기 상태를 검사한다.
+
+기존 `/en/` 페이지와 영문 PDF는 `en/` 원고를 사용하는 별도 판으로 유지한다. 그 원고의 번역 도구인 `tools/translate`와 웹 읽기용 사전 번역 도구인 `tools/pretranslate.mjs`는 구분한다.
 
 ## 이 책이 다루는 것
 
@@ -24,6 +42,23 @@ A living book on the history, art, and concepts of vibe coding, co-written on Gi
 - **개념 사전**
 
 전체 대, 중, 소주제 목록은 [TOPICS.md](TOPICS.md)에 있다.
+
+## 웹에서 문장별 피드백 남기기
+
+일반 읽기 페이지와 피드백용 리뷰 페이지는 주소가 분리되어 있다. [한국어 리뷰](https://oksure.github.io/vibecoding/reviews/)와 [영어 리뷰](https://oksure.github.io/vibecoding/reviews/en/)에서만 [Hypothesis](https://web.hypothes.is/) 주석 기능을 사용할 수 있다. 일반 `/vibecoding/` 및 `/vibecoding/en/` 페이지에는 이 기능이 없다.
+
+예를 들어 `/vibecoding/sections/03-3-context-engineering.html`의 리뷰 주소는 `/vibecoding/reviews/sections/03-3-context-engineering.html`이다. 리뷰 목차와 이전·다음 글 링크도 리뷰 페이지 안에서 이동한다. 두 버전은 같은 원고에서 자동 생성되므로 원고를 따로 관리하지 않는다.
+
+1. 리뷰 페이지를 연 뒤 오른쪽의 Hypothesis 도구 모음에서 Hypothesis 계정으로 로그인한다. 계정이 없다면 가입한다. 브라우저 확장 프로그램은 필요하지 않다.
+2. 피드백할 문장을 드래그해서 선택한 뒤 **Annotate**를 누른다.
+3. 오른쪽 패널에 댓글을 쓰고 공개 범위를 확인한 뒤 게시한다. 함께 볼 피드백은 **Post to Public**으로 게시한다. 공개 댓글은 누구나 볼 수 있다.
+4. 다른 사람의 주석을 누르면 해당 문장과 댓글을 함께 볼 수 있고, 로그인 후 **Reply**로 답글을 달 수 있다.
+
+**Highlight**만 선택한 강조 표시는 본인에게만 보인다. 다른 사람과 피드백을 공유하려면 **Annotate**로 댓글을 남겨야 한다. 수업 참여자끼리만 공유하려면 Hypothesis 비공개 그룹을 만들고 같은 그룹을 선택해 게시한다.
+
+댓글은 Hypothesis에 저장되며 한국어판과 영어판은 각 페이지 주소를 기준으로 구분된다. 원문이 크게 바뀌면 기존 댓글이 해당 문장에 연결되지 않을 수 있으므로, 수정 후 연결 상태를 확인한다. PDF 파일에 이 웹 주석 기능이 삽입되지는 않는다.
+
+사용법과 공개 범위는 [Annotation Basics](https://web.hypothes.is/help/annotation-basics/)와 [Who can see my annotations?](https://web.hypothes.is/help/who-can-see-my-annotations-in-the-web-app/)를 참고한다. 리뷰 페이지 생성과 Hypothesis 연결 설정은 `tools/_review_prepare.py`에 있다. 일반 페이지에서 작성했던 주석은 Hypothesis에 남으며 새 리뷰 주소로 자동 이동하지 않는다.
 
 ## 수업과 책
 
@@ -86,7 +121,8 @@ tools/
 [Quarto](https://quarto.org) 1.8 이상과 Python(PyYAML)이 필요하다. PDF까지 빌드하려면 Noto Sans CJK 폰트가 있어야 한다.
 
 ```bash
-tools/build html ko    # 한국어 웹판만 (집필 중 확인용, 가장 빠름)
+tools/build html ko    # 한국어 일반 읽기판 + 리뷰판 HTML
+tools/build reviews ko # 한국어 리뷰판 HTML만
 tools/build            # 전체: ko+en HTML/PDF -> _site/
 tools/translate        # 변경된 챕터만 AI 번역 (claude CLI 필요)
 ```

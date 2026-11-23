@@ -1,2 +1,151 @@
-# §1.1 자연어 프로그래밍이란? {.unnumbered}
+<!-- authoritative-lang: ko -->
 
+## §1.1 자연어 프로그래밍이란? {#sec-natural-language-programming .unnumbered}
+
+“이름과 이메일을 받고, 정원이 차면 신청을 마감하는 프로그램을 만들어 줘.” 행사 운영자에게 필요한 기능은 이렇게 한 문장으로 설명할 수 있다. 하지만 실제로 프로그램을 만들려면 신청 정보를 어디에 저장할지, 남은 자리는 어떻게 계산할지, 같은 사람이 여러 번 신청하면 어떻게 처리할지도 정해야 한다. 이제는 이런 요구를 AI에 설명해 프로그램을 만들고, 직접 사용하다 문제가 생기면 고쳐 달라고 요청할 수 있다.
+
+프로그램을 더 쉽게 만들려는 노력은 오래전부터 이어져 왔다. 이 장에서는 사람에게 익숙한 표현으로 컴퓨터에 일을 지시하려던 시도에서 시작해 바이브 코딩의 등장 배경을 살펴본다. 행사 신청 예시에서는 스프레드시트로 남은 자리를 계산하고, 노코드 도구로 신청 화면과 저장 절차를 구성한다. 이어 AI 코딩 도구로 화면과 파일에서 받은 신청에 같은 규칙을 적용하도록 코드를 고친다. 같은 일을 여러 도구로 다루면서, 프로그램을 만드는 사람이 직접 하는 일과 도구에 맡기는 일이 어떻게 달라졌는지 확인할 수 있다.
+
+### “남은 자리가 몇 개야?”라는 질문
+
+행사 신청 프로그램에 필요한 여러 기능 가운데, 남은 자리를 계산하는 일부터 살펴보자. 정원은 30명이고 접수된 신청은 27건이다. 운영자가 “남은 자리가 몇 개야?”라고 물으면 우리는 정원에서 접수 건수를 빼서 3자리라고 답할 수 있다. 그런데 같은 말을 컴퓨터에 건넨다고 곧바로 답이 나오는 것은 아니다. 컴퓨터는 정원과 접수 건수가 어디에 기록돼 있는지, 무엇을 접수된 신청으로 셀지, 두 값으로 어떤 계산을 해야 하는지 알아야 한다.
+
+이런 일과 조건을 컴퓨터가 따를 수 있도록 정해 놓은 것이 **프로그램**이다. 그 내용을 사람이 적은 것을 **코드**라고 하고, 코드를 작성하는 일을 프로그래밍이라고 한다. 프로그램과 이를 사용하는 데 필요한 자료 등을 통틀어 **소프트웨어**라고 부른다. 이 행사에서 남은 자리를 계산하는 프로그램이라면 정원과 접수 건수를 읽어 빼고, 결과를 보여 주는 일을 해야 한다.
+
+코드를 적을 때 쓰는 **프로그래밍 언어**에는 정해진 문법이 있다. 문법은 어떤 낱말과 기호를 어느 자리에 써야 하는지를 정한 규칙이다. 우리가 평소 대화에 쓰는 한국어나 영어는 **자연어**라고 한다. 자연어에서는 같은 뜻을 여러 방식으로 말할 수 있고, 이미 알고 있다고 생각하는 내용은 생략하기도 한다. “아직 몇 명 더 받아?”라고 물어도 사람은 앞의 행사 이야기를 듣고 남은 자리를 묻는다고 이해할 수 있다. 하지만 명단에 임시 신청이나 중복 신청이 섞여 있다면, 사람도 무엇을 ‘접수’로 셀지 다시 확인해야 한다.
+
+이 절에서 말하는 **자연어 프로그래밍**은 사람이 평소 쓰는 말로 원하는 동작이나 코드 변경을 설명하고, 시스템이 그 말을 실행할 작업이나 코드로 옮기는 방식이다. 그 생각에 이르기까지 사람들이 줄이려 한 수고는 조금씩 달랐다. 먼저 계산을 기계의 작은 동작으로 풀어 적는 수고를 줄였고, 업무에서 쓰는 낱말을 코드에 들여왔다. 그 뒤에는 정해진 코드 문법을 직접 쓰지 않고 말로 질문하거나 지시하고, 나아가 코드 자체를 고치려는 연구도 이어졌다. 각 접근에서 무엇을 컴퓨터에 맡길 수 있었고 무엇은 사람이 정해야 했는지, 같은 행사 계산과 당시의 실제 연구 사례를 따라 살펴보자.
+
+### 작은 계산을 기계에 시키는 방법
+
+남은 자리가 3개라는 답을 얻으려면 정원 30을 읽고, 접수 건수 27을 빼고, 결과를 보관해야 한다. 컴퓨터가 할 수 있는 이런 작은 동작 하나하나를 **명령**이라고 한다. 1950년대 중반까지 프로그래머는 계산을 이런 동작들로 풀어, 기계에 맞는 형태로 하나씩 적어야 했다. 시간이 오래 걸렸고 오류도 나기 쉬웠다. [Computer History Museum, Higher Level Languages](https://www.computerhistory.org/revolution/story/117).
+
+원리를 보려고 가상의 컴퓨터를 하나 만들자. 이 컴퓨터의 10번 보관함에는 정원 30, 11번 보관함에는 접수 건수 27이 들어 있다. 결과는 빈 12번 보관함에 넣기로 한다. 보관함은 컴퓨터가 계산에 필요한 값을 두는 **메모리**를 단순하게 나타낸 것이다. 또한 이 가상 컴퓨터에서는 숫자 01을 ‘읽기’, 02를 ‘빼기’, 03을 ‘저장하기’라고 약속했다고 하자.
+
+| 해야 할 일 | 숫자로 적은 가상 명령 | 이름으로 적은 가상 명령 |
+| --- | --- | --- |
+| 10번 보관함에서 정원 30을 읽는다 | 01 10 | LOAD 10 |
+| 읽은 값에서 11번 보관함의 접수 건수 27을 뺀다 | 02 11 | SUB 11 |
+| 결과 3을 12번 보관함에 저장한다 | 03 12 | STORE 12 |
+
+이 표의 숫자와 이름은 설명을 위해 만든 것이며, 실제 컴퓨터의 명령어가 아니다. 실제 컴퓨터마다 실행할 수 있는 명령과 그 표현이 정해져 있다. 컴퓨터가 직접 실행하는 숫자 형태의 명령을 **기계어**라고 부른다. 기계어의 숫자 명령에 `LOAD`나 `SUB`처럼 사람이 읽을 이름을 붙여 쓴 것이 **어셈블리어**다. 어셈블리어를 기계어로 바꾸는 프로그램은 **어셈블러**라고 한다. [Computer History Museum, Higher Level Languages](https://www.computerhistory.org/revolution/story/117) (Tech Talk: Moving Beyond Machine Language 절).
+
+어셈블리어에서는 ‘01이 읽기였나?’를 기억하지 않아도 되지만, 위 표처럼 값을 읽고 빼고 저장하는 동작을 각각 적어야 한다. 게다가 10번이 정원이고 11번이 접수 건수라는 약속도 작성자가 알아야 한다.
+
+그 시절에는 오늘날처럼 화면에서 코드를 고친 뒤 곧바로 실행해 보는 환경이 흔하지 않았다. 프로그래머는 작성한 내용을 용지에 적고, 이를 구멍 뚫린 카드나 종이테이프에 옮겨 컴퓨터에 입력하기도 했다. 여기서 카드와 종이테이프는 **프로그램을 컴퓨터에 입력하는 데 쓰인 매체**다. 같은 카드에 어셈블리어를 담을 수도, FORTRAN을 담을 수도 있었다. FORTRAN의 변화는 프로그래머가 카드에 옮기기 전에 **계산을 적는 방법**에 있었다. [Computer History Museum, Higher Level Languages](https://www.computerhistory.org/revolution/story/117).
+
+1957년 공개된 **FORTRAN**은 과학 계산을 기계의 작은 동작 대신 수식으로 표현할 수 있게 한 프로그래밍 언어다. [IBM, Fortran](https://www.ibm.com/history/fortran). 이 변화를 비교해 보기 위해 행사 계산을 FORTRAN으로 적어 보자. `NSEAT`에는 정원 30, `NREG`에는 접수 건수 27이 들어 있다고 하자. 남은 자리를 `NLEFT`에 저장하는 계산 부분은 다음과 같다. 실제 1950년대 행사 프로그램이 아니라 표현 방식의 차이를 보여 주는 설명용 코드 일부다.
+
+```f03
+NLEFT = NSEAT - NREG
+```
+
+이 문장은 정원에서 접수 건수를 빼서 남은 자리에 넣으라는 뜻이다. FORTRAN에서는 프로그래머가 계산식을 적으면 **컴파일러**라는 프로그램이 그 식을 컴퓨터가 실행할 세부 명령으로 바꾼다. 앞의 가상 명령에서 세 줄에 나누어 적었던 뺄셈을 수식 한 줄로 표현한 셈이다. `NSEAT`나 `NREG`가 무엇을 뜻하는지는 작성자가 정해 두어야 한다.
+
+행사의 남은 자리는 한 번의 뺄셈으로 구할 수 있지만, FORTRAN이 처음 겨냥한 과학 계산에서는 같은 작업을 여러 값에 반복해야 하는 경우도 많았다. 예를 들어 측정값 1,000개를 더하려면 어셈블리어에서는 다음 값의 위치를 찾고, 합계를 갱신하고, 멈출 시점을 확인하는 세부 명령을 작성해야 한다. FORTRAN에서는 더할 값의 범위와 반복할 계산을 문법에 맞춰 적으면 컴파일러가 그에 필요한 기계 명령을 만든다. [Computer History Museum, Higher Level Languages](https://www.computerhistory.org/revolution/story/117) (Programming example 절).
+
+이런 이유로 FORTRAN을 **고급 언어**라고 부른다. 여기서 ‘고급’은 기계의 세부 동작보다 사람이 풀려는 계산에 가까운 표현을 쓴다는 뜻이다. 하지만 FORTRAN은 “남은 자리 알려 줘”라는 말을 그대로 이해하지는 않았다. 정원과 접수 건수를 어디에서 읽을지, 신청이 중복되면 몇 건으로 셀지, 결과를 어디에 보여 줄지는 사람이 정해서 프로그램에 적어야 했다.
+
+1957년 FORTRAN 개발진이 발표한 논문에는 실제 작업 한 건이 나온다. 하루 교육을 받고 설명서를 참고한 프로그래머는 47개의 FORTRAN 문장으로 프로그램을 네 시간 만에 썼다. 컴파일러는 그 문장들을 컴퓨터가 실행할 약 1,000개의 명령으로 바꾸었다. 첫 결과가 틀리자 그는 원인이 된 FORTRAN 문장 한 개를 고쳐 다시 컴파일했다. 같은 작업을 손으로 직접 코딩했다면 사흘쯤 걸렸을 것이라는 추정도 논문에 실렸다. 개발진이 고른 한 사례이므로 모든 작업에서 그만큼 시간이 줄었다는 뜻은 아니다. 다만 사람이 적은 문장과 컴퓨터가 실행하는 명령 사이에 컴파일러가 맡은 일을 구체적으로 보여 준다. [John W. Backus 외, The FORTRAN Automatic Coding System](https://softwarepreservation.computerhistory.org/FORTRAN/paper/BackusEtAl-FortranAutomaticCodingSystem-1957.pdf) (1957; 189쪽).
+
+### 영어처럼 보이는 코드도 코드다
+
+FORTRAN은 행사 계산을 `NLEFT = NSEAT - NREG`처럼 수식으로 적게 해 주었다. 그러나 회사 업무에서는 계산 하나에 그치지 않고 많은 기록을 대조하고 옮겨야 했다. 직원의 근무 시간을 바탕으로 급여를 지급하거나, 은행의 계좌와 거래 내역을 처리하는 일이다. 이런 프로그램을 작성하고 나중에 고칠 사람에게는 ‘근무 시간’, ‘공제액’, ‘지급액’처럼 업무에서 쓰는 이름도 중요하다.
+
+그레이스 호퍼와 동료들이 1957년에 완성한 **FLOW-MATIC**은 재고나 급여처럼 많은 기록을 처리하는 프로그램을 영어에 가까운 정해진 명령으로 작성하게 한 업무용 언어였다. [Computer History Museum, Timeline of Computer History: 1957](https://www.computerhistory.org/timeline/1957/). [Grace M. Hopper, Automatic Programming for Business Applications](https://bitsavers.trailing-edge.com/magazines/Computers_And_Automation/195802.pdf) (1958-02). 실제로 어떤 말을 적었는지 1958년 설명서의 재고 관리 예시를 보자. 한 회사에는 상품 번호와 수량을 적은 ‘재고 목록’이 있고, 상품 번호와 단가를 적은 ‘가격 목록’이 따로 있다. 회사는 두 목록에서 같은 상품을 찾아 재고 기록에 단가를 붙이려 한다. 가격을 찾지 못한 상품은 따로 모아 확인해야 한다.
+
+설명서에 실린 FLOW-MATIC 프로그램에서 명령의 일부를 발췌하면 다음과 같다. [Remington Rand UNIVAC, FLOW-MATIC Programming System](https://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf) (1958; 22쪽, 그림 19). 가운데 ‘…’는 여러 명령을 생략했다는 표시다.
+
+```txt
+(1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF EQUAL GO TO OPERATION 5
+...
+(6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C)
+```
+
+여기서 A는 재고 목록, B는 가격 목록, C는 가격을 붙여 새로 만들 결과 목록이다. 첫 줄은 “A와 B의 상품 번호를 비교하고, 같으면 5번 작업으로 가라”는 뜻이다. 5번 작업에서는 A의 재고 기록을 C로 옮기고, 6번 작업에서는 B에 적힌 단가를 C의 단가 칸에 넣는다. 상품 번호가 같지 않을 때 어느 작업으로 갈지도 원본 프로그램의 첫 줄에 따로 적혀 있다. 사람이 목록을 보며 “같은 상품이면 가격을 옮긴다”라고 설명할 일을, FLOW-MATIC은 **COMPARE**, **IF EQUAL**, **MOVE**처럼 업무 동작에 가까운 낱말로 적게 한 것이다. 컴파일러는 그 명령을 컴퓨터가 실행할 수 있는 형태로 옮겼다. [Remington Rand UNIVAC, FLOW-MATIC Programming System](https://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf) (1958; 31\~32쪽).
+
+작성자는 “재고 목록에 가격을 붙여 줘”라는 요청을 여러 명령으로 풀어 적어야 했다. 어느 목록의 어떤 칸을 비교할지, 번호가 같거나 다를 때 다음에 무엇을 할지 정해진 문법과 작업 번호로 지정하는 것이다. 1959년 개발을 시작한 COBOL은 이런 영어식 업무 표현의 영향을 받았다. [Computer History Museum, Committee Forms to Develop New Language](https://www.computerhistory.org/tdih/may/28/). [IBM, What Is COBOL?](https://www.ibm.com/think/topics/cobol) (수정: 2026-02-25; History of COBOL 절).
+
+**COBOL**은 업무 처리에 익숙한 낱말과 영어에 가까운 문장 형태를 코드에 사용하려 했다. 과학자의 측정값 계산보다 급여나 회계처럼 많은 기록을 일정한 규칙으로 처리하는 업무를 겨냥했다. [IBM, What Is COBOL?](https://www.ibm.com/think/topics/cobol) (수정: 2026-02-25; COBOL, defined 절).
+
+당시에는 컴퓨터 제조사마다 사용하는 기계의 명령이 달랐다. 업무 프로그램을 다른 기종에서도 활용할 수 있는 공통 언어가 필요하다는 요구도 COBOL의 개발 배경에 있었다. 영어에 가까운 표현은 여러 목표 중 하나였다. [IBM, What Is COBOL?](https://www.ibm.com/think/topics/cobol) (수정: 2026-02-25; History of COBOL 절).
+
+앞에서 본 행사 신청의 남은 자리를 COBOL로 계산한다면 어떻게 적을까? `CAPACITY`에는 정원 30, `REGISTRATION-COUNT`에는 접수 건수 27이 들어 있다고 하자. 두 항목이 숫자 자료로 미리 정의되어 있다면 계산 부분을 다음처럼 적을 수 있다. 이것은 COBOL의 문법을 보여 주려고 만든 **설명용 코드 일부**이며, 당시 행사에 사용된 실제 프로그램은 아니다.
+
+```cobol
+SUBTRACT REGISTRATION-COUNT FROM CAPACITY
+    GIVING REMAINING-SEATS.
+```
+
+‘접수 건수를 정원에서 빼서 남은 자리에 넣는다’는 뜻이다. 결과는 3이다. 어셈블리어의 `LOAD`와 `SUB`도 영어 낱말을 줄여 쓴 것이지만, 각각 컴퓨터가 값을 읽고 빼는 작은 동작을 가리켰다. 이 COBOL 문장에서는 `CAPACITY`와 `REGISTRATION-COUNT`처럼 업무 자료에 붙인 이름을 사용하고, 그 자료로 할 계산을 `SUBTRACT … FROM … GIVING …`이라는 정해진 형식으로 적는다. [IBM, SUBTRACT statement](https://www.ibm.com/docs/en/cobol-zos/6.4.0?topic=statements-subtract-statement) (Format 2 절; 확인: 2026-11-15; IBM Enterprise COBOL for z/OS 6.4.0). 사람이 코드를 읽을 때 업무의 뜻을 따라가기 쉬워졌지만, 어떤 신청을 셀지와 어떤 값을 빼야 할지는 여전히 작성자가 결정해야 했다.
+
+FORTRAN과 COBOL은 사람이 계산과 업무 규칙을 코드로 적는 부담을 줄였다. 그러나 작성자는 여전히 각 언어의 문법에 맞춰 무엇을 계산하고 처리할지 지정해야 했다. 그렇다면 정해진 코드 문법을 배우지 않고, 평소 쓰는 말로 자료에 질문하거나 컴퓨터에 일을 시킬 수 있을까?
+
+### 말로 자료에 묻고 물체를 움직이다
+
+행사 운영자의 “남은 자리 알려 줘”라는 말처럼, 코드가 아니라 평소 말로 자료에 질문하도록 만든 연구도 있었다. 1970년대의 **LUNAR**는 지질학자가 달에서 가져온 암석의 자료에 영어로 질문하도록 만든 시스템이다. 연구자 윌리엄 우즈는 “고알칼리성 암석에서 알루미늄의 평균 농도는 얼마인가?”라는 질문을 예로 들었다. [W. A. Woods, Semantics and Quantification in Natural Language Question Answering](https://web.stanford.edu/class/linguist289/woods.pdf) (1978; §2.3). 컴퓨터가 답하려면 먼저 ‘고알칼리성 암석’에 해당하는 표본을 고르고 ‘알루미늄’에 해당하는 값을 찾아야 한다. 다음 표는 그 과정을 이해하기 위해 만든 가상 자료다. 실제 아폴로 표본이나 측정값은 아니다.
+
+| 표본 | 암석 종류 | 알루미늄에 해당하는 값 |
+| --- | --- | --- |
+| A | 고알칼리성 | 12 |
+| B | 고알칼리성 | 18 |
+| C | 다른 종류 | 30 |
+
+질문에 맞는 표본은 A와 B다. 두 값 12와 18을 더해 2로 나누면 답은 15다. C의 30까지 넣으면 ‘모든 암석의 평균’이 되어 다른 질문에 답한 셈이다. 이 예에서는 표를 읽은 사람이 A와 B를 직접 골랐다. 실제 표본이 수천 개라면 컴퓨터가 질문에 맞는 줄과 값을 찾아야 한다.
+
+실제 LUNAR의 연구 자료에서 고알칼리성 암석은 TYPEAS, 알루미늄에 해당하는 분석 항목은 AL2O3라는 내부 이름으로 기록되어 있었다. 지질학자가 그 이름을 외우지 않아도 질문할 수 있도록 연구진이 평소 쓰는 말과 자료의 내부 이름을 연결해 두었다. 질문에 나온 암석 종류를 찾고 해당 값을 모아 평균을 내는 절차를 시스템에 구현한 것이다. [W. A. Woods, Semantics and Quantification in Natural Language Question Answering](https://web.stanford.edu/class/linguist289/woods.pdf) (1978; §2.3).
+
+질문의 표현이 조금 달라지면 답도 달라진다. 이 가상 표에서 “고알칼리성 암석의 평균”을 구하면 A와 B의 값만 계산에 들어가므로 결과는 15다. “모든 암석의 평균”이라면 C도 포함해 20이 된다. “암석 종류마다 평균”이라면 고알칼리성 15와 다른 종류 30, 두 결과가 나온다. 우즈는 LUNAR 연구에서 ‘전체의 평균’과 ‘각 대상의 평균’처럼 말의 범위가 달라질 때 계산이 어떻게 달라지는지도 다뤘다. [W. A. Woods, Semantics and Quantification in Natural Language Question Answering](https://web.stanford.edu/class/linguist289/woods.pdf) (1978; §7.7). 시스템이 낱말 몇 개를 자료의 이름으로 바꾸는 것만으로는 충분하지 않았던 이유다.
+
+지질학자가 자료의 내부 이름을 몰라도 된다는 점은 큰 변화였다. 다만 LUNAR는 연구진이 달 암석 자료의 이름과 계산 절차를 미리 연결해 둔 시스템이었다. 행사 운영자의 “남은 자리 알려 줘”라는 질문을 같은 방식으로 처리하려면, 누군가 ‘접수된 신청’이 명단의 무엇을 가리키는지와 ‘남은 자리’를 어떻게 계산하는지 따로 연결해야 한다. LUNAR 사용자는 준비된 달 암석 자료에 질문할 수 있었지만, 질문만으로 새로운 프로그램을 만든 것은 아니었다.
+
+1971년에 진행된 초기 시연에서는 질문의 78%를 올바르게 이해하고 답했다. 이 시연에서는 달 암석 자료에 관한 질문만 대상으로 삼았고, 당시 처리하지 못하던 비교 표현은 제외했다. 78%는 이렇게 범위를 정한 질문에 대한 결과다. [W. A. Woods, Semantics and Quantification in Natural Language Question Answering](https://web.stanford.edu/class/linguist289/woods.pdf) (1978; §2.3).
+
+우즈가 기록한 한 실패 사례를 보면 이유가 분명해진다. 한 심리학과 대학원생이 “What is the average weight of all your samples?”(당신의 모든 표본의 평균 무게는?)라고 물었다. 당시 시스템은 `all samples`나 `your samples`라는 문장 구조는 읽을 수 있었지만, `all your samples`처럼 이어진 표현은 읽지 못했다. 문장 구조를 읽는 데 성공하더라도 ‘당신의’가 누구의 소유를 뜻하는지 처리할 규칙이 없었고, 자료에는 표본의 무게도 없었다. 사람에게는 자연스러운 질문 하나가 시스템에는 여러 단계에서 막힌 것이다. [W. A. Woods, Progress in Natural Language Understanding: An Application to Lunar Geology](https://dl.acm.org/doi/10.1145/1499586.1499695) (게시: 1973-06-04; 448쪽, Anecdotal data 절).
+
+1968년부터 1970년 사이, 테리 위노그래드는 MIT에서 사람의 말을 **행동**에 연결하는 연구용 프로그램 **SHRDLU**를 개발했다. SHRDLU의 세계에는 블록, 피라미드, 상자와 그것들을 옮기는 가상의 로봇 팔이 있다. 사용자가 영어로 “큰 빨간 블록을 집어”라고 하면 로봇 팔이 그 물체를 움직인다. 이어 “피라미드를 잡아”라고 했는데 피라미드가 둘이라면, 어느 것을 뜻하는지 먼저 알아내야 한다. SHRDLU는 시연 대화에서 이런 경우 되묻기도 했다. [Terry Winograd, Procedures as a Representation for Data in a Computer Program for Understanding Natural Language](https://dspace.mit.edu/entities/publication/3406b826-5a41-4b72-9430-7876c0d5405e) (1971). [Terry Winograd, Agents and Natural Language](https://hci.stanford.edu/courses/cs147/2006/slides/14-agents/147-agents.pdf) (2006; 슬라이드 11).
+
+또 다른 시연 명령은 “지금 들고 있는 블록보다 높은 블록을 찾아 그것을 상자에 넣어”였다. 여기서 ‘그것’은 원래 들고 있던 블록일까, 새로 찾은 블록일까? SHRDLU는 새로 찾은 블록을 가리킨다고 해석했음을 밝히고 그 블록을 옮겼다. 같은 낱말이라도 앞서 무엇을 집었는지와 화면에 어떤 물체가 있는지를 알아야 동작을 정할 수 있다. [Terry Winograd, Agents and Natural Language](https://hci.stanford.edu/courses/cs147/2006/slides/14-agents/147-agents.pdf) (2006; 슬라이드 11).
+
+SHRDLU가 다룬 세계는 작았다. 프로그램에는 어떤 물체가 어디에 놓여 있는지, 로봇 팔이 무엇을 집을 수 있는지에 관한 정보가 들어 있었다. 이런 정보가 있어야 ‘그것을 상자에 넣어’라는 말에서 ‘그것’이 무엇인지 판단하고 실제 동작으로 옮길 수 있다. LUNAR는 말을 **자료의 항목과 계산**에, SHRDLU는 말을 **물체와 행동**에 연결했다. 두 시스템은 평소 쓰는 말을 받아들였지만, 미리 준비된 범위 안에서 작동했다.
+
+### 말로 코드 자체를 만드는 시도
+
+LUNAR와 SHRDLU에서 말은 이미 만들어진 시스템에 질문하거나 행동을 시키는 입력이었다. 그렇다면 말로 **프로그램 자체를 만들거나 고칠** 수 있을까? 2000년에 발표된 연구용 프로그램 **NaturalJava**는 이런 코드 편집을 영어로 지시할 수 있도록 만들어졌다. Java는 정해진 문법에 따라 코드를 직접 쓰는 프로그래밍 언어다. NaturalJava의 사용자는 Java의 괄호와 기호를 직접 입력하는 대신 영어 문장으로 코드 편집을 지시했다. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://nlp.cs.utah.edu/assets/pdfs/price2000naturaljava.pdf) (2000; §1).
+
+연구진이 주목한 부담은 코드의 뜻을 정하는 일과 문법에 맞춰 적는 일이 한꺼번에 요구된다는 점이었다. 처음 배우는 사람은 무엇을 반복할지 생각하면서 괄호와 기호의 사용법도 익혀야 한다. 논문은 시각장애가 있는 프로그래머가 기호 오류를 화면에서 찾아 고치는 어려움도 개발 동기로 들었다. NaturalJava는 이런 문법 입력의 일부를 시스템에 맡기려 했다. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://nlp.cs.utah.edu/assets/pdfs/price2000naturaljava.pdf) (2000; §1).
+
+논문의 예에서 사용자는 “1부터 10까지 반복하는 for 반복문을 만들어”라고 말한다. **반복문**은 같은 동작을 여러 번 하게 하는 프로그램의 부분이다. NaturalJava는 문장에서 ‘새로 만들기’, ‘반복문’, ‘시작값 1’, ‘끝값 10’을 찾아 Java 프로그램 안에 반복문을 추가하고, 만들어진 코드를 화면에 보여 주었다. 사용자는 Java 문법의 세부 기호를 적지 않았지만, 어떤 구조를 만들고 어디서부터 어디까지 반복할지는 알려 주었다. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://nlp.cs.utah.edu/assets/pdfs/price2000naturaljava.pdf) (2000; §2.2).
+
+논문에 실린 실제 사용 화면에는 사용자의 영어 명령과 만들어진 Java 코드가 나란히 보인다. 사용자가 “Call elements’ removeElementAt and pass it minIndex.”라고 입력하자 코드 화면에 `elements.removeElementAt( minIndex );`가 나타났다. `elements`는 값이 담긴 목록이고, `minIndex`는 지울 항목의 위치를 담은 이름이다. NaturalJava는 문장을 코드 창에 그대로 옮기지 않고 요청을 프로그램의 내부 구조에 반영한 뒤 Java 문법으로 보여 주었다. 사용자는 괄호와 세미콜론을 직접 적지 않았지만, 어느 목록에서 어떤 기능을 실행하고 어떤 값을 전달할지는 알고 있어야 했다. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://nlp.cs.utah.edu/assets/pdfs/price2000naturaljava.pdf) (2000; 그림 2).
+
+말 한 문장이 코드로 바뀌었다는 점은 오늘날의 AI 코딩 도구와 닮았다. NaturalJava에서는 프로그래밍 요청을 해석하기 위해 연구진이 손으로 만든 약 400개의 표현 틀을 사용했다. 시스템은 한 문장에 한 종류의 동작이 들어 있다고 가정했다. ‘두 수를 더하고 그 결과를 다른 곳에 저장해’처럼 두 동작을 한 번에 이어 말하면 제대로 처리하지 못하는 경우가 있었다. 사용자는 대체로 만들려는 Java 구조를 차례대로 지정해야 했다. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://nlp.cs.utah.edu/assets/pdfs/price2000naturaljava.pdf) (2000; §2.2\~2.3).
+
+1.4절에서 다룰 AI 코딩 도구는 자연어 요청을 받아 코드 초안을 만들고, 관련 파일을 찾아 수정하거나 실행 결과를 확인하기도 한다. NaturalJava와 AI 코딩 도구의 공통점은 **사람의 말이 코드 변경으로 이어진다**는 것이다. 차이는 시스템이 받아들일 수 있는 표현과 맡길 수 있는 작업의 범위에 있다.
+
+### 질문할 수 있는 것과 직접 만들 수 있는 것
+
+기계어에서 FORTRAN과 COBOL까지의 변화는 사람이 **코드를 적는 방식**을 바꾸었다. LUNAR와 SHRDLU는 사람이 **코드를 적지 않고도 질문하고 지시할 수 있는 범위**를 보여 주었다. NaturalJava는 말로 **코드의 일부를 만들고 고치는 일**까지 시도했다. 이 사례들은 하나가 다른 하나를 차례대로 대체한 역사가 아니다. 서로 다른 목적에서 발전했지만, 사람이 원하는 일을 컴퓨터에 전달하기 쉽게 하려는 고민을 공유했다.
+
+표현이 쉬워져도 남는 판단이 있다. 달 암석의 평균을 구할 때는 어떤 표본을 넣을지 정해야 한다. 행사 신청에서는 정원을 얼마로 할지, 무엇을 접수된 신청으로 셀지 정해야 한다. SHRDLU가 피라미드를 집으려면 어느 피라미드인지 알아야 한다. 사람이 말로 요청하면 이런 판단이 저절로 사라지는 것은 아니다. 시스템에 맡길 일과 사람이 직접 정하고 결과를 확인할 일을 구분해야 한다.
+
+지금까지의 사례에서 이런 연결은 주로 프로그램을 만드는 사람이 준비했다. LUNAR의 지질학자는 연구진이 연결해 둔 자료에 질문했고, NaturalJava의 사용자는 만들려는 코드의 구조를 말로 지정했다. 그렇다면 행사 운영자처럼 자기 업무를 잘 아는 사람이 프로그래밍 언어를 배우지 않고도 정원과 신청 수를 놓고 계산 규칙을 직접 만들 수 있을까? 자연어로 질문하거나 코드를 바꾸는 연구와 나란히, 1970년대 말에는 사람들이 평소 다루던 **표**에서 답을 찾는 길도 열렸다. 다음 절에서는 스프레드시트가 계산을 만드는 사람과 만드는 방법을 어떻게 바꾸었는지 살펴본다.
+
+### 참고 자료
+
+1. [W. A. Woods, Semantics and Quantification in Natural Language Question Answering](https://www.sciencedirect.com/science/article/pii/S0065245808603903) (1978).
+2. [Computer History Museum, Higher Level Languages](https://www.computerhistory.org/revolution/story/117).
+3. [IBM, Fortran](https://www.ibm.com/history/fortran).
+4. [Computer History Museum, Timeline of Computer History: 1957](https://www.computerhistory.org/timeline/1957/).
+5. [Computer History Museum, Committee Forms to Develop New Language](https://www.computerhistory.org/tdih/may/28/).
+6. [IBM, What Is COBOL?](https://www.ibm.com/think/topics/cobol) (수정: 2026-02-25).
+7. [Terry Winograd, Procedures as a Representation for Data in a Computer Program for Understanding Natural Language](https://dspace.mit.edu/entities/publication/3406b826-5a41-4b72-9430-7876c0d5405e) (1971).
+8. [Terry Winograd, What Does It Mean to Understand Language?](https://onlinelibrary.wiley.com/doi/10.1207/s15516709cog0403_1) (1980).
+9. [Computer History Museum, SHRDLU natural language](https://www.computerhistory.org/timeline/1968/).
+10. [David Price 외, NaturalJava: A Natural Language Interface for Programming in Java](https://experts.arizona.edu/en/publications/naturaljava-a-natural-language-interface-for-programming-in-java/) (2000).
+11. [Grace M. Hopper, Automatic Programming for Business Applications](https://bitsavers.trailing-edge.com/magazines/Computers_And_Automation/195802.pdf) (1958-02).
+12. [Remington Rand UNIVAC, FLOW-MATIC Programming System](https://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf) (1958).
+13. [John W. Backus 외, The FORTRAN Automatic Coding System](https://dl.acm.org/doi/10.1145/1455567.1455599) (1957).
+14. [W. A. Woods, Progress in Natural Language Understanding: An Application to Lunar Geology](https://dl.acm.org/doi/10.1145/1499586.1499695) (게시: 1973-06-04).
+15. [IBM, SUBTRACT statement](https://www.ibm.com/docs/en/cobol-zos/6.4.0?topic=statements-subtract-statement) (확인: 2026-11-15; IBM Enterprise COBOL for z/OS 6.4.0).
+16. [Terry Winograd, Agents and Natural Language](https://hci.stanford.edu/courses/cs147/2006/slides/14-agents/147-agents.pdf) (2006; 슬라이드 11).

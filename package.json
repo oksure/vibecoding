@@ -1,0 +1,11 @@
+{
+  "name": "vibecoding-build-tools",
+  "private": true,
+  "scripts": {
+    "test": "node --test tools/pretranslate.test.mjs",
+    "translate:web": "node tools/pretranslate.mjs"
+  },
+  "dependencies": {
+    "linkedom": "0.18.12"
+  }
+}

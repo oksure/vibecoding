@@ -1,0 +1,154 @@
+<style>
+  .vc-language { position: fixed; right: 1rem; bottom: 1rem; z-index: 1040; font: 14px/1.5 system-ui, sans-serif; }
+  .vc-language-switch { display: flex; gap: 3px; padding: 4px; margin-left: auto; width: max-content; background: var(--bs-body-bg, white); border: 1px solid var(--bs-border-color, #d9dfe5); border-radius: 999px; box-shadow: 0 3px 14px #00000012; }
+  .vc-language button { border: 0; border-radius: 999px; padding: 6px 13px; color: var(--bs-body-color, #333); background: transparent; font: inherit; cursor: pointer; }
+  .vc-language button[aria-pressed="true"] { color: white; background: #2373ae; }
+  .vc-language button:focus-visible { outline: 3px solid #80b9e6; outline-offset: 2px; }
+  .vc-language button:disabled { opacity: .5; cursor: not-allowed; }
+  .vc-language-note { max-width: min(340px, calc(100vw - 2rem)); padding: 12px 15px; margin-bottom: 8px; border: 1px solid var(--bs-border-color, #d9dfe5); border-radius: 10px; color: var(--bs-body-color, #333); background: var(--bs-body-bg, white); box-shadow: 0 3px 14px #00000012; }
+  .vc-language-note:empty { display: none; }
+  @media print { .vc-language { display: none !important; } }
+</style>
+<script>
+(() => {
+  "use strict";
+  // BEGIN SHARED TRANSLATION DOM
+  function translationDOM(document, excluded) {
+    const korean = text => /[\uac00-\ud7a3\u3131-\u318e]/.test(text);
+    const escape = text => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    const selector = "p,h1,h2,h3,h4,h5,h6,td,th,figcaption,dt,dd,li";
+    const blocks = [...document.querySelectorAll(selector)].filter(node =>
+      !node.closest(excluded) && !node.querySelector(selector + ",pre.text") && korean(node.textContent));
+    const owners = new Set(blocks);
+    function pack(node) {
+      const templates = [];
+      function visit(child) {
+        if (child.nodeType === 3) return escape(child.data);
+        if (child.nodeType !== 1 || child.matches(".anchorjs-link")) return "";
+        const id = templates.length;
+        const frozen = !!child.matches(excluded) || !korean(child.textContent);
+        templates.push({node:child, frozen});
+        return frozen ? `<v${id}/>` : `<v${id}>${[...child.childNodes].map(visit).join("")}</v${id}>`;
+      }
+      return {source:[...node.childNodes].map(visit).join("").trim(), templates};
+    }
+    const units = blocks.map(node => ({node, kind:"block", ...pack(node)}));
+    // Plain-text prompt/specification examples are prose. Executable code
+    // remains protected by the exclusions above.
+    for (const node of document.querySelectorAll("pre.text > code")) {
+      if (korean(node.textContent) && !node.closest('.notranslate,[translate="no"]')) {
+        units.push({node,kind:"block",source:escape(node.textContent).trim(),templates:[]});
+      }
+    }
+    const walker = document.createTreeWalker(document.body, 4);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!korean(node.data) || !node.parentElement || node.parentElement.closest(excluded)) continue;
+      let parent = node.parentElement, owned = false;
+      while (parent) { if (owners.has(parent)) { owned = true; break; } parent = parent.parentElement; }
+      if (!owned) units.push({node, kind:"text", source:node.data.trim(), templates:[]});
+    }
+    function render(unit, translated) {
+      const root = document.createElement("span"), stack = [root], seen = new Set();
+      for (const token of translated.split(/(<[^>]*>)/g)) {
+        if (!token) continue;
+        if (!token.startsWith("<")) {
+          const decoder = document.createElement("span"); decoder.innerHTML = token;
+          stack.at(-1).append(document.createTextNode(decoder.textContent));
+          continue;
+        }
+        const match = token.match(/^<(\/?)v(\d+)(\/?)>$/);
+        if (!match) throw new Error("Unexpected translation markup");
+        const [, closing, number, selfClosing] = match, id = Number(number), template = unit.templates[id];
+        if (!template) throw new Error("Unknown translation marker");
+        if (closing) {
+          if (selfClosing || stack.length === 1 || stack.at(-1).__vcMarker !== id) throw new Error("Unbalanced translation marker");
+          stack.pop(); continue;
+        }
+        if (seen.has(id)) throw new Error("Repeated translation marker");
+        seen.add(id);
+        if (template.frozen && !selfClosing) throw new Error("Changed protected inline content");
+        if (!template.frozen && selfClosing) throw new Error("Dropped translated inline content");
+        const element = template.node.cloneNode(template.frozen);
+        stack.at(-1).append(element);
+        if (!selfClosing) { element.__vcMarker = id; stack.push(element); }
+      }
+      if (stack.length !== 1 || seen.size !== unit.templates.length) throw new Error("Missing translation marker");
+      return [...root.childNodes];
+    }
+    return {units, render};
+  }
+  // END SHARED TRANSLATION DOM
+  function init() {
+    if (!document.documentElement.lang.startsWith("ko")) return;
+    document.body.normalize();
+    const originalLang = document.documentElement.lang;
+    const ui = document.createElement("aside");
+    ui.className = "vc-language notranslate";
+    ui.setAttribute("translate", "no");
+    ui.setAttribute("aria-label", "읽기 언어 / Reading language");
+    ui.innerHTML = '<div class="vc-language-note" role="status" aria-live="polite"></div><div class="vc-language-switch" role="group" aria-label="언어 선택"><button type="button" lang="ko" aria-pressed="true" title="한국어 원문 보기">KO</button><button type="button" lang="en" aria-pressed="false" title="Read the prepared English translation">EN</button></div>';
+    document.body.append(ui);
+    const [ko, en] = ui.querySelectorAll("button");
+    const note = ui.querySelector('[role="status"]');
+    let data;
+    try {
+      data = JSON.parse(document.getElementById("vc-translation-data").textContent);
+      if (data.version !== 2 || typeof data.excluded !== "string" || !data.translations) throw new Error("invalid payload");
+    } catch (_) {
+      en.disabled = true;
+      note.textContent = "이 미리보기에는 영어 번역이 준비되지 않았습니다.";
+      return;
+    }
+    if (data.status === "pending") {
+      en.disabled = true;
+      en.title = "영어 번역 준비 중 / English translation pending";
+      en.setAttribute("aria-label", en.title);
+      return;
+    }
+    const originals = [];
+    const dom = translationDOM(document, data.excluded);
+    try {
+      for (const unit of dom.units) {
+        const translated = Object.hasOwn(data.translations, unit.source) ? data.translations[unit.source] : null;
+        if (typeof translated !== "string" || !translated.trim()) throw new Error("Missing translation");
+        if (unit.kind === "block") {
+          originals.push({...unit, original:[...unit.node.childNodes], english:dom.render(unit, translated)});
+        } else {
+          originals.push({...unit, original:unit.node.data, english:unit.node.data.match(/^\s*/)[0] + translated + unit.node.data.match(/\s*$/)[0]});
+        }
+      }
+    } catch (_) {
+      en.disabled = true;
+      note.textContent = "이 글의 영어 번역을 준비 중입니다. 한국어 원문을 먼저 읽어 주세요.";
+      return;
+    }
+    function select(lang, remember = true) {
+      for (const item of originals) if (item.node.isConnected) {
+        const content = lang === "en" ? item.english : item.original;
+        if (item.kind === "block") {
+          // Quarto adds heading permalinks after the initial document parse.
+          // Keep those live nodes on every switch, including auto-restored EN.
+          const decorations = [...item.node.children].filter(node => node.matches(".anchorjs-link"));
+          item.node.replaceChildren(...content, ...decorations.filter(node => !content.includes(node)));
+        }
+        else item.node.data = content;
+      }
+      document.documentElement.lang = lang === "en" ? "en" : originalLang;
+      ko.setAttribute("aria-pressed", String(lang === "ko"));
+      en.setAttribute("aria-pressed", String(lang === "en"));
+      if (remember) {
+        try { localStorage.setItem("vc-reading-language", lang); } catch (_) {}
+        try { sessionStorage.removeItem("vc-reading-language"); } catch (_) {}
+      }
+    }
+    ko.addEventListener("click", () => select("ko"));
+    en.addEventListener("click", () => select("en"));
+    try {
+      if ((localStorage.getItem("vc-reading-language") || sessionStorage.getItem("vc-reading-language")) === "en") select("en", false);
+    } catch (_) {}
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, {once: true});
+  else init();
+})();
+</script>

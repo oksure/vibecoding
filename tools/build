@@ -3,7 +3,8 @@
 #
 # Usage:
 #   tools/build            # everything: html + pdf for ko & en, assembled in _site/
-#   tools/build html       # HTML only (both languages)
+#   tools/build html       # reading + review HTML (both languages)
+#   tools/build reviews    # review HTML only (both languages)
 #   tools/build pdf        # PDF only  (both languages)
 #   tools/build html ko    # one target, one language
 set -euo pipefail
@@ -38,6 +39,13 @@ build_html() {
   (cd "$lang" && quarto render --to html)
 }
 
+build_reviews() {
+  local lang="$1"
+  echo "== reviews ($lang) =="
+  python3 tools/_review_prepare.py "$lang"
+  (cd "_reviewbuild/$lang" && quarto render --to html)
+}
+
 build_pdf() {
   local lang="$1"
   echo "== PDF ($lang) =="
@@ -51,21 +59,24 @@ build_pdf() {
 assemble_site() {
   echo "== site (_site/) =="
   rm -rf _site
-  mkdir -p _site/en _site/pdf
+  mkdir -p _site/en _site/pdf _site/reviews/en
   cp -r ko/_book/. _site/
   cp -r en/_book/. _site/en/
+  cp -r _reviewbuild/ko/_book/. _site/reviews/
+  cp -r _reviewbuild/en/_book/. _site/reviews/en/
   cp dist/*.pdf _site/pdf/
   touch _site/.nojekyll
-  echo "-> _site/ ready (ko at /, en at /en/, PDFs at /pdf/)"
+  echo "-> _site/ ready (ko at /, en at /en/, reviews at /reviews/, PDFs at /pdf/)"
 }
 
 for lang in $LANGS; do
   case "$TARGET" in
-    html) build_html "$lang" ;;
+    html) build_html "$lang"; build_reviews "$lang" ;;
+    reviews) build_reviews "$lang" ;;
     pdf)  build_pdf  "$lang" ;;
-    all)  build_html "$lang"; build_pdf "$lang" ;;
+    all)  build_html "$lang"; build_reviews "$lang"; build_pdf "$lang" ;;
     site) ;;
-    *) echo "usage: tools/build [html|pdf|site|all] [ko|en|both]"; exit 1 ;;
+    *) echo "usage: tools/build [html|reviews|pdf|site|all] [ko|en|both]"; exit 1 ;;
   esac
 done
 

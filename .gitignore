@@ -1,7 +1,11 @@
 /_pdfbuild/
+/_reviewbuild/
 /_site/
 /dist/
 _book/
 .quarto/
 *.quarto_ipynb
 /.luarc.json
+/node_modules/
+/.cache/
+/translation-backlog.json
