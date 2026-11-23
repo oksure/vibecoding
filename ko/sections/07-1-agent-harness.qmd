@@ -1,2 +1,81 @@
 # §7.1 에이전트 하네스란? {.unnumbered}
 
+<!-- authoritative-lang: ko -->
+
+## 에이전트 하네스란? {#sec-agent-harness}
+
+AI에게 코드 수정을 맡기면 대화창에는 짧은 문장만 남아도 실제 작업 폴더에서는 여러 일이 일어난다. 파일을 읽고, 코드를 바꾸고, 테스트를 실행한 뒤 오류를 보고 다시 수정한다. 이때 파일을 여는 일과 다음에 무엇을 할지 판단하는 일은 같은 구성 요소가 담당하지 않는다. 모델의 판단이 실제 파일의 변경으로 이어지려면 둘 사이를 연결하는 소프트웨어가 필요하다.
+
+터미널에서 사용하는 Codex CLI를 떠올리면 이 연결을 이해하기 쉽다. CLI는 명령줄 인터페이스(command-line interface)의 약자로, 사용자가 터미널에서 프로그램과 상호작용하는 방식이다. OpenAI는 Codex CLI의 핵심 로직을 설명하면서 사용자, 모델, 도구 사이의 상호작용을 조정하는 실행 계층을 명시적으로 ‘Codex harness’라고 부른다. Codex CLI에서 모델 호출과 도구 실행을 조정하는 부분이 하네스의 한 사례다. 여기서 가리키는 것은 모델 자체가 아니라, 그 모델을 불러 도구와 함께 작동시키는 실행 소프트웨어다. ([Michael Bolin, OpenAI, Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/), 게시: 2026-01-23; 도입과 The agent loop, 웹 원문 L47–L63; 확인: 2026-11-20; [1])
+
+AI에게 받은 코드를 사람이 복사해 실행해 본 적이 있다면, 사람은 이미 코드와 실행 결과를 오가는 연결을 맡아 본 셈이다. 하네스는 그 연결의 일부를 프로그램으로 수행한다. 그렇다고 사람의 판단과 책임까지 자동으로 대체하는 것은 아니다. 무엇을 바꾸어도 되는지와 결과를 받아들일지는 여전히 별도로 정해야 한다.
+
+이 절에서 에이전트 하네스(agent harness)는 모델이 작업에 필요한 정보를 받고, 허용된 도구를 사용하며, 실행 결과를 다음 판단에 활용하도록 연결하고 관리하는 모델 밖의 실행 계층을 뜻한다. Anthropic의 Claude Code 용어집도 하네스를 도구, 모델에 제공할 정보를 구성하는 컨텍스트 관리, 실행 환경을 묶는 체계로 정의한다. 이 문서는 Claude Code가 하네스이고 Claude가 그 안의 모델이라고 구분하며, 파일 접근과 명령 실행, 권한 확인, 메모리 로딩, 행동을 잇는 루프를 그 역할로 설명한다. ([Anthropic, Glossary](https://code.claude.com/docs/en/glossary#agentic-harness), 게시일 미표기; Agentic harness와 Agentic loop, 웹 원문 L122–L127; 확인: 2026-11-20; [2])
+
+여기서 ‘모델 밖’이라는 말은 모델과 다른 장소에서 실행된다는 뜻이 아니다. 추론을 담당하는 구성 요소와 그 추론을 실제 행동으로 옮기는 구성 요소를 기능상 구분한다는 뜻이다. 둘이 같은 컴퓨터에서 실행되거나 하나의 제품 안에 묶여 있어도 이 구분은 유지된다. 반대로 모델이 원격 서버에 있고 하네스가 사용자 컴퓨터에서 실행되어도, 파일을 실제로 읽고 쓰는 권한은 하네스와 연결된 실행 환경에 달려 있다.
+
+관계를 간단히 표현하면 ‘에이전트 = 모델 + 하네스’라고 쓸 수 있다. 이는 이해를 돕는 압축식이다. 모델, 하네스, 환경이 언제나 독립된 제품 세 개로 존재한다거나 모든 제품이 같은 구조라는 뜻은 아니다. 이 관계를 모델, 하네스, 환경, 에이전트의 역할로 나누어 보면 구분이 분명해진다.
+
+팀원의 발표 파일을 정리하는 신입 조교의 업무로 이 관계를 설명할 수 있다. 무엇을 읽고 어떻게 요약할지 판단하는 역할은 모델에 비유할 수 있다. 허용된 범위에서 파일 열기 도구를 실행하고 결과를 조교에게 전달하는 업무 시스템은 하네스에 해당한다.
+
+이 비유에서 파일을 여는 프로그램은 도구이고, 자료가 놓인 공유 폴더는 환경이다.
+
+모델은 입력을 바탕으로 응답과 다음 행동을 생성하는 추론 구성 요소다. 코드 수정 작업에서는 읽어야 할 파일이나 수정할 내용을 제안한다. 하네스는 모델 호출과 도구 실행, 정보 전달, 권한과 작업 흐름을 관리한다. 도구를 통해 허용된 파일을 읽고 편집하도록 연결하며, 실행 결과를 다시 모델에 돌려주는 일이 여기에 해당한다.
+
+환경은 파일 시스템, 터미널, 외부 서비스처럼 행동의 대상이 되는 곳이다. 도구가 실행되면 이 환경에서 파일 내용이 바뀌거나 테스트가 수행된다. 에이전트는 모델이 하네스를 통해 이러한 환경과 상호작용하며 목표를 수행하는 전체 시스템을 가리킨다. 사용자의 수정 요청을 받아 변경 내용과 실행 결과를 돌려주는 과정을 전체로 볼 때 에이전트라고 부르는 것이다.
+
+Codex에서도 이 구분이 드러난다. OpenAI의 설명에 따르면 Codex 하네스에는 기본 실행 루프뿐 아니라 대화 상태 관리, 설정, 파일 읽기와 명령 실행, 외부 도구와 작업 지침의 연결이 포함된다. ‘파일을 읽는 중’, ‘명령 실행’, ‘승인 대기’는 이 계층에서 처리하는 동작이다. 실제로 허용되는 행동은 실행 환경과 설정에 따라 달라진다. ([Celia Chen, OpenAI, Unlocking the Codex harness: how we built the App Server](https://openai.com/index/unlocking-the-codex-harness/), 게시: 2026-02-04; Inside the Codex harness, 웹 원문 L63–L75; 확인: 2026-11-20; [3])
+
+프롬프트 엔지니어링은 목표와 제약, 예시, 출력 형식을 어떻게 지시할지 다룬다. 컨텍스트 엔지니어링은 그러한 지시를 포함해 모델에 어떤 정보를 제공하고 갱신할지 다룬다. 두 활동은 겹치며, 프롬프트는 컨텍스트의 일부다. 하네스를 이해할 때도 이 둘을 버리고 다음 단계로 넘어간다고 생각해서는 안 된다. 입력을 구성하는 일에 더해, 그 입력을 받은 모델의 출력을 어떤 권한으로 실행하고 결과를 어떻게 돌려줄지까지 연결해서 보는 것이다. ([Anthropic, Effective context engineering for AI agents](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents), 게시: 2025-09-29; Context engineering vs prompt engineering, 웹 원문 L42–L53; 확인: 2026-11-20; [4])
+
+예를 들어 ‘운영 중인 데이터베이스는 수정하지 말라’는 문장은 모델에 전달할 지시다. 운영 데이터베이스에 쓸 수 있는 자격 증명을 아예 주지 않는 것은 실행 권한의 설계다. 두 조치는 함께 쓸 수 있지만 같은 장치는 아니다. 앞의 문장을 더 자세히 적는 것만으로 뒤의 권한 제한이 생기지는 않는다. 이것이 하네스를 프롬프트 한 장과 구분해서 보아야 하는 이유다.
+
+실제 사례도 있다. Replit은 2025년 7월 29일 공식 글에서 자사 에이전트가 Jason Lemkin의 앱 데이터베이스 데이터를 삭제한 일을 인정했다. 회사 설명에 따르면 데이터는 나중에 복구되었으며, 당시에는 개발 중 변경이 운영 앱에도 영향을 줄 수 있었다. 같은 글은 개발용 데이터베이스와 운영용 데이터베이스를 기본적으로 분리하고, 개발 중에는 에이전트가 운영용 데이터베이스를 바꾸지 못하게 하는 조치를 소개했다. 이 사례에서 살펴볼 핵심은 에이전트가 실제로 변경할 수 있었던 데이터의 범위다. ([The Replit Team, Doubling down on our commitment to secure vibe coding](https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding), 게시: 2025-07-29; Separate Production and Database Environments 및 사고 설명, 웹 원문 L123–L125, L135–L139; 확인: 2026-11-20; [5])
+
+하네스 엔지니어링(harness engineering)은 이런 실행 계층을 설계하고 개선하는 일이다. 같은 요청에 실패할 때 필요한 정보와 도구가 제공되었는지, 실행 범위가 너무 넓지 않은지, 결과가 다음 판단에 전달되는지까지 확인한다. 프롬프트와 컨텍스트 설계는 이런 실행 계층 안에서도 계속 필요하다. 하네스 엔지니어링을 이전 기법이 사라지는 시대 구분으로 볼 필요는 없다.
+
+최소 구조는 입력 구성, 모델의 판단, 허용된 도구 실행, 결과 반환으로 설명할 수 있다. 다음은 빈 문자열을 받으면 비정상 종료하는 날짜 처리 함수를 고치는 가상 예시다. 특정 제품에서 실행해 얻은 결과가 아니라 구성 요소의 관계를 보여 주기 위해 만든 상황이다.
+
+먼저 하네스가 사용자의 요청과 작업 규칙, 관련 코드를 모델의 입력으로 구성한다. 목표가 ‘빈 입력은 오류를 설명하는 응답으로 처리하되 정상 날짜 처리 방식은 유지한다’라면, 모델에는 그 목표와 해당 함수, 필요한 테스트 정보가 제공되어야 한다. 이때 하네스는 파일을 그대로 전부 넣을 수도 있고 필요한 부분을 읽는 도구를 제공할 수도 있다. 여기서 중요한 것은 현재 판단에 필요한 정보가 입력으로 연결된다는 점이다.
+
+다음으로 모델이 행동을 제안한다. 관련 파일을 먼저 읽을 수도 있고, 이미 코드가 제공되었다면 수정안을 만들 수도 있다. 모델이 ‘테스트를 실행하라’는 도구 호출을 출력하는 단계와 테스트가 실제로 실행되는 단계는 구분된다. OpenAI가 설명하는 Codex 루프에서도 모델의 응답이 최종 답변인지 도구 호출 요청인지에 따라 이후 처리가 달라진다. ([Michael Bolin, OpenAI, Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/), 게시: 2026-01-23; 도입과 The agent loop, 웹 원문 L47–L63; 확인: 2026-11-20; [1])
+
+하네스는 도구 호출 요청을 받아 실제 실행으로 연결한다. 파일 편집이 허용되어 있으면 지정된 변경을 적용하고, 실행 승인이 필요한 명령이면 승인을 기다릴 수 있다. 반대로 읽기만 허용된 환경에서는 수정 파일을 직접 저장하지 못할 수 있다. 모델이 어떤 행동을 요청했다는 사실만으로 그 행동의 실행 권한이 생기는 것은 아니다. 도구는 그 범위 안에서 파일 시스템이나 테스트 실행 환경에 실제 영향을 준다.
+
+마지막으로 도구가 돌려준 결과가 모델의 다음 입력으로 들어간다. 테스트가 실패했다면 실패한 항목과 오류가 다음 수정의 근거가 된다. 명령을 실행하지 못했다면 성공한 것처럼 처리하지 않고, 실행되지 않았다는 결과를 다루어야 한다. 모델이 ‘문제를 고쳤다’고 설명한 문장과 환경에서 확인된 실행 결과가 서로 다른 정보라는 점이 중요하다. Anthropic도 에이전트가 각 단계에서 도구 실행 결과 등 환경의 피드백으로 진행 상태를 판단해야 한다고 설명한다. ([Anthropic, Building effective agents](https://www.anthropic.com/research/building-effective-agents), 게시: 2024-12-19; When and when not to use agents 및 Agents, 웹 원문 L56–L59, L152–L161, L197–L203; 확인: 2026-11-20; [6])
+
+이 과정은 결과 반환에서 끝나지 않고 다음 판단으로 이어진다. 작업이 끝났다고 판단되면 응답을 돌려주고, 추가 작업이 필요하면 도구 사용을 이어가며, 승인이 필요하거나 정해진 한도에 도달하면 멈출 수 있다. 여기서는 이러한 반복과 중단이 존재한다는 점까지만 다룬다. 재시도 횟수와 종료 정책을 어떻게 정할지는 루프 엔지니어링의 문제다.
+
+도구는 모델이 요청할 수 있도록 노출된 기능이다. 파일 검색, 파일 편집, 명령 실행은 각각 도구가 될 수 있다. 그러나 도구를 여러 개 모아 놓은 목록만으로는 누가 호출을 실행하고, 어떤 범위까지 허용하며, 결과를 어디로 돌려주는지 설명되지 않는다. 이 연결과 관리를 함께 보아야 하네스의 구조가 드러난다.
+
+MCP(Model Context Protocol)는 AI 애플리케이션과 외부 시스템을 연결하는 표준이다. 하네스가 외부 데이터나 도구를 연결하는 데 활용할 수 있지만, MCP 자체가 에이전트의 전체 작업 흐름을 대신 뜻하지는 않는다. 스킬(skill)은 특정 작업에 필요한 지침과 자료를 묶어 재사용하는 단위다. Agent Skills 형식은 지침뿐 아니라 스크립트와 참고 자료도 함께 묶을 수 있도록 한다. 따라서 MCP나 스킬 하나를 하네스 전체와 동일시하기보다, 하네스가 작업 능력을 확장하는 데 사용하는 부품으로 이해하는 편이 정확하다. ([Model Context Protocol, What is the Model Context Protocol (MCP)?](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro), 문서 경로 버전 2026-07-28; What is the Model Context Protocol, 웹 원문 L21–L25; 확인: 2026-11-20; [7]) ([Agent Skills, Agent Skills Overview](https://agentskills.io/home), 게시일 미표기; What are Agent Skills 및 How do Agent Skills work, 웹 원문 L21–L42; 확인: 2026-11-20; [8])
+
+현재 목표와 직전 실행 결과를 유지해야 작업이 이어진다. 이러한 작업 상태를 관리하는 것도 하네스의 역할이다. 여러 세션에 걸친 정보 보존과 실패 뒤 복구를 담당하는 메모리 및 체크포인트의 설계는 7.4에서 다룬다.
+
+하네스가 있다는 사실만으로 에이전트가 항상 올바르게 일하는 것은 아니다. 모델이 도구를 잘못 선택할 수도 있고, 허용된 범위 안에서 잘못된 파일을 고칠 수도 있다. 테스트를 실행할 수 있어도 테스트가 요구사항을 충분히 검사하지 못하면 오류가 남는다. Anthropic은 자율적인 에이전트에서 오류가 누적될 위험과 비용을 함께 지적하며, 단순한 방법으로 충분한 경우에는 굳이 복잡한 에이전트 시스템을 더하지 말라고 권한다. ([Anthropic, Building effective agents](https://www.anthropic.com/research/building-effective-agents), 게시: 2024-12-19; When and when not to use agents 및 Agents, 웹 원문 L56–L59, L152–L161, L197–L203; 확인: 2026-11-20; [6])
+
+그러므로 하네스의 의미를 ‘모델을 더 똑똑하게 만드는 장치’로만 이해하면 중요한 부분을 놓친다. 하네스는 어떤 정보를 볼 수 있는지와 어떤 행동을 실행할 수 있는지, 그 결과가 다음 판단에 어떻게 반영되는지를 바꾼다. 실제 품질은 모델의 판단과 이 연결 구조가 해당 과제에 맞는지에 달려 있다. 부품을 많이 연결했다고 품질이 저절로 높아지는 것은 아니다.
+
+이제 ‘AI가 파일을 고쳤다’는 설명을 더 구체적으로 읽을 수 있다. 모델이 다음 행동을 생성했고, 하네스가 허용된 도구를 실행했으며, 환경에서 나온 결과가 다음 판단으로 돌아간 것이다. 실제 하네스를 비교하는 기준은 7.2에서, 도구와 MCP, 스킬을 연결하는 방법은 7.3에서 다룬다.
+
+### 참고문헌 {.unnumbered}
+
+웹 원문 줄 번호는 2026-11-20에 확인한 텍스트 추출본 기준이다. 사이트가 개편되면 줄 번호가 달라질 수 있으므로 문서 제목과 원문 절 이름을 함께 기록한다.
+
+[1] [Michael Bolin, OpenAI, Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/). 2026-01-23. 원문 위치: 도입과 The agent loop, 웹 원문 L47–L63. 확인일: 2026-11-20. Codex CLI와 공통 하네스의 설명. 글에 CLI 릴리스 번호 미표기.
+
+[2] [Anthropic, Glossary](https://code.claude.com/docs/en/glossary#agentic-harness). 게시일 미표기. 원문 위치: Agentic harness와 Agentic loop, 웹 원문 L122–L127. 확인일: 2026-11-20. Claude Code 제품 용어집. 서비스 문서에 버전 미표기.
+
+[3] [Celia Chen, OpenAI, Unlocking the Codex harness: how we built the App Server](https://openai.com/index/unlocking-the-codex-harness/). 2026-02-04. 원문 위치: Inside the Codex harness, 웹 원문 L63–L75. 확인일: 2026-11-20. 실행 루프, 상태, 도구 실행과 확장의 구조 설명. 글에 제품 릴리스 번호 미표기.
+
+[4] [Anthropic, Effective context engineering for AI agents](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents). 2025-09-29. 원문 위치: Context engineering vs prompt engineering, 웹 원문 L42–L53. 확인일: 2026-11-20. 기법의 설계 범위 구분. 시간 단위의 배타적 단계 구분을 제안하는 자료는 아님.
+
+[5] [The Replit Team, Doubling down on our commitment to secure vibe coding](https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding). 2025-07-29. 원문 위치: Separate Production and Database Environments 및 사고 설명, 웹 원문 L123–L125, L135–L139. 확인일: 2026-11-20. 사건 당사자인 회사의 회고. 데이터 복구 설명도 회사의 보고로 한정.
+
+[6] [Anthropic, Building effective agents](https://www.anthropic.com/research/building-effective-agents). 2024-12-19. 원문 위치: When and when not to use agents 및 Agents, 웹 원문 L56–L59, L152–L161, L197–L203. 확인일: 2026-11-20. 일반적인 에이전트 설계 논의. 모든 하네스의 성능 보장으로 해석하지 않음.
+
+[7] [Model Context Protocol, What is the Model Context Protocol (MCP)?](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro). 문서 경로 버전 2026-07-28. 원문 위치: What is the Model Context Protocol, 웹 원문 L21–L25. 확인일: 2026-11-20. 문서 경로에 명시된 버전을 기록. 제품별 연결 가능 여부의 보장은 아님.
+
+[8] [Agent Skills, Agent Skills Overview](https://agentskills.io/home). 게시일 미표기. 원문 위치: What are Agent Skills 및 How do Agent Skills work, 웹 원문 L21–L42. 확인일: 2026-11-20. 열린 형식의 공식 설명. 사이트에 문서 버전 미표기.
+
+
