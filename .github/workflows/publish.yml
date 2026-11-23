@@ -48,8 +48,33 @@ jobs:
         with:
           version: 1.8.27
 
-      - name: Build book (HTML ko+en, PDF ko+en, assemble _site)
-        run: tools/build
+      - name: Install dedicated browser for PDF diagrams
+        timeout-minutes: 5
+        run: |
+          npx --yes @puppeteer/browsers@3.2.7 install chrome-headless-shell@stable --path "$RUNNER_TEMP/quarto-browser"
+          quarto_chrome=$(find "$RUNNER_TEMP/quarto-browser" -type f -name chrome-headless-shell -print -quit)
+          test -n "$quarto_chrome"
+          "$quarto_chrome" --version
+          echo "QUARTO_CHROMIUM=$quarto_chrome" >> "$GITHUB_ENV"
+
+      - name: Verify PDF diagram rendering
+        timeout-minutes: 2
+        run: quarto render tools/fixtures/mermaid-typst.qmd --to typst --output-dir "$RUNNER_TEMP/diagram-check"
+
+      - name: Build reading and review HTML (ko+en)
+        timeout-minutes: 10
+        run: tools/build html
+
+      - name: Build Korean PDF
+        timeout-minutes: 5
+        run: tools/build pdf ko
+
+      - name: Build English PDF
+        timeout-minutes: 5
+        run: tools/build pdf en
+
+      - name: Assemble website
+        run: tools/build site
 
       - uses: actions/upload-artifact@v7
         with:

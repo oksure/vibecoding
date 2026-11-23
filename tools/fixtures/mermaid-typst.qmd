@@ -1,0 +1,11 @@
+---
+format: typst
+mainfont: Noto Sans CJK KR
+---
+
+```{mermaid}
+flowchart LR
+  start[시작] --> verify{검증}
+  verify -->|통과| done[완료]
+  verify -->|실패| start
+```
