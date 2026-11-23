@@ -4,9 +4,11 @@
 
 대학원생 한 명이 연구실 공용 장비의 예약 도구를 만든다고 하자. 설명을 위한 가상의 예시이며 실행해 본 결과가 아니다. 지금까지는 장비 옆 화이트보드에 이름을 적어 예약했고, 이를 웹 페이지로 옮기려 한다. AI 코딩 도구에 "연구실 장비 예약 페이지를 만들어 줘"라고 요청하면 장비 목록과 시간표, 예약 버튼이 있는 페이지가 나오고, 버튼을 누르면 예약도 된다. 그런데 이 요청에는 적지 않은 내용이 있다. 두 사람이 같은 시간대를 예약하면 어떻게 되는가. 한 번에 몇 시간까지 예약할 수 있는가. 다른 사람의 예약을 누가 취소할 수 있는가. 요청한 사람은 어느 것도 정하지 않았다. 그래도 생성된 코드는 세 경우 모두에서 어떤 식으로든 동작하며, 그 동작은 AI가 골라 넣은 것이다.
 
-사용자는 페이지를 써 보다가 겹친 예약을 발견하고 "같은 시간에는 한 명만 예약되게 해 줘"라고 다시 요청한다. 며칠 뒤에는 장비를 하루 종일 잡아 둔 예약을 보고 시간 제한을 요청한다. 결과를 보고 요청을 고치는 일이 이렇게 되풀이된다. 2.4절은 생성된 코드를 읽지 않고 실행 결과만 보며 요청을 반복하는 작업 방식을 좁은 뜻의 바이브 코딩이라고 불렀다. 이 절에서도 바이브 코딩을 그 뜻으로 쓴다.
+사용자는 페이지를 써 보다가 겹친 예약을 발견하고 "같은 시간에는 한 명만 예약되게 해 줘"라고 다시 요청한다. 며칠 뒤에는 장비를 하루 종일 잡아 둔 예약을 보고 시간 제한을 요청한다. 결과를 보고 요청을 고치는 일이 이렇게 되풀이된다. 이 반복을 줄이려는 방식이 스펙 주도 개발(spec-driven development, SDD)이다.
 
-이 반복을 줄이려는 방식이 스펙 주도 개발(spec-driven development, SDD)이다. 이 절에서 SDD는 코드를 생성하기 전에 무엇을 만들지를 문서로 먼저 쓰고, 사람이 그 문서를 검토해 합의한 뒤, AI가 그 문서를 기준으로 구현하게 하는 방식을 가리킨다. 이 문서를 명세(specification, 이하 Spec)라고 한다. Spec에는 만들 기능과 그 이유, 지켜야 할 규칙, 완료를 판정할 조건을 적는다. 계획(plan)은 Spec의 내용을 어떤 구조와 순서로 구현할지를 적은 문서다. Spec과 계획에는 비용이 든다. AI가 초안을 써 주더라도 사람이 읽고 고치는 시간이 필요하다. 이 절은 그 비용이 언제 값을 하는지를 묻는다.
+SDD가 가리키는 범위는 자료마다 다르며, 그 차이는 「명세와 계획을 먼저 쓰는 방식의 등장」에서 다룬다. 이 절에서 SDD는 코드를 생성하기 전에 무엇을 만들지를 문서로 먼저 쓰고, 사람이 그 문서를 검토해 합의한 뒤, AI가 그 문서를 기준으로 구현하게 하는 방식을 가리킨다. 이 문서를 명세(specification, 줄여서 spec)라고 한다. 명세에는 만들 기능과 그 이유, 지켜야 할 규칙, 완료를 판정할 조건을 적는다. 계획(plan)은 어떤 구조와 순서로 구현할지를 적은 문서이고, SDD에서는 명세를 바탕으로 쓴다. 명세를 따로 남기지 않고 계획만 먼저 확인한 뒤 구현하는 방식도 있는데, 이 절에서는 이를 계획 우선 작업이라고 부르고 SDD와 구분한다. 바이브 코딩은 §2.4의 좁은 뜻, 곧 생성된 코드를 읽지 않고 실행 결과만 보며 요청을 반복하는 작업 방식으로 쓴다.
+
+명세와 계획에는 비용이 든다. AI가 초안을 써 주더라도 사람이 읽고 고치는 시간이 필요하다. 이 절은 그 비용이 언제 값을 하는지를 묻는다.
 
 ## 빠르게 만든 코드에 남는 불확실성
 
@@ -14,25 +16,25 @@
 
 저장소의 이슈(issue, 버그나 개선 요청을 기록한 항목)를 해결하는 코딩 에이전트에서도 같은 경향이 보고되었다. Vijayvargiya 등은 실제 오픈소스 저장소의 이슈로 만든 평가 과제 모음인 SWE-bench Verified에서 해결에 필요한 정보를 뺀 판본을 만들어 에이전트에 주었다. 모델들은 따로 권하지 않으면 사용자에게 묻지 않고 작업을 진행했고, 질문이 허용된 조건에서는 묻지 않는 조건보다 성능이 최대 74% 높았다([Sanidhya Vijayvargiya 외, Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](https://arxiv.org/abs/2502.13069) (ICLR 2026 채택; arXiv 버전 3 게시: 2026-02-21)). 두 연구에서 빠진 정보는 연구자가 일부러 만든 것이고, Ambig-SWE에서 질문에 답한 상대는 모의 사용자였다. 실제 요청이 얼마나 자주 불완전한지는 이 결과로 알 수 없다. 확인되는 것은 정보가 빠졌을 때 모델이 그 사실을 알리기보다 추측으로 채우는 경향이다.
 
-사람 쪽에서 일어나는 일은 바이브 코딩 영상을 분석한 연구에 기록되어 있다. Chou 등은 바이브 코딩 영상 20개를 분석했다. 시작 전에 요구사항을 자세히 적은 작업자도 있었지만, 많은 작업자는 출력을 본 뒤에 새 요구사항을 만들었다. 기술 배경이 적고 AI에 크게 의존한 두 작업자는 프롬프트의 40% 가까이를 같은 요청을 되풀이하거나 오류 메시지를 설명 없이 다시 붙여 넣는 데 썼다([Yi-Hung Chou 외, Building Software by Rolling the Dice: A Qualitative Study of Vibe Coding](https://arxiv.org/abs/2512.22418) (ESEC/FSE 2026 채택; arXiv 버전 2 게시: 2025-12-30)). 영상 20개를 대상으로 한 질적 연구이므로 이 비율을 바이브 코딩 전체의 수치로 읽을 수는 없다. 조건을 대화의 여러 턴에 나눠 줄 때 모델의 성능이 낮아진다는 실험 결과는 3.1절에서 다루었다.
+사람 쪽에서 일어나는 일은 바이브 코딩 영상을 분석한 연구에 기록되어 있다. Chou 등은 바이브 코딩 영상 20개를 분석했다. 시작 전에 요구사항을 자세히 적은 작업자도 있었지만, 많은 작업자는 출력을 본 뒤에 새 요구사항을 만들었다. 기술 배경이 적고 AI에 크게 의존한 두 작업자는 프롬프트의 40% 가까이를 같은 요청을 되풀이하거나 오류 메시지를 설명 없이 다시 붙여 넣는 데 썼다([Yi-Hung Chou 외, Building Software by Rolling the Dice: A Qualitative Study of Vibe Coding](https://arxiv.org/abs/2512.22418) (ESEC/FSE 2026 채택; arXiv 버전 2 게시: 2025-12-30)). 영상 20개를 대상으로 한 질적 연구이므로 이 비율을 바이브 코딩 전체의 수치로 읽을 수는 없다. 조건을 대화의 여러 턴에 나눠 줄 때 모델의 성능이 낮아진다는 실험 결과는 §3.1에서 다루었다.
 
-이 결과들을 예약 도구에 비추어 보면, 빠르게 만든 코드에 남는 불확실성은 두 가지다. 첫째는 사람이 정한 적 없는 결정이 코드에 들어 있다는 것이다. 겹친 예약을 허용할지는 아무도 정하지 않았지만 코드는 허용하거나 막거나 둘 중 하나로 동작한다. 3.5절은 같은 현상을 두고 정한 적 없는 결정이 코드에 굳어 버린다고 썼다. 둘째는 완료를 판정할 기준이 없다는 것이다. "예약 페이지를 만들어 줘"라는 요청만으로는 돌아온 페이지가 다 된 것인지 가릴 수 없고, 사용자는 써 보다가 이상한 동작이 눈에 띌 때에야 문제를 안다. 두 가지로 나눈 것은 이 절의 정리이며 위 연구들의 분류가 아니다.
+이 결과들을 예약 도구에 비추어 보면, 빠르게 만든 코드에 남는 불확실성은 두 가지다. 첫째는 사람이 정한 적 없는 결정이 코드에 들어 있다는 것이다. 겹친 예약을 허용할지는 아무도 정하지 않았지만 코드는 허용하거나 막거나 둘 중 하나로 동작한다. §3.5에서는 같은 현상을 두고 정한 적 없는 결정이 코드에 굳어 버린다고 썼다. 둘째는 완료를 판정할 기준이 없다는 것이다. "예약 페이지를 만들어 줘"라는 요청만으로는 돌아온 페이지가 다 된 것인지 가릴 수 없고, 사용자는 써 보다가 이상한 동작이 눈에 띌 때에야 문제를 안다. 두 가지로 나눈 것은 이 절의 정리이며 위 연구들의 분류가 아니다.
 
-## Spec과 계획을 먼저 쓰는 방식의 등장
+## 명세와 계획을 먼저 쓰는 방식의 등장
 
-이 절이 확인한 자료 가운데 이른 것은 개인이 공유한 작업 요령이다. Harper Reed는 2025년 2월에 자신의 작업 순서를 공개했다. AI와 문답하며 아이디어를 `spec.md`로 정리하고, 그 Spec에서 단계별 프롬프트 계획(`prompt_plan.md`)과 점검 목록(`todo.md`)을 만든 다음 코드를 생성하게 하는 순서다([Harper Reed, My LLM codegen workflow atm](https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/) (게시: 2025-02-16)). 같은 해 4월 Anthropic은 Claude Code 사용 권장 사항에서 탐색, 계획, 코딩, 커밋(변경 내용을 저장소 기록에 남기는 일)의 순서를 소개하면서, 앞의 두 단계가 없으면 Claude가 곧바로 해법을 코딩하려는 경향이 있다고 적었다([Anthropic, Claude Code: Best practices for agentic coding](http://web.archive.org/web/20250502205533/https://www.anthropic.com/engineering/claude-code-best-practices) (게시: 2025-04-18; 원래 주소의 글이 이후 개정되어 2025-05-02 보관본으로 확인)).
+이 절이 확인한 자료 가운데 이른 것은 개인이 공유한 작업 요령이다. Harper Reed는 2025년 2월에 자신의 작업 순서를 공개했다. AI와 문답하며 아이디어를 `spec.md`로 정리하고, 그 명세에서 단계별 프롬프트 계획(`prompt_plan.md`)과 점검 목록(`todo.md`)을 만든 다음 코드를 생성하게 하는 순서다([Harper Reed, My LLM codegen workflow atm](https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/) (게시: 2025-02-16)). 이 절의 구분으로는 명세를 먼저 쓰는 쪽의 사례다.
 
-2025년 하반기에는 이 순서를 절차로 넣은 도구가 차례로 공개되었다. 7월에 공개된 Kiro는 Spec 작성 절차를 갖춘 AI 통합 개발 환경(IDE)이다. 소개 글은 프롬프트를 거듭해 동작하는 앱을 얻은 뒤의 상황을 문제로 들었다. 모델이 어떤 가정을 했는지 알 수 없고, 사용자가 진행 중에 내린 결정은 문서로 남지 않으며, 요구사항이 흐릿해서 앱이 요구사항을 충족하는지 판단할 수 없다는 것이다([Nikhil Swaminathan과 Deepak Singh, Introducing Kiro](https://kiro.dev/blog/introducing-kiro/) (게시: 2025-07-14)). 9월에는 GitHub이 오픈소스 도구 Spec Kit을 소개했다. 소개 글은 목표를 설명하고 코드 덩어리를 돌려받는 방식이 빠른 프로토타입에는 좋지만, 중요한 애플리케이션을 만들거나 기존 코드베이스에서 작업할 때는 덜 믿을 만하다고 썼다([Den Delimarsky, Spec-driven development with AI: Get started with a new open source toolkit](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (게시: 2025-09-02)). 같은 달 6일에는 오픈소스 도구 OpenSpec의 첫 공개 릴리스가 나왔다([OpenSpec, Changelog](https://openspec.dev/changelog/) (확인: 2026-11-16)).
+2025년 하반기에는 이 순서를 절차로 넣은 도구가 차례로 공개되었다. 7월에 공개된 Kiro는 명세 작성 절차를 갖춘 AI 통합 개발 환경(IDE)이다. 소개 글은 프롬프트를 거듭해 동작하는 앱을 얻은 뒤의 상황을 문제로 들었다. 모델이 어떤 가정을 했는지 알 수 없고, 사용자가 진행 중에 내린 결정은 문서로 남지 않으며, 요구사항이 흐릿해서 앱이 요구사항을 충족하는지 판단할 수 없다는 것이다([Nikhil Swaminathan과 Deepak Singh, Introducing Kiro](https://kiro.dev/blog/introducing-kiro/) (게시: 2025-07-14)). 9월에는 GitHub이 오픈소스 도구 Spec Kit을 소개했다. 소개 글은 목표를 설명하고 코드 덩어리를 돌려받는 방식이 빠른 프로토타입에는 좋지만, 중요한 애플리케이션을 만들거나 기존 코드베이스에서 작업할 때는 덜 믿을 만하다고 썼다([Den Delimarsky, Spec-driven development with AI: Get started with a new open source toolkit](https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/) (게시: 2025-09-02)). 같은 달 6일에는 오픈소스 도구 OpenSpec의 첫 공개 릴리스가 나왔다([OpenSpec, Changelog](https://openspec.dev/changelog/) (확인: 2026-11-16)).
 
-문서를 여러 벌 남기지 않고 계획만 먼저 확인하는 가벼운 형태도 일반 코딩 도구에 들어갔다. Cursor는 2025년 9월 29일에 공개한 1.7 판에 Plan Mode를 넣었다([Cursor, Changelog 1.7: Browser Controls, Plan Mode, and Hooks](https://cursor.com/changelog/1-7) (게시: 2025-09-29)). Claude Code의 plan mode에서는 Claude가 조사와 계획 작성만 하고, 사용자가 계획을 승인하기 전까지는 원칙적으로 파일 수정이 막힌다([Anthropic, Choose a permission mode](https://code.claude.com/docs/en/permission-modes) (확인: 2026-11-16; 문서에 게시일과 제품 버전 표기 없음)). 이 절에서는 이런 방식을 계획 우선 작업이라고 부른다. Spec을 따로 남기지 않는다는 점에서 SDD보다 가볍고, 사람이 코드보다 먼저 문서를 확인한다는 점은 같다.
+명세를 따로 남기지 않고 계획만 먼저 확인하는 가벼운 형태도 있다. Anthropic은 2025년 4월 Claude Code 사용 권장 사항에서 탐색, 계획, 코딩, 커밋(변경 내용을 저장소 기록에 남기는 일)의 순서를 소개하면서, 앞의 두 단계가 없으면 Claude가 곧바로 해법을 코딩하려는 경향이 있다고 적었다([Anthropic, Claude Code: Best practices for agentic coding](http://web.archive.org/web/20250502205533/https://www.anthropic.com/engineering/claude-code-best-practices) (게시: 2025-04-18; 원래 주소의 글이 이후 개정되어 2025-05-02 보관본으로 확인)). 이런 순서는 일반 코딩 도구의 기능으로도 들어갔다. Cursor는 2025년 9월 29일에 공개한 1.7 판에 Plan Mode를 넣었다([Cursor, Changelog 1.7: Browser Controls, Plan Mode, and Hooks](https://cursor.com/changelog/1-7) (게시: 2025-09-29)). Claude Code의 plan mode에서는 Claude가 조사와 계획 작성만 하고, 사용자가 계획을 승인하기 전까지는 원칙적으로 파일 수정이 막힌다([Anthropic, Choose a permission mode](https://code.claude.com/docs/en/permission-modes) (확인: 2026-11-16; 문서에 게시일과 제품 버전 표기 없음)). 도입에서 계획 우선 작업이라고 부른 것이 이 방식이다. SDD와 가르는 기준은 무엇을 만들지와 완료 조건을 적은 명세를 남겨 합의하는가이다. 명세가 없으므로 SDD보다 가볍고, 사람이 코드보다 먼저 문서를 확인한다는 점은 SDD와 같다. 두 방식이 도구에 따라 나뉘는 것은 아니다. 뒤의 표에서 보듯 Kiro에도 명세 문서 없이 구현 계획만 만드는 Plan mode가 있다.
 
-SDD라는 말의 뜻은 아직 하나로 정해지지 않았다. Thoughtworks는 2025년 11월 Technology Radar에서 SDD를 조직에 미칠 영향을 살펴볼 만한 기술('Assess')로 분류하면서, 용어의 정의가 아직 변하고 있다고 적었다([Thoughtworks, Technology Radar: Spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) (게시: 2025-11-05)). Böckeler는 SDD로 불리는 방식들을 세 가지 구현 수준으로 나누었다. 작업 전에 Spec을 먼저 쓰는 spec-first, 작업이 끝난 뒤에도 Spec을 남겨 유지보수에 쓰는 spec-anchored, 사람이 Spec만 고치고 코드는 직접 손대지 않는 spec-as-source다([Birgitta Böckeler, Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) (게시: 2025-10-15)). 이 절이 다루는 범위는 첫째 수준, 곧 코드 생성 전에 Spec을 쓰고 합의하는 일이다.
+SDD라는 말의 뜻은 아직 하나로 정해지지 않았다. Thoughtworks는 2025년 11월 Technology Radar에서 SDD를 조직에 미칠 영향을 살펴볼 만한 기술('Assess')로 분류하면서, 용어의 정의가 아직 변하고 있다고 적었다([Thoughtworks, Technology Radar: Spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) (게시: 2025-11-05)). Böckeler는 SDD로 불리는 방식들을 세 가지 구현 수준으로 나누었다. 작업 전에 명세를 먼저 쓰는 spec-first, 작업이 끝난 뒤에도 명세를 남겨 유지보수에 쓰는 spec-anchored, 사람이 명세만 고치고 코드는 직접 손대지 않는 spec-as-source다([Birgitta Böckeler, Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) (게시: 2025-10-15)). 도입에서 밝힌 이 절의 SDD는 이 가운데 첫째 수준에 해당한다.
 
-요구사항을 문서로 먼저 적는 일 자체는 새롭지 않다. AI 코딩 도구의 SDD에서 다른 점은 Spec의 초안을 대개 AI가 쓰고, 그 Spec을 읽고 구현하는 쪽도 AI라는 것이다. Spec Kit 소개 글은 사람의 주된 역할이 방향을 잡는 것이고 글의 대부분은 코딩 에이전트가 쓴다고 설명했다. 요구사항을 구조화하는 방법은 6.1절에서, Spec을 애자일 개발, 테스트 주도 개발과 함께 쓰는 방법은 12.1절에서 다룬다.
+요구사항을 문서로 먼저 적는 일 자체는 새롭지 않다. AI 코딩 도구의 SDD에서 다른 점은 명세의 초안을 대개 AI가 쓰고, 그 명세를 읽고 구현하는 쪽도 AI라는 것이다. Spec Kit 소개 글은 사람의 주된 역할이 방향을 잡는 것이고 글의 대부분은 코딩 에이전트가 쓴다고 설명했다. 명세를 애자일 개발, 테스트 주도 개발과 함께 쓰는 방법은 §12.1에서 다룬다.
 
-## 세 도구가 Spec을 다루는 방식
+## 세 도구가 명세를 다루는 방식
 
-Kiro, Spec Kit, OpenSpec은 Spec을 저장소 안의 Markdown 파일로 남긴다는 점이 같고, 문서를 나누는 방식과 사람이 확인하는 지점이 다르다. 아래 표는 2026년 11월 16일에 각 도구의 공식 문서로 확인한 내용이다. 확인 시점의 최신 판은 Kiro IDE 1.4.178, Spec Kit 1.4.0, OpenSpec 2.0.0이다. 세 도구를 같은 과제에 실행해 비교한 결과가 아니다.
+Kiro, Spec Kit, OpenSpec은 명세를 저장소 안의 Markdown 파일로 남긴다는 점이 같고, 문서를 나누는 방식과 사람이 확인하는 지점이 다르다. 아래 표는 2026년 11월 16일에 각 도구의 공식 문서로 확인한 내용이다. 확인 시점의 최신 판은 Kiro IDE 1.4.178, Spec Kit 1.4.0, OpenSpec 2.0.0이다. 세 도구를 같은 과제에 실행해 비교한 결과가 아니다.
 
 | 비교 기준 | Kiro | Spec Kit | OpenSpec |
 | --- | --- | --- | --- |
@@ -40,50 +42,50 @@ Kiro, Spec Kit, OpenSpec은 Spec을 저장소 안의 Markdown 파일로 남긴�
 | 남기는 문서 | `requirements.md`(버그 수정은 `bugfix.md`), `design.md`, `tasks.md` | 기능마다 `spec.md`, `plan.md`, `tasks.md`, 프로젝트 전체의 원칙을 적는 constitution | 변경마다 `proposal.md`, `specs/`, `tasks.md`, 필요할 때만 `design.md` |
 | 기본 단계 | 요구사항(또는 버그 분석), 설계, 작업 목록 | specify, plan, tasks, implement, converge | explore, propose, review, apply, archive |
 | 사람이 확인하는 지점 | 각 단계의 문서를 승인한 뒤 다음 단계로 넘어간다 | 명령을 하나씩 실행하고 결과를 검토한 뒤 다음 명령으로 넘어가도록 안내한다 | 코드를 쓰기 전에 제안된 계획을 검토하고 고친다. 단계 사이에 고정된 승인 절차는 두지 않는다고 밝힌다 |
-| 절차를 줄이는 방법 | Quick Spec은 단계 사이의 승인 없이 세 문서를 한 번에 만든다. Plan mode는 Spec 문서 없이 구현 계획만 만든다 | 작은 기능에는 clarify, checklist, analyze를 뺀 짧은 경로를 쓴다 | `design.md`는 필요한 변경에만 쓴다 |
-| 기존 코드의 변경 | Bugfix Spec이 현재 동작, 기대 동작, 바뀌면 안 되는 동작을 `bugfix.md`에 적는다 | 기존 시스템 전체를 Spec으로 다시 적지 않고, 저장소에 설치한 뒤 다음 변경부터 적용한다 | 변경분만 적은 Spec을 쓰고, 작업을 마쳐 archive하면 프로젝트의 기준 Spec에 합친다 |
+| 절차를 줄이는 방법 | Quick Spec은 단계 사이의 승인 없이 세 문서를 한 번에 만든다. Plan mode는 명세 문서 없이 구현 계획만 만든다 | 작은 기능에는 clarify, checklist, analyze를 뺀 짧은 경로를 쓴다 | `design.md`는 필요한 변경에만 쓴다 |
+| 기존 코드의 변경 | Bugfix Spec이 현재 동작, 기대 동작, 바뀌면 안 되는 동작을 `bugfix.md`에 적는다 | 기존 시스템 전체를 명세로 다시 적지 않고, 저장소에 설치한 뒤 다음 변경부터 적용한다 | 변경분만 적은 명세를 쓰고, 작업을 마쳐 archive하면 프로젝트의 기준 명세에 합친다 |
 
 각 열의 출처는 차례로 다음과 같다. Kiro는 [Kiro, Specs](https://kiro.dev/docs/specs/) (수정: 2026-11-12), [Kiro, Quick Spec](https://kiro.dev/docs/specs/quick-spec/), [Kiro, Plan mode](https://kiro.dev/docs/specs/plan/), [Kiro, Bugfix Specs](https://kiro.dev/docs/specs/bugfix-specs/)이다. Spec Kit은 [GitHub, Spec Kit: Spec-Driven Development Quickstart](https://github.github.io/spec-kit/quickstart.html), [GitHub, Spec Kit: How to adopt Spec Kit in an existing project](https://github.github.io/spec-kit/how-to/existing-projects.html)이다. OpenSpec은 [OpenSpec, Quickstart](https://openspec.dev/docs/quickstart), [Fission-AI, OpenSpec README](https://github.com/Fission-AI/OpenSpec)이다. 날짜를 따로 적지 않은 문서는 모두 2026-11-16에 확인했다.
 
 세 도구 모두 공개 뒤에 절차가 달라졌다. Spec Kit의 현재 문서에는 소개 글의 네 단계(Specify, Plan, Tasks, Implement)에 없던 clarify와 converge 같은 명령이 있고, Kiro의 현재 문서에는 소개 글에 없던 Quick Spec과 Plan mode가 있다. OpenSpec은 1.0.0(2026-01-26)과 2.0.0(2026-11-11)에서 명령 체계를 바꾸었다([OpenSpec, Changelog](https://openspec.dev/changelog/) (확인: 2026-11-16)). 표의 명령 이름과 단계는 확인 날짜 기준의 내용이다.
 
-세 도구는 무엇을 만들지(요구사항), 어떻게 만들지(설계나 계획), 어떤 순서로 작업할지(작업 목록)를 서로 다른 문서로 나누고, 사람이 코드보다 먼저 이 문서들을 검토하게 한다. Spec Kit 소개 글은 이때 사람의 역할이 방향을 잡는 데서 끝나지 않고 검증하는 것이라고 썼다. 요구사항을 적는 형식도 비슷하다. Kiro는 요구사항을 EARS(Easy Approach to Requirements Syntax) 표기로 쓴다. "WHEN [조건이나 사건] THE SYSTEM SHALL [기대 동작]"의 틀에 맞춰 적는 방식이고, Kiro 문서는 이렇게 쓴 요구사항을 테스트 사례로 바로 옮길 수 있다고 설명한다([Kiro, Feature Specs](https://kiro.dev/docs/specs/feature-specs/) (확인: 2026-11-16)). OpenSpec의 Spec도 요구사항마다 WHEN과 THEN으로 된 시나리오를 붙인다. 두 형식은 조건과 기대 동작을 짝지어 적으므로, 앞에서 빠져 있다고 한 완료 판정 기준을 문서에 담는 수단이 된다.
+세 도구는 무엇을 만들지(요구사항), 어떻게 만들지(설계나 계획), 어떤 순서로 작업할지(작업 목록)를 서로 다른 문서로 나누고, 사람이 코드보다 먼저 이 문서들을 검토하게 한다. Spec Kit 소개 글은 이때 사람의 역할이 방향을 잡는 데서 끝나지 않고 검증하는 것이라고 썼다. 요구사항을 적는 형식도 비슷하다. Kiro는 요구사항을 EARS(Easy Approach to Requirements Syntax) 표기로 쓴다. "WHEN [조건이나 사건] THE SYSTEM SHALL [기대 동작]"의 틀에 맞춰 적는 방식이고, Kiro 문서는 이렇게 쓴 요구사항을 테스트 사례로 바로 옮길 수 있다고 설명한다([Kiro, Feature Specs](https://kiro.dev/docs/specs/feature-specs/) (확인: 2026-11-16)). OpenSpec의 명세도 요구사항마다 WHEN과 THEN으로 된 시나리오를 붙인다. 두 형식은 조건과 기대 동작을 짝지어 적으므로, 앞에서 빠져 있다고 한 완료 판정 기준을 문서에 담는 수단이 된다.
 
-세 도구의 문서는 Spec 절차가 맞지 않는 경우도 직접 적고 있다. Kiro 문서는 Feature Specs가 목표가 분명하지 않은 탐색적 코딩에는 적합하지 않다고 적었고, 빠르고 잘 아는 변경이라면 계획을 건너뛰고 바로 작업하라고 안내한다. Spec Kit은 작은 기능을 위한 짧은 경로를 따로 둔다. OpenSpec은 무엇을 만들지 아직 모를 때 쓰는 explore를 propose 앞에 두었고, 기존 코드베이스의 Spec을 처음부터 전부 만드는 것은 시간 낭비라고 적었다([OpenSpec, FAQ](https://openspec.dev/faq/) (확인: 2026-11-16)). 도구를 만든 쪽도 모든 작업에 Spec 절차 전체를 권하지는 않는다.
+세 도구의 문서는 명세 절차가 맞지 않는 경우도 직접 적고 있다. Kiro 문서는 Feature Specs가 목표가 분명하지 않은 탐색적 코딩에는 적합하지 않다고 적었고, 빠르고 잘 아는 변경이라면 계획을 건너뛰고 바로 작업하라고 안내한다. Spec Kit은 작은 기능을 위한 짧은 경로를 따로 둔다. OpenSpec은 무엇을 만들지 아직 모를 때 쓰는 explore를 propose 앞에 두었고, 기존 코드베이스의 명세를 처음부터 전부 만드는 것은 시간 낭비라고 적었다([OpenSpec, FAQ](https://openspec.dev/faq/) (확인: 2026-11-16)). 도구를 만든 쪽도 모든 작업에 명세 절차 전체를 권하지는 않는다.
 
-## Spec이 값을 하는 경우와 탐색이 더 나은 경우
+## 명세가 값을 하는 경우와 탐색이 더 나은 경우
 
-Spec의 초안은 대개 AI가 쓰므로, 사람이 치르는 비용의 큰 부분은 생성된 문서를 읽고 고치는 시간이다. Böckeler는 Kiro에 작은 버그 수정을 맡겼을 때 요구사항 문서가 사용자 스토리(user story, 사용자 관점에서 적은 요구사항) 4개와 인수 조건(acceptance criteria, 요구사항이 충족되었는지 판정하는 조건) 16개로 늘어났다고 적었다. 그는 이를 견과 하나를 깨려고 큰 망치를 쓰는 일에 비유했고, 여러 Markdown 파일을 검토하느니 코드를 검토하겠다고 썼다([Birgitta Böckeler, Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) (게시: 2025-10-15)). Colin Eberhardt는 취미로 만드는 앱의 기능 하나를 Spec Kit으로 다시 구현하며 기록을 남겼다. 첫 구현까지 코드 689줄과 Markdown 2,577줄이 만들어졌고, 검토에 3.5시간이 들었다. 그는 SDD 없이 작업할 때가 열 배쯤 빠르다고 평가했고, 자신이 도구를 잘못 쓰고 있을 가능성도 함께 적었다([Colin Eberhardt, Putting Spec Kit Through Its Paces: Radical Idea or Reinvented Waterfall?](https://blog.scottlogic.com/2025/11/26/putting-spec-kit-through-its-paces-radical-idea-or-reinvented-waterfall.html) (게시: 2025-11-26)). 두 글은 각각 한 사람이 2025년 10월과 11월 당시의 도구를 써 본 기록이다.
+명세의 초안은 대개 AI가 쓰므로, 사람이 치르는 비용의 큰 부분은 생성된 문서를 읽고 고치는 시간이다. Böckeler는 Kiro에 작은 버그 수정을 맡겼을 때 요구사항 문서가 사용자 스토리(user story, 사용자 관점에서 적은 요구사항) 4개와 인수 조건(acceptance criteria, 요구사항이 충족되었는지 판정하는 조건) 16개로 늘어났다고 적었다. 그는 이를 견과 하나를 깨려고 큰 망치를 쓰는 일에 비유했고, 여러 Markdown 파일을 검토하느니 코드를 검토하겠다고 썼다([Birgitta Böckeler, Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) (게시: 2025-10-15)). Colin Eberhardt는 취미로 만드는 앱의 기능 하나를 Spec Kit으로 다시 구현하며 기록을 남겼다. 첫 구현까지 코드 689줄과 Markdown 2,577줄이 만들어졌고, 검토에 3.5시간이 들었다. 그는 SDD 없이 작업할 때가 열 배쯤 빠르다고 평가했고, 자신이 도구를 잘못 쓰고 있을 가능성도 함께 적었다([Colin Eberhardt, Putting Spec Kit Through Its Paces: Radical Idea or Reinvented Waterfall?](https://blog.scottlogic.com/2025/11/26/putting-spec-kit-through-its-paces-radical-idea-or-reinvented-waterfall.html) (게시: 2025-11-26)). 두 글은 각각 한 사람이 2025년 10월과 11월 당시의 도구를 써 본 기록이다.
 
-실제 사용자들은 작업에 따라 SDD를 골라 썼다. Agarwal 등은 Reddit 토론, 실무자 21명의 인터뷰, 공개 저장소 266개의 Spec 파일을 함께 분석했다. 대부분의 실무자는 SDD를 선택적으로 썼고 모든 작업에 쓰는 사람은 소수였다. 작은 작업, 버그 수정, 일회성 스크립트, 프로토타입에서는 SDD를 건너뛰었고, 쓸지 말지는 주로 작업의 크기나 복잡도로 정했다. 일부는 실패했을 때의 대가를 기준으로 삼아, 걸린 것이 크고 의도가 분명한 작업에 SDD를 권했다. 아이디어가 막연할 때 프로토타입부터 만든 참여자도 있었다. 저자들은 비용에 관해 SDD가 토큰(모델이 처리하는 텍스트의 단위) 사용량과 시간, 인지 부담을 구현 단계에서 계획 단계로 옮긴다고 정리했다([Shyam Agarwal 외, Spec-Driven Development as Prescribed and as Practiced](https://arxiv.org/abs/2608.25202) (버전 4 게시: 2026-10-15)). 이 논문은 arXiv에 공개된 프리프린트다.
+실제 사용자들은 작업에 따라 SDD를 골라 썼다. Agarwal 등은 Reddit 토론, 실무자 21명의 인터뷰, 공개 저장소 266개의 명세 파일을 함께 분석했다. 대부분의 실무자는 SDD를 선택적으로 썼고 모든 작업에 쓰는 사람은 소수였다. 작은 작업, 버그 수정, 일회성 스크립트, 프로토타입에서는 SDD를 건너뛰었고, 쓸지 말지는 주로 작업의 크기나 복잡도로 정했다. 일부는 실패했을 때의 대가를 기준으로 삼아, 걸린 것이 크고 의도가 분명한 작업에 SDD를 권했다. 아이디어가 막연할 때 프로토타입부터 만든 참여자도 있었다. 저자들은 비용에 관해 SDD가 토큰(모델이 처리하는 텍스트의 단위) 사용량과 시간, 인지 부담을 구현 단계에서 계획 단계로 옮긴다고 정리했다([Shyam Agarwal 외, Spec-Driven Development as Prescribed and as Practiced](https://arxiv.org/abs/2608.25202) (버전 4 게시: 2026-10-15)). 이 논문은 arXiv에 공개된 프리프린트다.
 
-Spec이 결과를 얼마나 개선하는지에 대한 근거는 아직 약하다. 같은 연구에서 대부분의 실무자는 Spec이 에이전트의 작업을 더 믿을 만하게 만든다고 느꼈지만, 그 효과를 같은 기간에 일어난 모델의 성능 향상과 분리하지 못했다. 연구에 인용된 한 팀은 SDD 방식이 직접 프롬프트를 쓸 때보다 토큰을 두세 배 쓰고 시간도 두 배쯤 걸렸으며, 몇 달을 쓴 뒤에도 코드가 나아졌음을 증명하지 못했다고 Reddit에 적었다. 저자들도 이 연구가 확인한 것은 연관이며 인과 효과가 아니라고 밝혔다.
+명세가 결과를 얼마나 개선하는지에 대한 근거는 아직 약하다. 같은 연구에서 대부분의 실무자는 명세가 에이전트의 작업을 더 믿을 만하게 만든다고 느꼈지만, 그 효과를 같은 기간에 일어난 모델의 성능 향상과 분리하지 못했다. 연구에 인용된 한 팀은 SDD 방식이 직접 프롬프트를 쓸 때보다 토큰을 두세 배 쓰고 시간도 두 배쯤 걸렸으며, 몇 달을 쓴 뒤에도 코드가 나아졌음을 증명하지 못했다고 Reddit에 적었다. 저자들도 이 연구가 확인한 것은 연관이며 인과 효과가 아니라고 밝혔다.
 
-Hill은 오픈소스 저장소 119개의 풀 리퀘스트(pull request, 저장소에 변경을 반영해 달라는 요청) 88,052건을 분석했다. 명세 자료(specification artifact)가 붙은 풀 리퀘스트와 그렇지 않은 풀 리퀘스트를 비교했는데, 명세가 결함과 재작업을 줄인다는 등의 가설 다섯 개가 모두 지지되지 않았다([Brenn Hill, Specification Artifacts in Open-Source Pull Request Workflows Do Not Reduce Defects: An Empirical Test of Spec-Driven Development Claims](https://doi.org/10.4230/LIPIcs.ESEM.2026.84) (ESEM 2026, LIPIcs 394권, 84:1–84:20)). 다만 이 연구가 명세 자료로 분류한 것의 97.5%는 이슈나 티켓에 대한 참조였고, SDD 도구가 만든 Spec을 저장소에 올린 사례는 표본에 없었다. 따라서 이 결과는 SDD 도구의 효과를 직접 잰 것이 아니다. 이 절이 조사한 범위에서는 Spec을 쓰는 데 든 시간과 그로 줄어든 수정 시간을 같은 과제에서 비교한 연구를 찾지 못했다(확인: 2026-11-16).
+Hill은 오픈소스 저장소 119개의 풀 리퀘스트(pull request, 저장소에 변경을 반영해 달라는 요청) 88,052건을 분석했다. 명세 자료(specification artifact)가 붙은 풀 리퀘스트와 그렇지 않은 풀 리퀘스트를 비교했는데, 명세가 결함과 재작업을 줄인다는 등의 가설 다섯 개가 모두 지지되지 않았다([Brenn Hill, Specification Artifacts in Open-Source Pull Request Workflows Do Not Reduce Defects: An Empirical Test of Spec-Driven Development Claims](https://doi.org/10.4230/LIPIcs.ESEM.2026.84) (ESEM 2026, LIPIcs 394권, 84:1–84:20)). 다만 이 연구가 명세 자료로 분류한 것의 97.5%는 이슈나 티켓에 대한 참조였고, SDD 도구가 만든 명세를 저장소에 올린 사례는 표본에 없었다. 따라서 이 결과는 SDD 도구의 효과를 직접 잰 것이 아니다. 이 절이 조사한 범위에서는 명세를 쓰는 데 든 시간과 그로 줄어든 수정 시간을 같은 과제에서 비교한 연구를 찾지 못했다(확인: 2026-11-16).
 
-Spec을 먼저 쓰는 절차가 요구사항과 설계를 모두 확정한 뒤에 구현하는 폭포수(waterfall) 개발로 돌아가는 것이라는 비판도 있다([François Zaninotto, Spec-Driven Development: The Waterfall Strikes Back](https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html) (게시: 2025-11-12)). AWS의 엔지니어인 Marc Brooker는 SDD의 Spec이 처음에 확정하고 끝나는 문서가 아니고 버전을 관리하며 계속 고쳐 가는 문서라고 반박했다([Marc Brooker, Spec Driven Development isn't Waterfall](https://brooker.co.za/blog/2026/04/09/waterfall-vs-spec) (게시: 2026-04-09)).
+명세를 먼저 쓰는 절차가 요구사항과 설계를 모두 확정한 뒤에 구현하는 폭포수(waterfall) 개발로 돌아가는 것이라는 비판도 있다([François Zaninotto, Spec-Driven Development: The Waterfall Strikes Back](https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html) (게시: 2025-11-12)). AWS의 엔지니어인 Marc Brooker는 SDD의 명세가 처음에 확정하고 끝나는 문서가 아니고 버전을 관리하며 계속 고쳐 가는 문서라고 반박했다([Marc Brooker, Spec Driven Development isn't Waterfall](https://brooker.co.za/blog/2026/04/09/waterfall-vs-spec) (게시: 2026-04-09)).
 
-이 자료들을 바탕으로 Spec이 값을 하는 경우와 탐색이 더 나은 경우를 나누면 다음과 같다. 이 표는 이 절의 정리이며, 조건별 효과를 측정한 결과가 아니다.
+이 자료들을 바탕으로 명세가 값을 하는 경우와 탐색이 더 나은 경우를 나누면 다음과 같다. 이 표는 이 절의 정리이며, 조건별 효과를 측정한 결과가 아니다.
 
-| Spec이 값을 하는 경우 | 탐색이 더 나은 경우 |
+| 명세가 값을 하는 경우 | 탐색이 더 나은 경우 |
 | --- | --- |
 | 요구사항이 복잡하거나 재사용, 협업이 필요할 때 | 문제 자체가 불명확해 실험이 필요할 때 |
 | 여러 사람이나 에이전트가 같은 목표를 공유해야 할 때 | 한 번 쓰고 버릴 일회성 스크립트일 때 |
-| 완료 조건을 객관적으로 판정해야 할 때 | Spec을 쓰는 비용이 그것으로 얻는 확실성보다 클 때 |
+| 완료 조건을 객관적으로 판정해야 할 때 | 명세를 쓰는 비용이 그것으로 얻는 확실성보다 클 때 |
 
-왼쪽 열의 조건은 도구들이 내세운 문제의식과 겹친다. Kiro 문서는 Feature Specs가 맞는 경우로 구조화된 계획이 필요한 복잡한 기능과 팀 협업을 위한 문서가 필요한 프로젝트를 들었다. OpenSpec은 요구사항이 대화 기록에만 있으면 AI 코딩 도구의 결과를 예측하기 어렵다고 적었다. 대화 기록은 그 대화를 한 사람과 세션에만 남으므로, 다른 사람이나 다른 에이전트가 같은 목표를 보려면 문서가 필요하다. 완료 조건의 판정은 Kiro와 OpenSpec이 요구사항을 조건과 기대 동작의 짝으로 적게 하는 이유이기도 하다. 오른쪽 열의 조건은 Agarwal 등의 연구에서 실무자들이 SDD를 건너뛴 작업과 겹친다. Piskala도 쓰고 버릴 프로토타입에는 Spec에 들인 노력이 함께 버려진다고 보았고, 탐색적 코딩에서는 무엇을 만들지 아직 모르는 상태에서 Spec을 먼저 쓰는 일이 배우는 과정을 제약한다고 썼다([Deepak Babu Piskala, Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants](https://arxiv.org/abs/2602.00180) (게시: 2026-01-30)). 이 논문은 실무 안내서이며 자체 측정 자료를 싣고 있지 않다.
+왼쪽 열의 조건은 도구들이 내세운 문제의식과 겹친다. Kiro 문서는 Feature Specs가 맞는 경우로 구조화된 계획이 필요한 복잡한 기능과 팀 협업을 위한 문서가 필요한 프로젝트를 들었다. OpenSpec은 요구사항이 대화 기록에만 있으면 AI 코딩 도구의 결과를 예측하기 어렵다고 적었다. 대화 기록은 그 대화를 한 사람과 세션에만 남으므로, 다른 사람이나 다른 에이전트가 같은 목표를 보려면 문서가 필요하다. 완료 조건의 판정은 Kiro와 OpenSpec이 요구사항을 조건과 기대 동작의 짝으로 적게 하는 이유이기도 하다. 오른쪽 열의 조건은 Agarwal 등의 연구에서 실무자들이 SDD를 건너뛴 작업과 겹친다. Piskala도 쓰고 버릴 프로토타입에는 명세에 들인 노력이 함께 버려진다고 보았고, 탐색적 코딩에서는 무엇을 만들지 아직 모르는 상태에서 명세를 먼저 쓰는 일이 배우는 과정을 제약한다고 썼다([Deepak Babu Piskala, Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants](https://arxiv.org/abs/2602.00180) (게시: 2026-01-30)). 이 논문은 실무 안내서이며 자체 측정 자료를 싣고 있지 않다.
 
 오른쪽 열의 마지막 조건은 나머지와 성격이 다르다. 비용과 확실성을 견주려면 둘을 어림할 수 있어야 하는데, 앞에서 본 것처럼 이를 직접 잰 연구가 없다. 지금 쓸 수 있는 어림의 근거는 실무자들이 실제로 쓴 기준, 곧 작업의 크기, 틀렸을 때의 대가, 의도가 분명한 정도다.
 
-## 탐색은 어디까지 하고, 무엇부터 Spec으로 합의할 것인가
+## 탐색은 어디까지 하고, 무엇부터 명세로 합의할 것인가
 
-앞 표의 두 열은 한 프로젝트 안에 함께 있다. 예약 도구에는 화면 구성처럼 만들어 봐야 판단할 수 있는 부분과 예약 충돌 규칙처럼 미리 정해야 하는 부분이 섞여 있다. 그래서 바이브 코딩과 SDD 가운데 하나를 고르는 질문보다, 탐색을 어디까지 하고 무엇부터 Spec으로 합의할지를 묻는 편이 실제 판단에 가깝다. 3.1절도 대화로 찾은 조건을 다시 정리해 적는 과정을 설명하며 같은 질문을 이 절로 넘겼다. 아래의 기준은 이 절의 제안이다.
+앞 표의 두 열은 한 프로젝트 안에 함께 있다. 예약 도구에는 화면 구성처럼 만들어 봐야 판단할 수 있는 부분과 예약 충돌 규칙처럼 미리 정해야 하는 부분이 섞여 있다. 그래서 바이브 코딩과 SDD 가운데 하나를 고르는 질문보다, 탐색을 어디까지 하고 무엇부터 명세로 합의할지를 묻는 편이 실제 판단에 가깝다. §3.1도 대화로 찾은 조건을 다시 정리해 적는 과정을 설명하며 같은 질문을 이 절로 넘겼다. 아래의 기준은 이 절의 제안이다.
 
-예약 도구의 첫 단계는 탐색이다. 만드는 사람 혼자 쓰는 프로토타입이고, 주 단위 시간표가 나은지 일 단위 시간표가 나은지는 화면을 보기 전에는 답하기 어렵다. 이 단계에서 Spec을 쓰면 아직 모르는 내용을 추측으로 채우게 된다. 탐색을 멈출 때를 알려 주는 신호는 수정 요청의 성격이다. "버튼을 위로 옮겨 줘"는 결과를 봐야 나올 수 있는 요청이다. "같은 시간에는 한 명만 예약되게 해 줘"는 결과를 보기 전에도 정할 수 있었던 규칙이다. 뒤쪽 유형의 요청이 나오기 시작하면 그 규칙들을 Spec으로 옮겨 적을 때가 된 것이다. 3.5절이 제시한 신호, 곧 완료 조건을 한 문장으로 쓸 수 있는가도 같은 판단에 쓸 수 있다.
+예약 도구의 첫 단계는 탐색이다. 만드는 사람 혼자 쓰는 프로토타입이고, 주 단위 시간표가 나은지 일 단위 시간표가 나은지는 화면을 보기 전에는 답하기 어렵다. 이 단계에서 명세를 쓰면 아직 모르는 내용을 추측으로 채우게 된다. 탐색을 멈출 때를 알려 주는 신호는 수정 요청의 성격이다. "버튼을 위로 옮겨 줘"는 결과를 봐야 나올 수 있는 요청이다. "같은 시간에는 한 명만 예약되게 해 줘"는 결과를 보기 전에도 정할 수 있었던 규칙이다. 뒤쪽 유형의 요청이 나오기 시작하면 그 규칙들을 명세로 옮겨 적을 때가 된 것이다. §3.5에서 제시한 신호, 곧 완료 조건을 한 문장으로 쓸 수 있는가도 같은 판단에 쓸 수 있다.
 
-연구실 구성원 모두가 이 도구를 쓰기로 하면 Spec으로 합의할 대상이 생긴다. 무엇부터 적을지는 앞 표의 왼쪽 열을 각 결정에 대입해 가릴 수 있다. 여기에 Agarwal 등의 연구에서 일부 실무자가 기준으로 든 실패의 대가를 더한다. 예약 충돌 규칙은 여러 사람이 똑같이 이해해야 하고, 지켜지는지를 객관적으로 판정할 수 있어야 하며, 틀리면 두 사람이 같은 시간에 장비 앞에서 마주친다. 취소 권한과 최대 예약 시간도 같다. 화면의 색과 배치는 어느 기준에도 해당하지 않으므로 탐색에 남겨 둔다.
+연구실 구성원 모두가 이 도구를 쓰기로 하면 명세로 합의할 대상이 생긴다. 무엇부터 적을지는 앞 표의 왼쪽 열을 각 결정에 대입해 가릴 수 있다. 여기에 Agarwal 등의 연구에서 일부 실무자가 기준으로 든 실패의 대가를 더한다. 예약 충돌 규칙은 여러 사람이 똑같이 이해해야 하고, 지켜지는지를 객관적으로 판정할 수 있어야 하며, 틀리면 두 사람이 같은 시간에 장비 앞에서 마주친다. 취소 권한과 최대 예약 시간도 같다. 화면의 색과 배치는 어느 기준에도 해당하지 않으므로 탐색에 남겨 둔다.
 
-다음은 이 규칙들을 적은 Spec의 가상 예시다. 완료 조건은 앞에서 본 EARS 표기처럼 조건과 기대 동작을 짝지어 적었다. 특정 도구가 생성한 문서가 아니며, 이 Spec으로 구현을 실행해 본 것도 아니다.
+다음은 이 규칙들을 적은 명세의 가상 예시다. 완료 조건은 앞에서 본 EARS 표기처럼 조건과 기대 동작을 짝지어 적었다. 특정 도구가 생성한 문서가 아니며, 이 명세로 구현을 실행해 본 것도 아니다.
 
 ```text
 기능: 장비 예약 규칙
@@ -101,14 +103,14 @@ Spec을 먼저 쓰는 절차가 요구사항과 설계를 모두 확정한 뒤�
 - 본인이나 장비 관리자가 아닌 사용자가 예약 취소를 요청하면,
   시스템은 취소를 거절한다.
 
-이 Spec에서 정하지 않는 것
+이 명세에서 정하지 않는 것
 - 화면의 색과 배치, 시간표의 표시 단위
 ```
 
-이 Spec은 스무 줄이 되지 않는다. 도입에서 AI가 대신 정했던 세 가지 결정을 사람이 정한 내용으로 바꾸고, 각 규칙이 지켜지는지 확인할 조건을 함께 적었다. 화면에 관한 내용은 일부러 뺐다. Piskala는 자기 상황에서 모호함을 없애는 데 필요한 최소 수준으로 Spec을 쓰라고 권했는데, 위 예시는 그 권고를 예약 도구에 적용해 본 것이다.
+이 명세는 스무 줄이 되지 않는다. 도입에서 AI가 대신 정했던 세 가지 결정을 사람이 정한 내용으로 바꾸고, 각 규칙이 지켜지는지 확인할 조건을 함께 적었다. 화면에 관한 내용은 일부러 뺐다. Piskala는 자기 상황에서 모호함을 없애는 데 필요한 최소 수준으로 명세를 쓰라고 권했는데, 위 예시는 그 권고를 예약 도구에 적용해 본 것이다.
 
-탐색에서 Spec으로 넘어가는 경로는 도구에도 있다. Kiro 문서에 따르면 자유롭게 대화하는 vibe 세션을 진행하다가 Spec 생성을 요청하면 그 대화의 맥락을 바탕으로 요구사항을 만든다([Kiro, Best practices](https://kiro.dev/docs/specs/best-practices/) (확인: 2026-11-16)). OpenSpec은 무엇을 만들지 정하지 못했을 때 explore로 시작하고, 정해지면 propose로 넘어가도록 안내한다. Spec을 빈 문서에서 혼자 채울 필요도 없다. Spec Kit의 clarify 명령과 Kiro의 Plan mode에서는 AI가 먼저 질문하고 사람이 답한다. Agarwal 등의 연구에서 일부 참여자는 에이전트의 질문에 답하고 초안을 고치는 과정에서 자신의 의도가 분명해졌다고 말했다.
+탐색에서 명세로 넘어가는 경로는 도구에도 있다. Kiro 문서에 따르면 자유롭게 대화하는 vibe 세션을 진행하다가 명세 생성을 요청하면 그 대화의 맥락을 바탕으로 요구사항을 만든다([Kiro, Best practices](https://kiro.dev/docs/specs/best-practices/) (확인: 2026-11-16)). OpenSpec은 무엇을 만들지 정하지 못했을 때 explore로 시작하고, 정해지면 propose로 넘어가도록 안내한다. 명세를 빈 문서에서 혼자 채울 필요도 없다. Spec Kit의 clarify 명령과 Kiro의 Plan mode에서는 AI가 먼저 질문하고 사람이 답한다. Agarwal 등의 연구에서 일부 참여자는 에이전트의 질문에 답하고 초안을 고치는 과정에서 자신의 의도가 분명해졌다고 말했다.
 
-이 기준의 한계는 근거의 종류에 있다. 이 절이 조사한 범위에서는 Spec을 쓴 경우와 쓰지 않은 경우를 같은 과제에서 비교한 실험을 찾지 못했고, 위 기준은 실무자 조사, 개인의 사용 기록, 도구 문서에서 끌어낸 해석이다. 예약 도구 사례도 가상의 예시여서, Spec을 쓴 쪽이 실제로 수정 횟수를 줄였는지는 보여 주지 못한다.
+이 기준의 한계는 근거의 종류에 있다. 이 절이 조사한 범위에서는 명세를 쓴 경우와 쓰지 않은 경우를 같은 과제에서 비교한 실험을 찾지 못했고, 위 기준은 실무자 조사, 개인의 사용 기록, 도구 문서에서 끌어낸 해석이다. 예약 도구 사례도 가상의 예시여서, 명세를 쓴 쪽이 실제로 수정 횟수를 줄였는지는 보여 주지 못한다.
 
-Spec을 쓸지는 프로젝트 전체가 아닌 개별 결정마다 따로 판단할 수 있다. 만들어 봐야 알 수 있는 것은 탐색으로 정하고, 여러 사람이 공유해야 하거나 완료를 판정해야 하거나 틀렸을 때 대가가 큰 결정은 코드보다 먼저 Spec에 적어 합의한다. 요구사항을 목표와 제약, 완료 기준으로 구조화하는 방법은 6.1절에서, 완료 조건을 테스트로 옮기는 방법은 10.1절에서 다룬다. 다음 3.5절은 이렇게 정한 작업을 어떤 형태의 도구에 맡길지를 다룬다.
+명세를 쓸지는 프로젝트 전체가 아닌 개별 결정마다 따로 판단할 수 있다. 만들어 봐야 알 수 있는 것은 탐색으로 정하고, 여러 사람이 공유해야 하거나 완료를 판정해야 하거나 틀렸을 때 대가가 큰 결정은 코드보다 먼저 명세에 적어 합의한다. 요구사항을 목표와 제약, 완료 기준으로 구조화하는 방법은 §6.1에서, 완료 조건을 테스트로 옮기는 방법은 §10.1에서 다룬다. 다음 §3.5에서는 이렇게 정한 작업을 어떤 형태의 도구에 맡길지를 다룬다.
