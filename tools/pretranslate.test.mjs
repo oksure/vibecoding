@@ -8,7 +8,7 @@ import {execFile} from "node:child_process";
 import {promisify} from "node:util";
 import vm from "node:vm";
 import {parseHTML} from "linkedom";
-import {fragments, embed, check, unitsFor} from "./_translation_html.mjs";
+import {fragments, embed, check, unitsFor, untranslatedDiagrams} from "./_translation_html.mjs";
 import {prepare, translationReport} from "./pretranslate.mjs";
 
 const fixture = '<!doctype html><html lang="ko"><head><title>한국어 제목</title><script>const untouched="한국어 코드";</script></head><body><nav>목차</nav><main><h1>테스트 제목</h1><p>본문 <a href="/chapter#anchor">링크</a>입니다.</p><pre><code>print("코드 보존")</code></pre><span translate="no">번역 제외</span></main></body></html>';
@@ -40,6 +40,46 @@ test("plain-text prompt examples switch languages while executable code remains 
 test("character references remain in the same text fragment as in a browser", () => {
   const html = '<html lang="ko"><body><p>저자 외, Expectation vs.&nbsp;Experience &amp; Tools</p></body></html>';
   assert.deepEqual(fragments(html), ["저자 외, Expectation vs.\u00a0Experience &amp; Tools"]);
+});
+
+test("reviewed diagrams preserve graph structure and switch without rerendering or network access", async () => {
+  const diagrams = JSON.parse(await readFile(new URL("../translations/diagrams.ko-en.json",import.meta.url),"utf8"));
+  const topology = text => [...text.matchAll(/^\s*(\w+)(?:\[[^\]]*\]|\{[^}]*\})?\s*-->\|[^|]*\|\s*(\w+)/gm)].map(m => [m[1],m[2]]);
+  for (const diagram of diagrams) {
+    assert.deepEqual(topology(diagram.english),topology(diagram.source));
+    const {document} = parseHTML('<html lang="ko"><head></head><body><main><pre class="mermaid mermaid-js"></pre></main></body></html>');
+    document.querySelector("pre").textContent = diagram.source;
+    const html = embed(document.toString(),{});
+    check(html);
+    assert.deepEqual(untranslatedDiagrams(html),[]);
+    const browser = parseHTML(html).document;
+    const image = browser.querySelector(".vc-diagram-en");
+    const svg = Buffer.from(image.src.split(",")[1],"base64").toString("utf8");
+    assert.ok(!/[가-힣]/.test(svg));
+    assert.match(svg,/<svg/);
+    assert.match(svg,/viewBox="0 0 [\d.]+ [\d.]+"/);
+    assert.ok(!svg.includes("<foreignobject"));
+    assert.equal(image.alt,diagram.alt);
+    assert.match(browser.getElementById("vc-diagram-style").textContent,/visibility: hidden/);
+    vm.runInContext(toggle,vm.createContext({document:browser,localStorage:{getItem:()=>"en"},sessionStorage:memoryStorage()}));
+    assert.equal(browser.documentElement.lang,"en");
+    assert.equal(browser.querySelector(".vc-diagram-ko pre").textContent,diagram.source);
+    browser.querySelector('.vc-language button[lang="ko"]').click();
+    assert.equal(browser.documentElement.lang,"ko");
+    assert.equal(browser.querySelectorAll(".vc-translated-diagram").length,1);
+    assert.equal(parseHTML(embed(html,{})).document.querySelectorAll(".vc-translated-diagram").length,1);
+  }
+});
+
+test("a changed Korean diagram stays published with EN pending until reviewed", () => {
+  const html = '<html lang="ko"><head></head><body><pre class="mermaid">flowchart LR\n a[새 단계] --&gt;|변경| b[검토]</pre></body></html>';
+  assert.equal(untranslatedDiagrams(html).length,1);
+  const output = embed(html,{});
+  assert.throws(()=>check(output),/Missing translation/);
+  assert.equal(check(output,{allowMissing:true}).pending,true);
+  const report = translationReport([{file:"/site/diagram.html",texts:[],diagrams:untranslatedDiagrams(html)}],{});
+  assert.equal(report.pendingPages.length,1);
+  assert.match(report.missing[0].source,/Mermaid diagram/);
 });
 
 test("saved translations are shared across pages and changed source requires a new translation", async () => {

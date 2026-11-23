@@ -1,0 +1,14 @@
+[
+  {
+    "source": "flowchart LR\n  req[요구사항] -->|명세| plan[계획]\n  plan -->|작업 목록| change[변경]\n  change -->|변경 내역| verify{검증}\n  verify -->|테스트 통과| approve[사람 승인]\n  verify -->|실패, 3회 미만| fix[원인 분석과 수정]\n  fix -->|수정 후 재검증| verify\n  verify -->|실패 3회| escalate[에스컬레이션]\n  approve -->|승인| done[완료]\n  approve -->|거절| stop[종료]",
+    "english": "flowchart LR\n  req[Requirements] -->|Specification| plan[Planning]\n  plan -->|Task list| change[Editing]\n  change -->|Diff| verify{Verification}\n  verify -->|Tests pass| approve[Human approval]\n  verify -->|Failure, fewer than 3| fix[Diagnose and revise]\n  fix -->|Verify after revision| verify\n  verify -->|3 failures| escalate[Escalation]\n  approve -->|Approved| done[Complete]\n  approve -->|Rejected| stop[Stop]",
+    "svg": "coding-workflow.en.svg",
+    "alt": "Coding workflow with verification, retry limits, human approval, and escalation."
+  },
+  {
+    "source": "flowchart TD\n  conv[논문 변환] -->|Markdown 본문| model[모델 구현]\n  model -->|모델 코드| train[학습 구현]\n  train -->|학습 코드| smoke{스모크 테스트}\n  smoke -->|통과| review[사람 확인: 탐색 범위와 예산]\n  smoke -->|실패| diag[원인 진단]\n  diag -->|모델 쪽 원인| model\n  diag -->|학습 코드 쪽 원인| train\n  diag -->|논문에 없는 설정, 또는 같은 원인으로 3회 실패| human[사람 판단]\n  human -->|설정 결정 후| model\n  review -->|승인| tune[하이퍼파라미터 튜닝]\n  tune -->|튜닝된 설정| exp[비교 실험]",
+    "english": "flowchart TD\n  conv[Convert paper] -->|Markdown text| model[Implement model]\n  model -->|Model code| train[Implement training]\n  train -->|Training code| smoke{Smoke tests}\n  smoke -->|Pass| review[Human review: search space and budget]\n  smoke -->|Fail| diag[Diagnose cause]\n  diag -->|Model issue| model\n  diag -->|Training code issue| train\n  diag -->|Missing setting, or 3 failures with the same cause| human[Human judgment]\n  human -->|After choosing settings| model\n  review -->|Approved| tune[Hyperparameter tuning]\n  tune -->|Tuned settings| exp[Comparison experiment]",
+    "svg": "paper-implementation.en.svg",
+    "alt": "Paper implementation workflow with smoke tests, diagnosis, human review, and tuning."
+  }
+]

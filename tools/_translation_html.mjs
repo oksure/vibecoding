@@ -2,6 +2,7 @@ import {readFileSync} from "node:fs";
 import vm from "node:vm";
 import {validateTranslation} from "./_translation_quality.mjs";
 import {parseHTML} from "linkedom";
+import {embedDiagrams, missingDiagrams} from "./_translation_diagrams.mjs";
 
 export const VERSION = "direct-ko-en-blocks-v1";
 export const EXCLUDED = 'script,style,noscript,pre,code,kbd,samp,svg,math,mjx-container,textarea,input,select,iframe,.notranslate,[translate="no"],.vc-language,#quarto-search-results,.quarto-search-panel,hypothesis-sidebar,hypothesis-adder,hypothesis-notebook';
@@ -20,8 +21,14 @@ export function fragments(html) {
   const dom = unitsFor(html);
   return dom === null ? null : [...new Set(dom.units.map(unit => unit.source))];
 }
+export function untranslatedDiagrams(html) {
+  const {document} = parseHTML(html);
+  return missingDiagrams(document);
+}
 export function embed(html, translations, {pending = false} = {}) {
   const {document} = parseHTML(html);
+  embedDiagrams(document);
+  pending ||= missingDiagrams(document,{requireEmbedded:true}).length > 0;
   document.getElementById("vc-translation-data")?.remove();
   const data = document.createElement("script");
   data.id = "vc-translation-data";
@@ -41,7 +48,7 @@ export function check(html, {allowMissing = false} = {}) {
   if (data?.version !== 2 || data.generation !== VERSION || data.excluded !== EXCLUDED || !data.translations || typeof data.translations !== "object" || Array.isArray(data.translations)) throw new Error("Missing/invalid translation data");
   if (data.status !== undefined && !["ready","pending"].includes(data.status)) throw new Error("Invalid translation status");
   const dom = unitsFor(html);
-  const missing = texts.filter(text => !Object.hasOwn(data.translations, text));
+  const missing = [...texts.filter(text => !Object.hasOwn(data.translations, text)),...missingDiagrams(document,{requireEmbedded:true})];
   if (missing.length && (!allowMissing || data.status !== "pending")) throw new Error(`Missing translation: ${missing[0].slice(0, 80)}`);
   if (!missing.length && data.status === "pending") throw new Error("Complete translations must be marked ready");
   for (const unit of dom.units) {
