@@ -1,30 +1,30 @@
 # §3.3 Context Engineering : 에이전트에게 일을 시키는 법 {.unnumbered}
 <!-- authoritative-lang: ko -->
 
-## 들어가며
+## 들어가며{#sec-context-engineering-intro}
 
 앞선 두 절에서는 Prompt Engineering(프롬프트 엔지니어링)을 통해 의도와 예시를 전달하는 방법과, 에이전트가 도구를 사용하면서 작업을 이어 가는 Agentic Coding(에이전틱 코딩)을 살펴보았다. 그런데 에이전트가 코드를 읽고, 수정하고, 실행 결과에 따라 다시 판단할 때, 모든 정보를 한꺼번에 참조할 수 있을까?
 
-LLM은 학습을 통해 형성된 지식과 현재 입력으로 제공된 Contex(컨텍스트, 맥락)를 바탕으로 답변을 생성하고, 이 '컨텍스트'에는 사용자와의 대화뿐만 아니라 시스템 지침, 관련 코드, 검색 자료, 도구의 실행 결과 등도 포함된다. 
+LLM은 학습을 통해 형성된 지식과 현재 입력으로 제공된 Context(컨텍스트, 맥락)를 바탕으로 답변을 생성하고, 이 '컨텍스트'에는 사용자와의 대화뿐만 아니라 시스템 지침, 관련 코드, 검색 자료, 도구의 실행 결과 등도 포함된다. 
 그러나 모델이 한 번에 처리할 수 있는 입력의 길이에는 상한이 있으며, 입력에 포함되었다고 하더라도 위치 등 다른 요소로 인해 언제나 같은 정도로 활용되지 않는다. 따라서 앞선 질문의 정답은 "NO"에 가깝다.
 
-다시 말하자면, 사람과 협업할 때 필요한 자료나 이전 작업의 결과가 공유되지 않으면 일을 이어 가기 어려운 것처럼 에이전트에게도 현재 목표에 맞는 정보가 전달되어야 한다. 즉, 같은 수정 요청이라도 관련 코드를 빼트리거나 이전에 확인한 오류를 전달하지 않으면 적절한 작업이 이루어지지 않는다는 것이다.
+사람과 협업할 때 필요한 자료나 이전 작업의 결과가 공유되지 않으면 일을 이어 가기 어려운 것처럼 에이전트에게도 현재 목표에 맞는 정보와 이전 작업의 결과가 전달되어야 한다. 예를 들어 로그인 오류를 수정한다면 에이전트가 관련 코드를 확인할 수 있게 하고, 발생한 오류 메시지와 원래 기대한 동작을 함께 알려주어야 하지, 단순히 "수정해"라는 지시만으로는 적절한 작업이 이루어지지 않는다는 것이다.
 
-따라서 에이전트의 각 작업 단계에서 어떤 정보를 제공하고, 이전 작업의 결과를 어떻게 유지하며, 새롭게 확인한 내용을 어떻게 반영할지 설계할 필요가 있다. 이번 절에서는 필요한 정보인 컨텍스트를 구성하고, 작업 단계에 맞게 갱신하는 과정을 설계하는 "Context Engineering(컨텍스트 엔지니어링)"이 무엇을 의미하고, 어떻게 발생하였고, 다른 엔지니어링과 어떻게 구분되는지를 살펴볼 것이다.
+따라서 효과적인 AI 활용이 이루어지기 위해서는 에이전트의 각 작업 단계에서 어떤 정보를 제공하고, 이전 작업의 결과를 어떻게 유지하며, 새롭게 확인한 내용을 어떻게 반영할지 설계할 필요가 있다. 이번 절에서는 필요한 정보인 컨텍스트를 구성하고, 작업 단계에 맞게 갱신하는 과정을 설계하는 "Context Engineering(컨텍스트 엔지니어링)"이 무엇을 의미하고, 어떻게 발생하였고, 다른 엔지니어링과 어떻게 구분되는지를 살펴볼 것이다.
 
 ## 컨텍스트와 컨텍스트 윈도의 의미 {#sec-context-engineering}
 
 앞서 살펴보았듯, **Context(컨텍스트)**는 모델이 응답을 생성하는 시점에 입력으로 참조하는 정보로, 컨텍스트에는 사용자의 질문뿐 아니라 시스템 지침, 예시, 관련 대화, 검색된 문서, 도구의 설명과 실행 결과도 포함된다. Anthropic은 이를 추론 시점에 제공되는 토큰의 집합으로 설명한다([Anthropic, 2025, 「Effective context engineering for AI agents」, “Context engineering vs. prompt engineering” 절](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents)). 
 
-이어서 등장하는 개념인 **Context Window(컨텍스트 윈도)**는 모델이 한 번의 응답 생성 과정에서 참조할 수 있는 정보의 범위를 의미하고, 그 크기는 보통 모델이 입력을 처리하는 단위인 토큰 수의 상한으로 받아들여진다. 컨텍스트 윈도에는 기본적인 대화 기록에 더해 시스템 지침, 읽어 온 파일과 검색 자료, 도구 설명과 실행 결과도 포함된다. 뿐만 아니라, 일부 API에서는 입력과 함께 생성할 출력도 같은 윈도의 용량을 사용하기 때문에 응답을 만들 여유 또한 고려해야 한다. 컨텍스트 윈도는 모델이 학습한 전체 데이터의 저장 공간과 구분된다([Anthropic, n.d.-a, 「Context windows」, “How the context window works” 절](https://platform.claude.com/docs/en/build-with-claude/context-windows#how-the-context-window-works)).
+이어서 등장하는 개념인 **Context Window(컨텍스트 윈도)**는 모델이 한 번의 응답 생성 과정에서 참조할 수 있는 정보의 범위를 의미하고, 그 크기는 보통 모델이 입력을 처리하는 단위인 토큰 수의 상한으로 받아들여진다. 컨텍스트 윈도에는 기본적인 대화 기록에 더해 시스템 지침, 읽어 온 파일과 검색 자료, 도구 설명과 실행 결과도 포함된다. 뿐만 아니라, 일부 API에서는 입력과 함께 생성할 출력도 같은 윈도의 용량을 사용하기 때문에 응답을 만들 여유 또한 고려해야 한다. 컨텍스트 윈도는 모델이 학습한 전체 데이터의 저장 공간과 구분된다([Anthropic, n.d., 「Context windows」, “How the context window works” 절](https://platform.claude.com/docs/en/build-with-claude/context-windows#how-the-context-window-works)).
 
 이를 바탕으로, 모델이 어떤 정보를 얼마나 활용할 수 있는지를 고려하여 컨텍스트를 구성하고 관리하는 과정이 **Context Engineering(컨텍스트 엔지니어링)**이다. 컨텍스트 관리가 필요한 이유는 크게 두 가지로 나누어 살펴볼 수 있다. 첫째는 모델이 한 번에 다룰 수 있는 정보량에 상한이 있다는 점이고, 둘째는 정보가 그 범위 안에 포함되어 있더라도 모델이 이를 항상 같은 수준으로 활용하는 것은 아니라는 점이다.
 
-먼저, 언어 모델이 한 번의 처리 과정에서 다룰 수 있는 정보의 범위에는 제한이 있다. 모델이 입력에 더 많은 토큰을 처리하려면, 일반적으로 이를 처리하는 데 필요한 계산량과 메모리 사용량도 증가한다. Dai 등은 Transformer 기반 언어 모델이 긴 맥락을 처리할 때 계산 자원의 제약을 받는다고 설명했다. 따라서 텍스트 윈도의 크기는 모델의 구조와 학습 방식, 사용 가능한 계산 자원 등을 종합적으로 고려하여 결정된다([Dai et al., 2019, 「Transformer-XL: Attentive language models beyond a fixed-length context」, §3.1](https://arxiv.org/html/1901.02860v3#S3.SS1)).
+먼저, 언어 모델이 한 번의 처리 과정에서 다룰 수 있는 정보의 범위에는 제한이 있다. 모델이 입력에 더 많은 토큰을 처리하려면, 일반적으로 이를 처리하는 데 필요한 계산량과 메모리 사용량도 증가한다. Dai 등은 Transformer 기반 언어 모델이 긴 맥락을 처리할 때 계산 자원의 제약을 받는다고 설명했다. 따라서 컨텍스트 윈도의 크기는 모델의 구조와 학습 방식, 사용 가능한 계산 자원 등을 종합적으로 고려하여 결정된다([Dai et al., 2019, 「Transformer-XL: Attentive language models beyond a fixed-length context」, §3.1](https://arxiv.org/html/1901.02860v3#S3.SS1)).
 
-LLM 설계와 반도체 기술이 동시에 발전하면서 컨텍스트 윈도의 크기도 점차적으로 확장되어 왔다. 2019년 GPT-2 연구에서는 컨텍스트 크기를 이전 GPT의 512토큰에서 1,024토큰으로 늘렸고, 2020년 GPT-3 연구에서 사용한 모델들의 컨텍스트 윈도는 2,048토큰이었다([Radford et al., 2019, 「Language models are unsupervised multitask learners」, §2.3](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf#page=4); [Brown et al., 2020, 「Language models are few-shot learners」, §2.1](https://arxiv.org/html/2005.14165#S2.SS1)). 이후 컨텍스트 윈도는 더욱 확장되어, 2026년 11월 기준 GPT-6.1 Sol의 컨텍스트 윈도는 1,050,000토큰에 달한다([OpenAI, n.d., 「GPT-6.1 Sol」](https://developers.openai.com/api/docs/models/gpt-6.1-sol)). 그러나 아무리 크기가 커지더라도 실제 모델과 서비스에서 한 번에 사용할 수 있는 정보량에는 항상 상한이 존재하게 된다.
+LLM 설계와 반도체 기술이 동시에 발전하면서 컨텍스트 윈도의 크기도 점차적으로 확장되어 왔다. 2019년 GPT-2 연구에서는 컨텍스트 크기를 이전 GPT의 512토큰에서 1,024토큰으로 늘렸고, 2020년 GPT-3 연구에서 사용한 모델들의 컨텍스트 윈도는 2,048토큰이었다([Radford et al., 2019, 「Language models are unsupervised multitask learners」, §2.3](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf#page=4); [Brown et al., 2020, 「Language models are few-shot learners」, §2.1](https://arxiv.org/html/2005.14165#S2.SS1)). 이후 컨텍스트 윈도는 더욱 확장되어, 2026년 11월 기준 OpenAI API에서 제공하는 GPT-6.1 Sol의 컨텍스트 윈도는 1,050,000토큰에 달한다([OpenAI, n.d., 「GPT-6.1 Sol」](https://developers.openai.com/api/docs/models/gpt-6.1-sol)). 그러나 아무리 크기가 커지더라도 실제 모델과 서비스에서 한 번에 사용할 수 있는 정보량에는 항상 상한이 존재하게 된다.
 
-다음으로, 컨텍스트에 포함된 정보를 모델이 실제로 얼마나 활용하는지도 고려해야 한다. Khandelwal 등은 2018년 LSTM 언어 모델에서 과거 단어를 삭제, 교체, 재배열하고 예측 성능의 지표인 Perplexity가 어떻게 달라지는지 측정하였고, 연구 대상 모델은 Penn Treebank와 WikiText-2에서 평균적으로 약 200토큰의 과거 맥락을 활용했으며, 최근 약 50토큰과 멀리 떨어진 컨텍스트을 다르게 처리하는 양상이 나타났다. 이는 특정 모델과 데이터에서 맥락의 기여를 정량화한 초기 사례로 볼 수 있다([Khandelwal et al., 2018, 「Sharp nearby, fuzzy far away: How neural language models use context」, §5 및 §8](https://aclanthology.org/P18-1027/)). 
+다음으로, 컨텍스트에 포함된 정보를 모델이 실제로 얼마나 활용하는지도 고려해야 한다. Khandelwal 등은 2018년 LSTM 언어 모델에서 입력받는 과거 맥락의 길이와 단어의 순서 등을 바꾸고, 다음 단어 예측 성능의 지표인 Perplexity가 어떻게 달라지는지 측정했다. 연구진은 이전 맥락을 모두 제공했을 때와 비교하여 Perplexity가 약 1~2%만 차이 나는 최근 맥락의 길이를 유효 맥락 크기로 보았다. 그 결과 Penn Treebank와 WikiText-2 데이터에서 평균적으로 약 200토큰의 과거 맥락이 활용되었으며, 최근 약 50토큰과 더 멀리 떨어진 맥락을 다르게 처리하는 양상이 나타났다. 이후 컨텍스트 윈도의 크기가 확대되고 모델 구조와 학습 방식도 달라졌으므로, 200토큰이라는 수치를 현재 모델에 그대로 적용하기는 어렵지만, 맥락의 위치에 따라 정보의 활용 양상이 달라질 수 있다는 문제는 뒤이어 살펴볼 후속 연구에서도 확인된다([Khandelwal et al., 2018, 「Sharp nearby, fuzzy far away: How neural language models use context」, §4 및 §5](https://aclanthology.org/P18-1027/)).
 
 긴 입력을 다루는 최근의 LLM에서도 입력 길이와 활용 성능은 구분된다. Liu 등은 정답을 담은 문서의 위치를 바꾸어 질의응답 성능을 비교했다. 20문서를 활용한 실험에서 GPT-3.5-Turbo의 정확도는 정답 문서가 첫 번째일 때 75.8%, 열 번째일 때 53.8%, 마지막일 때 63.2%였다. 입력 안에 정답 근거가 있어도 그 위치에 따라 결과가 달라진 것이다([Liu et al., 2023, 「Lost in the middle: How language models use long contexts」, 부록 G.2, Table 6](https://arxiv.org/html/2307.03172v3#A7.SS2)).
 
@@ -32,13 +32,17 @@ LLM 설계와 반도체 기술이 동시에 발전하면서 컨텍스트 윈도�
 
 ## 컨텍스트 엔지니어링이라는 용어의 정립 {#sec-context-engineering-history}
 
-이 문제를 다루는 기술은 용어가 널리 퍼지기 전부터 발전해 왔다. Lewis 등이 2020년 제안한 Retrieval-Augmented Generation(RAG)은 모델 내부에 저장된 지식에 더해 필요한 근거를 외부에서 검색하여 생성 과정에서 결합하여 제공하는 방식이다([Lewis et al., 2020, 「Retrieval-augmented generation for knowledge-intensive NLP tasks」, §2 및 Figure 1](https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html)). 또, 2023년 Packer 등은 컨텍스트 윈도와 외부 저장 공간을 구분하고, 필요한 정보를 그 사이에서 이동시키는 메모리 관리 구조의 MemGPT를 제시했다([Packer et al., 2023, 「MemGPT: Towards LLMs as operating systems」, §2.1–§2.3](https://arxiv.org/html/2310.08560v1#S2)). 두 연구는 각각 정보의 검색과 기억 관리를 통해 컨텍스트를 구성하는 방식의 기술적 배경으로 볼 수 있다.
+이 문제를 다루는 기술은 용어가 널리 퍼지기 전부터 발전해 왔다. Lewis 등이 2020년 제안한 Retrieval-Augmented Generation(RAG)은 모델 내부에 저장된 지식에 더해 필요한 근거를 외부에서 검색하여 생성 과정에서 결합하여 제공하는 방식이다([Lewis et al., 2020, 「Retrieval-augmented generation for knowledge-intensive NLP tasks」, §2 및 Figure 1](https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html)). 또, 2023년 Packer 등은 컨텍스트 윈도와 외부 저장 공간을 구분하고, 필요한 정보를 그 사이에서 이동시키는 메모리 관리 구조의 MemGPT를 제시했다([Packer et al., 2023, 「MemGPT: Towards LLMs as operating systems」, §2.1–§2.3](https://arxiv.org/html/2310.08560v1#S2)). 두 연구는 필요한 정보를 검색하거나 기억을 관리하여 모델에 제공하는 선행 사례로 볼 수 있다.
 
-이처럼 여러 이름으로 발전하던 작업을 하나의 설계 문제로 바라보게 하는 표현이 2025년 6월 개발자들의 논의를 통해 널리 소개되었다. 2025년 6월 19일, Tobi Lütke는 X(구 트위터)에서 Prompt Engineering보다 Context Engineering이라는 표현을 선호한다고 밝히며, LLM이 과제를 해결할 수 있도록 필요한 컨텍스트를 충분히 제공하는 능력이 필요함을 강조했다([Lütke, 2025, 「I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing」](https://x.com/tobi/status/1935533422589399127)). 이 문제의식의 핵심은 질문 문장을 다듬는 일과 함께, 그 질문을 해결할 조건이 모델에게 전달되었는지를 살펴봐야 한다는 점이다. 예를 들어 수정할 코드와 기대 동작이 제공되지 않았다면 “정확하게 고쳐 달라”는 표현을 반복하는 것만으로 누락된 정보를 채울 수는 없다는 것이다.
+2025년 6월에는 개발자들 사이에서 모델에 필요한 정보를 구성하는 활동을 Context Engineering이라 부르는 논의가 확산되었다. 2025년 6월 19일, Tobi Lütke는 X(구 트위터)에서 Prompt Engineering보다 Context Engineering이라는 표현을 선호한다고 밝히며, LLM이 과제를 해결할 수 있도록 필요한 컨텍스트를 충분히 제공하는 능력이 필요함을 강조했다([Lütke, 2025, 「I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing」](https://x.com/tobi/status/1935533422589399127)). 이 문제의식의 핵심은 질문 문장을 다듬는 일과 함께, 그 질문을 해결할 조건이 모델에게 전달되었는지를 살펴봐야 한다는 점이다. 예를 들어 수정할 코드와 기대 동작이 제공되지 않았다면 “정확하게 고쳐 달라”는 표현을 반복하는 것만으로 누락된 정보를 채울 수는 없다는 것이다.
 
-이에 더해, 바이브코딩의 아버지라고 불리는 Andrej Karpathy 또한 2025년 6월 25일, X(구 트위터)에 Lütke의 원글을 인용 게시(Quote-post)하고, 첫 문장에 **+1**을 적어 이 명명에 동의하며, 일상적인 Prompt가 짧은 작업 설명으로 받아들여지는 반면, 산업용 LLM Application에서는 다음 단계에 적절한 정보를 컨텍스트 윈도에 구성하는 작업이 필요하다고 설명했다([Karpathy, 2025, 「+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your」](https://x.com/karpathy/status/1937902205765607626)). Karpathy의 동의는 **컨텍스트 엔지니어링**이라는 용어를 학술적으로 승인했다기 보다는, 산업용 LLM 시스템의 설계 문제와 연결해 그 이름의 적절성을 설명한 공개 발언으로 볼 수 있다.
+![Lütke의 X 게시물 원문([Lütke, 2025, 「I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing」](https://x.com/tobi/status/1935533422589399127))](images/03-3-context-engineering/01_lutke.png)
 
-Simon Willison의 2025년 6월 27일 글은 **이름이 사람들에게 어떤 작업을 떠올리게 하는가**에 초점을 둔다. 그는 Prompt Engineering이 본래 신뢰할 만한 입력을 구성하는 복잡한 작업을 담을 수 있기를 기대했지만, 사람들이 이를 단순히 챗봇에 문장을 입력하는 일로 받아들이는 문제가 생겼다고 보았다. Context Engineering이라는 이름을 통해 사람들로 하여금 실제 작업 범위를 더 직관적으로 전달할 수 있다고 본 것이다([Willison, 2025, 「Context engineering」](https://simonwillison.net/2025/jun/27/context-engineering/)).
+이에 더해, 바이브 코딩이라는 개념을 제안한 Andrej Karpathy(§2.1; [Karpathy, 2025a, 「There's a new kind of coding I call “vibe coding”」](https://x.com/karpathy/status/1886192184808149383)) 또한 2025년 6월 25일(UTC, 한국 시간 6월 26일) Lütke의 글을 인용하면서 **+1**이라고 적어 Context Engineering이라는 명칭에 동의했다. 일상적인 프롬프트가 짧은 작업 설명으로 받아들여지는 반면, 실제 LLM 애플리케이션에서는 다음 단계에 적절한 정보를 컨텍스트 윈도에 구성하는 작업이 필요하다고 설명했다([Karpathy, 2025b, 「+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your」](https://x.com/karpathy/status/1937902205765607626)). 이는 용어를 학술적으로 승인한 사례라기보다 LLM 시스템의 설계 문제와 연결해 명칭의 적절성을 설명한 공개 발언으로 볼 수 있다.
+
+![Karpathy의 X 게시물 원문([Karpathy, 2025b, 「+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your」](https://x.com/karpathy/status/1937902205765607626))](images/03-3-context-engineering/02_Karpathy.png)
+
+Simon Willison의 2025년 6월 27일 글은 **이름이 사람들에게 어떤 작업을 떠올리게 하는가**에 초점을 둔다. 그는 Prompt Engineering이 본래 신뢰할 만한 입력을 구성하는 복잡한 작업을 담을 수 있기를 기대했지만, 사람들이 이를 단순히 챗봇에 문장을 입력하는 일로 받아들이는 문제가 생겼다고 보았다. 이어서 그는 “the inferred definition of "context engineering" is likely to be much closer to the intended meaning”이라고 밝혔다. 즉, 사람들이 Context Engineering이라는 이름에서 추론한 의미가 실제 작업 범위에 더 가까울 것으로 본 것이다([Willison, 2025, 「Context engineering」](https://simonwillison.net/2025/jun/27/context-engineering/)).
 
 Philipp Schmid는 6월 30일 글에서 **그 작업을 어떤 시스템으로 구현할 것인가**에 무게를 둔다. 그는 적절한 정보와 도구를 적절한 형식과 시점에 제공하는 동적 시스템의 설계로 Context Engineering을 설명했다. 시스템 및 사용자 지침뿐 아니라 현재 이력, 장기 기억, 검색 자료, 사용 가능한 도구의 정의, 구조화된 출력 형식도 함께 다룬다([Schmid, 2025, 「The new skill in AI is not prompting, it's context engineering」, “What is the Context?” 및 “From Prompt to Context Engineering” 절](https://www.philschmid.de/context-engineering)). 두 글의 강조점을 비교하면 Willison은 용어의 의미와 대중적 인식에, Schmid는 정보 공급의 구조와 작동 시점에 집중한다고 해석할 수 있다.
 
@@ -60,11 +64,22 @@ Context Engineering은 이러한 지시를 포함해 **모델이 현재 과제�
 
 프롬프트 자체도 컨텍스트의 일부이므로 두 영역은 겹친다. 예시의 내용과 배열을 개선하는 일은 프롬프트 설계이면서 컨텍스트 구성에도 해당하고, 그 예시를 어떤 과제에서 선택해 불러올지 정하는 일은 정보 공급의 설계와 연결된다. 따라서 두 개념을 짧은 문장과 긴 문장, 수동 작업과 자동 작업, 한 번의 호출과 여러 번의 호출과 같이 단순화하여 구분하는 것은 적절치 않다.
 
-이에 등장한 개념인 하네스(Harness)는 컨텍스트 구성을 지원하고 모델, 도구, 실행 결과를 연결하는 주변 실행 체계이며, 이를 설계하고 구현하는 일이 Harness Engineering이다. 하네스의 구체적인 구성과 활용은 다음 장에서 이어서 살펴볼 예정이다.
+하네스(Harness)는 컨텍스트 구성을 지원하고 모델, 도구, 실행 결과를 연결하는 주변 실행 체계이며, 이를 설계하고 구현하는 일이 Harness Engineering이다([Lopopolo, 2026, 「Harness engineering: Leveraging Codex in an agent-first world」](https://openai.com/index/harness-engineering/)). 하네스 엔지니어링에 관한 자세한 내용은 뒷편에서 확인할 수 있다.
+
+## 관련 내용을 다루는 절 {#sec-context-engineering-related-sections}
+
+| 더 알고 싶은 것 | 다루는 곳 |
+|---|---|
+| AI 코딩 도구의 실행 구조 | §3.5 |
+| 컨텍스트 윈도의 크기와 압축 및 재시작 시점의 비교 | §5.2 |
+| 작업에 필요한 정보를 선택하고 파일로 남기는 과정 | §6.3 |
+| 에이전트 하네스의 구체적인 역할 | §7.1 |
+| 컨텍스트 압축과 세션 재개를 지원하는 하네스 기능 | §7.4 |
+| 사람과 에이전트가 함께 읽는 저장소 지침의 관리 | §13.2 |
 
 ## 참고문헌 {.unnumbered}
 
-Anthropic. (n.d.-a). *Context windows*. Claude Platform Docs. Retrieved October 31, 2026, from <https://platform.claude.com/docs/en/build-with-claude/context-windows>
+Anthropic. (n.d.). *Context windows*. Claude Platform Docs. Retrieved October 31, 2026, from <https://platform.claude.com/docs/en/build-with-claude/context-windows>
 
 Anthropic. (2025, September 29). *Effective context engineering for AI agents*. <https://www.anthropic.com/research/effective-context-engineering-for-ai-agents>
 
@@ -74,7 +89,9 @@ Dai, Z., Yang, Z., Yang, Y., Carbonell, J., Le, Q., & Salakhutdinov, R. (2019). 
 
 Kadiyala, R. M. R., Purbey, J., Gupta, S., Martini, G., Debnath, S., & Farooq, H. (2025). DSBC: Data science task benchmarking with context engineering. In K. Inui, S. Sakti, H. Wang, D. F. Wong, P. Bhattacharyya, B. Banerjee, A. Ekbal, T. Chakraborty, & D. P. Singh (Eds.), *Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics* (pp. 3392–3424). The Asian Federation of Natural Language Processing and The Association for Computational Linguistics. <https://doi.org/10.18653/v1/2025.ijcnlp-long.181>
 
-Karpathy, A. [\@karpathy]. (2025, June 25). *+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your* [Post]. X. <https://x.com/karpathy/status/1937902205765607626>
+Karpathy, A. [@karpathy]. (2025a, February 2). *There's a new kind of coding I call “vibe coding”* [Post]. X. <https://x.com/karpathy/status/1886192184808149383>
+
+Karpathy, A. [@karpathy]. (2025b, June 25). *+1 for "context engineering" over "prompt engineering". People associate prompts with short task descriptions you'd give an LLM in your* [Post]. X. <https://x.com/karpathy/status/1937902205765607626>
 
 Khandelwal, U., He, H., Qi, P., & Jurafsky, D. (2018). Sharp nearby, fuzzy far away: How neural language models use context. In I. Gurevych & Y. Miyao (Eds.), *Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)* (pp. 284–294). Association for Computational Linguistics. <https://doi.org/10.18653/v1/P18-1027>
 
@@ -82,7 +99,9 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 
 Liu, N. F., Lin, K., Hewitt, J., Paranjape, A., Bevilacqua, M., Petroni, F., & Liang, P. (2023). *Lost in the middle: How language models use long contexts* (Version 3) [Preprint]. arXiv. <https://arxiv.org/abs/2307.03172v3>
 
-Lütke, T. [\@tobi]. (2025, June 19). *I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing* [Post]. X. <https://x.com/tobi/status/1935533422589399127>
+Lopopolo, R. (2026, February 11). *Harness engineering: Leveraging Codex in an agent-first world*. OpenAI. <https://openai.com/index/harness-engineering/>
+
+Lütke, T. [@tobi]. (2025, June 19). *I really like the term “context engineering” over prompt engineering. It describes the core skill better: the art of providing* [Post]. X. <https://x.com/tobi/status/1935533422589399127>
 
 Mei, L., Yao, J., Ge, Y., Wang, Y., Bi, B., Cai, Y., Liu, J., Li, M., Li, Z.-Z., Zhang, D., Zhou, C., Mao, J., Xia, T., Guo, J., & Liu, S. (2025). *A survey of context engineering for large language models* (Version 2) [Preprint]. arXiv. <https://arxiv.org/abs/2507.13334v2>
 
