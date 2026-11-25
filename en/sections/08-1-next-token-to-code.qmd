@@ -1,2 +1,60 @@
-# §8.1 다음 토큰에서 코드까지 {.unnumbered}
+<!-- MACHINE-TRANSLATED from ko/sections/08-1-next-token-to-code.qmd source-sha256:bb12191081bbcd4b model:sonnet date:2026-11-24 | DO NOT EDIT: edit ko/sections/08-1-next-token-to-code.qmd and run tools/translate -->
 
+<!-- authoritative-lang: ko -->
+
+# §8.1 From Next Token to Code {#sec-next-token-to-code .unnumbered}
+
+In my personal research, I built a document search agent with AI. It is a program that takes a question, finds and reads documents, and answers based on their content. To leave room for composing the answer, I allowed only two actions in the final stage: reading documents that had already been found, or ending the answer. After five preparatory tests passed, I ran the actual questions. But in the run log, there was one question where a search happened again during the final stage. The execution code also had a conditional that checked tool use. How did the search get past that check?
+
+![A plan that reserves room for the answer, and an actual run that searched again during wrap-up](/images/08-1-search-webtoon.png){#fig-search-story fig-alt="네 컷 웹툰. 연구자는 답변을 정리할 여유를 따로 남겨 둔다. 준비 테스트 다섯 개가 통과하지만, 실제 실행 기록에는 마무리 중 검색이 나타난다. 연구자는 검사 코드가 있는데도 검색이 어떻게 통과했는지 묻는다." width=100%}
+
+## How a model continues code
+
+A large language model (LLM) processes text in units called tokens. The model splits text into pieces, assigns each piece a fixed number, and uses those numbers in its computation. If frequently occurring letter combinations are grouped into one token, the same text can be handled in fewer units than if each character were processed separately. A single word can be one token, or a single word can be split into several tokens. In code, part of a variable name or a punctuation mark such as a parenthesis can also be a token. Where token boundaries fall depends on the splitting method the model uses.
+
+When generating text, the request given to the model and the text generated so far become part of the context. The context is the information the model consults when predicting the next token. Based on this information, the model calculates the probability of each token that could come next. The selected token is appended to the output, and on the next turn the model consults everything up to and including what was just appended. The process of reusing previously generated tokens to predict the next one is called autoregressive generation. [Tom B. Brown et al., Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165v4) (arXiv v4, 2020-07-22, §2.1).
+
+![The process of appending the next token to a natural-language sentence. The way tokens are split and the candidate probabilities are for illustration.](/images/08-1-text-token-loop.png){#fig-text-token-loop fig-alt="비 오는 날을 묘사하는 중에 모델이 오늘은 비가까지 썼다. 다음 토큰 후보는 내려, 와, 그쳐다. 이 예시에서는 내려가 선택되어 오늘은 비가 내려가 다음 예측의 컨텍스트에 포함된다."}
+
+Code is written by appending the next token in the same way. For example, suppose the model receives the task "run the requested tool if it is in the allowed list." In Python, a conditional starts with `if`, and `in` checks whether a value is contained in a list. If the code already defines a name that holds the requested tool, the model can reuse the name it saw earlier in the conditional. It can then generate the line that runs when the tool is in the list. The unit emitted at one time is a single token. The context consulted at each position can include the task request and variable names defined many lines earlier.
+
+![One round of selecting the next token and appending it to the output. The code fragment and candidate probabilities are for illustration.](/images/08-1-next-token-loop.png){#fig-next-token-loop fig-alt="모델이 작업 요청과 관련 코드, 이미 생성한 if tool을 참고한다. 후보 in, 등호 두 개, 여는 대괄호의 확률을 비교한다. 이 예시에서는 in이 선택되고, if tool in이 다음 예측의 문맥에 포함된다."}
+
+## Why models generate code well
+
+Models repeat training in which they look at the beginning of a great deal of code and predict the next token. Through many examples, they learn relationships such as where a variable name defined earlier gets reused, and what code follows when a conditional sits inside a loop. When given a new request, the model calculates the probability of tokens that could follow the current context, based on these learned relationships. In the 2026 Mellum 2 study, the model was pretrained on about 10.6 trillion tokens of code, natural language, and other data, and code-related data made up 59% of the final training stage. The pretrained Mellum 2 base model scored 62.4% on `pass@1` for MBPP, an evaluation in which the model writes short Python code from a natural-language description. [Marko Kojic et al., Mellum2 Technical Report](https://arxiv.org/html/2605.31268v1#S3) (arXiv v1, 2026-05-29, §3.1, §3.2, Table 5). [JetBrains, Mellum2-12B-A2.5B-Base-Pretrain model card](https://huggingface.co/JetBrains/Mellum2-12B-A2.5B-Base-Pretrain#evaluation-results). [Jacob Austin et al., Program Synthesis with Large Language Models](https://arxiv.org/html/2108.07732v1#S2.SS1) (arXiv v1, 2021-08-16, §2.1, §3).
+
+Suppose the model receives the request "sum the amounts of orders whose payment is complete." If it has written code that looks at orders one by one, it can judge it highly likely that code checking the payment status and adding the amount of matching orders comes next. By repeating such predictions, it completes several lines one token at a time.
+
+## Why it is still wrong in unexpected ways
+
+A model can write code based on familiar patterns. Code that is grammatically correct and reads naturally can still produce wrong results. Examples include missing a condition the problem requires or mishandling certain inputs. In the 2026 PROBE study, which evaluated code written by six models, there were cases of wrong answers caused by oversimplifying the conditions of the problem or failing to consider some inputs. [Rodrigo Pato Nogueira et al., PROBE: Benchmarking code generation in large language models](https://link.springer.com/article/10.1007/s10664-026-10904-5) (2026-08-15, §5.4.4).
+
+Code can pass tests and still give wrong results in real execution. To catch an error in a test, you need to supply an input for which the faulty code produces a different result. One HumanEval+ problem asked for the numbers common to two lists, arranged from smallest to largest. The code written by AI passed the existing tests, but for a new input the correct answer was `[1, 6, 8]` and the actual output was `[8, 1, 6]`. The code converted the already sorted numbers to a set (`set`) at the end, which changed the order. [Jiawei Liu et al., Is Your Code Generated by ChatGPT Really Correct? Rigorous Evaluation of Large Language Models for Code Generation](https://arxiv.org/abs/2305.01210v3) (arXiv v3, 2023-10-30, Figure 1).
+
+In the earlier order-summing example, if there is no discount, the product price is added as is. If there is a discount, the amount after subtracting the discount from the product price is added. But suppose the model wrote the code so that the discount handling adds the discount amount. If you only test an order for a 10,000 won product bought without a discount, the faulty discount handling never runs. If you test an order with a 2,000 won discount, the expected payment is 8,000 won, while the code computes 12,000 won, and the error shows up.
+
+![The code that runs and the test results, depending on whether there is a discount](/images/08-1-discount-test.png){#fig-discount-test fig-alt="할인 없는 주문은 상품 가격인 10,000원을 그대로 써서 테스트를 통과한다. 2,000원 할인 주문에서는 코드가 할인액을 더해 12,000원을 계산한다. 예상 결제액은 8,000원이므로 테스트에 실패한다."}
+
+## Why the search ran in the final stage
+
+The reason the search ran in the introduction is also that the program consulted the wrong list when deciding whether to allow a tool. The program had two separate lists: the full list of registered tools and the allowed list for the current stage. The final stage's allowed list contained only document reading and ending the answer. When the model requested a search, the program checked the full tool list. That list contained the search tool, so the program ran the search. The preparatory tests that passed earlier did not expose this wrong list reference.
+
+The code below checks the same search request in the final stage against the two lists. `True` means search is in the list, so the request is allowed, and `False` means search is not in the list, so the request is blocked.
+
+```python
+all_tools = ["search", "read", "stop"]
+allowed_tools = ["read", "stop"]
+requested_tool = "search"
+
+print(requested_tool in all_tools)      # True
+print(requested_tool in allowed_tools)  # False
+```
+
+If you test whether search is blocked in the final stage, code that checks the full list fails, and code that checks the current allowed list passes.
+
+![Check results from the two lists for the same search request](/images/08-1-tool-list-check.png){#fig-tool-list-check fig-alt="실행 코드가 전체 등록 목록을 검사하면 목록에 검색이 있어 실행한다. 문서 읽기와 답변 종료만 담긴 현재 허용 목록을 검사하면 검색을 차단한다."}
+
+As AI's ability to write code has improved, it has become easier for people who did not major in programming to describe in words the features they want to build and to start vibe coding with code written by AI. Once the code runs, you need to check whether it actually keeps the conditions you intended. In this case, that means checking whether execution is blocked when a search request is sent in the final stage.
+
+Chapter 9, "How AI Coding Fails," looks at the failures that arise in AI coding, such as plausible but wrong code and edits that go beyond the requested scope. Chapter 10, "How to Verify That It 'Works,'" covers in §10.1 how to turn requirements into tests, and then explains how to reproduce errors and find causes in run logs.
