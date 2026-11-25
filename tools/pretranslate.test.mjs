@@ -42,6 +42,19 @@ test("character references remain in the same text fragment as in a browser", ()
   assert.deepEqual(fragments(html), ["저자 외, Expectation vs.\u00a0Experience &amp; Tools"]);
 });
 
+test("explicit prose examples translate Markdown instructions without changing ordinary Markdown code", () => {
+  const html = '<html lang="ko"><body><pre class="markdown vc-prose"><code>description: 발표 초안 작성\n1. 원고를 읽는다.</code></pre><pre class="markdown"><code># 코드 예시</code></pre></body></html>';
+  const map = {"description: 발표 초안 작성\n1. 원고를 읽는다.":"description: Draft a presentation\n1. Read the manuscript."};
+  assert.deepEqual(fragments(html),Object.keys(map));
+  const {document} = parseHTML(embed(html,map));
+  vm.runInContext(toggle,vm.createContext({document,localStorage:memoryStorage(),sessionStorage:memoryStorage()}));
+  document.querySelector('.vc-language button[lang="en"]').click();
+  assert.equal(document.querySelector("pre.vc-prose").textContent,map[Object.keys(map)[0]]);
+  assert.equal(document.querySelector("pre:not(.vc-prose)").textContent,"# 코드 예시");
+  document.querySelector('.vc-language button[lang="ko"]').click();
+  assert.equal(document.querySelector("pre.vc-prose").textContent,Object.keys(map)[0]);
+});
+
 test("reviewed diagrams preserve graph structure and switch without rerendering or network access", async () => {
   const diagrams = JSON.parse(await readFile(new URL("../translations/diagrams.ko-en.json",import.meta.url),"utf8"));
   const topology = text => [...text.matchAll(/^\s*(\w+)(?:\[[^\]]*\]|\{[^}]*\})?\s*-->\|[^|]*\|\s*(\w+)/gm)].map(m => [m[1],m[2]]);

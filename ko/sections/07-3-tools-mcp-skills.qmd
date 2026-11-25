@@ -71,7 +71,7 @@ Codex처럼 자동 선택을 지원하는 환경에서는 스킬 이름을 매�
 
 다음은 발표 초안을 작성하는 `presentation-draft` 스킬의 예시다. 스킬 폴더와 이름을 같게 하고, 아래 내용을 `presentation-draft/SKILL.md`로 저장한다. Codex 프로젝트에서 사용할 때는 프로젝트의 `.agents/skills/` 안에 해당 폴더를 둘 수 있다. [OpenAI, Build skills의 로컬 스킬 위치](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) (확인: 2026-11-24)
 
-```markdown
+```{.markdown .vc-prose}
 ---
 name: presentation-draft
 description: 발표 원고를 청중과 발표 시간에 맞게 장별 제목, 핵심 내용, 발표자 노트로 나눌 때 사용한다.
