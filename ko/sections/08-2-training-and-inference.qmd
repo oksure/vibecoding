@@ -1,2 +1,97 @@
-# §8.2 AI 코딩 모델은 어떻게 만들어지나 {.unnumbered}
+<!-- authoritative-lang: ko -->
 
+# §8.2 AI 코딩 모델은 어떻게 만들어지나 {#sec-coding-model-training .unnumbered}
+
+블루베리는 산성 토양을 좋아한다. 이걸 모르고 비싸고 좋은 화분용 배양토를 사다 정성껏 분갈이를 해 주면 어떻게 될까? 블루베리는 죽는다. 필자의 블루베리 화분도 그렇게 죽었다.
+
+코딩도 농사와 비슷하다. 흙의 산도가 블루베리의 생육을 좌우하듯, 사소해 보이는 코드 한 줄에 시스템 전체가 기대고 있을 때가 있다. 멀쩡히 돌아가는 프로그램에 왜 저 한 줄을 남겨 뒀는지, 2006년에 퇴사한 김 부장님만 아실지도 모른다. 코딩 도구에 “이 코드 좀 깔끔하게 정리해 줘. 단, 지금 돌아가는 기능은 그대로 둬”라고 부탁했다고 해 보자. 답을 쓰려면 김 부장님의 한 줄이 왜 거기 있는지 짐작할 수 있어야 하고, 정리하면서도 사용자가 붙인 조건을 지켜야 한다.
+
+8.1절에서 본 것처럼 언어 모델이 하는 일은 앞의 텍스트를 보고 다음 토큰을 예측하는 것이다. 그래서 언어 모델은 의미를 이해하지 못한 채 학습 자료에 나타난 말의 형태를 확률에 따라 이어 붙일 뿐이라는 뜻에서 ‘확률론적 앵무새(stochastic parrot)’라고 비판받기도 했다([Bender 외, On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?](https://doi.org/10.1145/3442188.3445922) (FAccT 2021 본 학회)). 그렇다면 다음 토큰을 예측하는 모델이 어떻게 코드의 맥락과 사용자의 조건을 반영한 답을 쓰게 될까? 이 절은 모델이 맥락을 ‘이해’하는지를 따지지 않는다. 대신 맥락을 반영한 출력이 나오도록 모델을 어떻게 학습시키는지를 본다.
+
+코딩 모델을 만드는 과정은 크게 **사전학습**과 **사후학습**으로 나누어 볼 수 있다. 사전학습의 목적은 코드 작성·완성·이해처럼 여러 작업에 두루 쓸 능력을 갖춘 **기본 모델**을 만드는 것이다. 이미 학습한 모델에서 출발해 그 기반을 넓히기도 한다. 사후학습의 목적은 그 모델을 실제로 쓸 때 중요한 능력과 행동을 더 직접적으로 개선하는 것이다. 코딩을 부탁하는 사람에게는 요구한 조건을 지키는지, 제출한 코드가 의도대로 작동하는지가 중요하다. 두 단계 모두 코드의 정확성을 높일 수 있다. 차이는 개발자가 그 시점에 어떤 모델을 만들려 하고, 어떤 근거로 더 나아졌다고 판단하느냐에 있다([Llama 3 기술보고서, §3–4](https://arxiv.org/html/2407.21783v3)).
+
+## 사전학습: 여러 작업에 쓸 코딩 능력을 어떻게 기르는가
+
+프로그램 하나에는 개발자가 내린 수많은 결정이 기록되어 있다. 어떤 이름을 붙였는지, 어떤 함수를 함께 호출했는지, 주석에 적힌 약속을 어떻게 구현했는지가 모두 자료가 된다. 사전학습에서는 많은 코드와 문서를 이용해 이런 관계를 익힌다. 기본 모델이 만들어지고 나면 처음 보는 코드에서도 함수의 나머지를 작성하거나 설명에 맞는 구현을 제안하는 능력을 평가할 수 있다. Code Llama 연구진은 이미 언어를 학습한 Llama 2에서 출발해 코드 자료로 훈련을 이어 갔고, 그렇게 확장한 코딩 능력을 바탕으로 지시 수행용 모델도 만들었다. 기존 모델에서 학습을 이어 가는 일은 사전학습에서도 일어난다([Code Llama, §2–3](https://arxiv.org/html/2308.12950v3)).
+
+그렇다면 개발자가 남긴 파일만 있고 별도의 답안지가 없을 때는 무엇을 기준으로 배울까? 답은 8.1절에서 본 **다음 토큰 예측**에 있다. 8.1절은 이 예측을 코드를 생성하는 방법으로 보았다. 학습에서는 같은 예측이 목표가 된다. 학습 프로그램에는 원본이 있으므로, 모델이 다음 토큰마다 매긴 확률을 그 자리에 실제로 적힌 토큰과 비교할 수 있다. 모델이 그 토큰에 낮은 확률을 줬다면 오차가 크다. 훈련 과정에서는 이 오차를 줄이는 방향으로 **가중치**, 곧 모델의 예측에 영향을 주는 내부 수치를 조금씩 조정한다. 이 비교를 수많은 위치에서 반복할 수 있으니 사람이 코드 한 줄마다 답안을 달 필요가 없다. 자료 자체에서 학습에 쓸 답을 얻는 방식을 **자기지도학습**이라고 한다. 여기서 정답은 원본에 쓰인 토큰이다. 원본 코드에 버그가 있어도 그 토큰은 그대로 학습 목표가 된다([Radford 외, Improving Language Understanding by Generative Pre-Training, §3.1 식 (1)](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf#page=3)).
+
+어떤 문맥을 보여 줄지도 정해야 한다. 함수가 정의된 파일과 호출되는 파일을 함께 읽히면 이름과 구현뿐 아니라 그 함수가 어디서 쓰이는지도 자료에 들어온다. 커서 뒤에 코드가 이미 있는 편집 상황을 연습시킬 수도 있다. 원래 코드에서 가운데 구간을 떼어 낸 뒤 앞뒤를 단서로 그 부분을 복원하게 하는 **가운데 채우기(fill-in-the-middle)**다. 여러 파일을 묶는 방법은 모델이 볼 수 있는 문맥의 범위를, 가운데 채우기는 그 문맥에서 풀게 할 문제를 정한다. 도입부의 질문으로 돌아가면, 모델이 코드의 맥락을 반영하는 첫 번째 근거가 여기에 있다. 맥락이 담긴 자료를 맥락째 보여 주고 예측하게 하는 것이다([DeepSeek-Coder, §2.2, §3.1.2](https://arxiv.org/abs/2401.14196); [Bavarian 외, Efficient Training of Language Models to Fill in the Middle](https://arxiv.org/abs/2207.14255)).
+
+사전학습과 사후학습의 경계가 늘 뚜렷한 것은 아니다. Cheng 등은 문서 내용을 바탕으로 요청과 그에 맞는 답을 만들고, 이 문답을 원문과 함께 사전학습 자료로 썼다. 요청에 답하는 형식을 사전학습 단계에서부터 익히게 한 것이다. 두 단계를 나누는 기준이 쓰는 자료의 형태가 아니라 학습의 목적에 있다는 점을 보여 준다([Cheng 외, Instruction Pre-Training: Language Models are Supervised Multitask Learners](https://aclanthology.org/2024.emnlp-main.148/) (EMNLP 2024 본 학회)).
+
+## 사후학습: 사용자에게 어떤 답을 하도록 가르치는가
+
+기본 모델이 코드를 쓸 수 있어도 사용자가 바란 답을 매번 내놓지는 않는다. “수정한 부분만 보여 줘”라고 했는데 파일 전체를 다시 쓰거나, 결과는 그럴듯해도 지켜 달라고 한 제약을 빠뜨릴 수 있다. 사후학습에서는 어떤 응답을 원하는지 정하고, 그 방향으로 모델을 더 훈련한다. 답변 형식뿐 아니라 실제로 문제를 풀어내는 능력도 개선 대상이다.
+
+이렇게 이미 학습한 모델의 가중치를 목적에 맞게 더 조정하는 것을 **파인튜닝(미세조정)**이라고 한다. 사후학습에서는 어떤 정보를 바탕으로 가중치를 조정할까? 여기서는 모범 응답을 따라 배우는 지도 미세조정, 두 답 중 어느 쪽이 더 나은지 비교해 배우는 선호 학습, 모델이 직접 낸 답에 보상을 주는 강화학습을 살펴본다. 실제 모델을 훈련할 때는 이 방법들을 조합하기도 한다([Llama 3, §4](https://arxiv.org/html/2407.21783v3#S4); [DeepSeek-R1](https://www.nature.com/articles/s41586-025-09422-z) (Nature 게재 논문)).
+
+### 모범 응답을 보여 줄 수 있는가?
+
+**지도 미세조정(SFT)**에서는 사용자 요청과 그에 맞는 모범 응답을 짝지어 학습한다. 모델은 요청과 모범 답의 앞부분을 읽고 답의 다음 토큰을 예측한다. 사전학습에서 본 다음 토큰 예측이 여기에도 쓰인다. 이번에는 개발자가 *이 요청을 받았을 때 쓰기를 바라는 답*을 골라 주었다는 점이 중요하다. Llama 3 연구진은 지시 미세조정에서 요청 부분을 손실 계산에서 제외하고, 모델이 생성해야 할 응답 부분을 기준으로 가중치를 조정했다([Llama 3, §4.1.3](https://arxiv.org/html/2407.21783v3#S4.SS1.SSS3)).
+
+모범 답은 누가 쓸까? 사람이 직접 작성할 수도 있고, 다른 모델이 완성한 응답을 쓸 수도 있다. 교사 모델의 응답을 학생 모델의 학습 목표로 삼는 방식을 **응답을 이용한 증류**라고 한다. Kim과 Rush의 실험에서는 교사가 원문 한 문장을 끝까지 번역하고 학생이 그 번역문으로 배웠다. 이후 DeepSeek-R1 연구에서는 교사 모델이 생성한 풀이를 이용해 더 작은 언어 모델들을 미세조정했다. 증류라는 말은 이 사례에서 **누구의 답을 배우는지**를, 지도 미세조정이라는 말은 **그 답으로 학생을 어떻게 훈련하는지**를 설명한다([Kim과 Rush, Sequence-Level Knowledge Distillation, §3.2](https://aclanthology.org/D16-1139/) (EMNLP 2016 본 학회); [DeepSeek-R1, 증류 실험](https://arxiv.org/abs/2501.12948)).
+
+응답을 이용한 증류는 업계에서 다투는 문제이기도 하다. 모델을 만든 회사가 허락하지 않았는데도 다른 쪽이 그 모델의 응답을 대량으로 받아 자기 모델의 학습 자료로 쓸 수 있기 때문이다. OpenAI는 2026년 11월에 공개한 GPT-6.2 시스템 카드에서, 화면에 보이지 않는 추론 과정(chain of thought)을 빼내는 것이 프런티어 연구소를 겨냥한 증류 공격의 주된 방식이라고 적었다. 대응책으로는 모델이 숨긴 추론을 드러내지 않도록 학습시키는 것, 추출 시도를 감지하는 분류기, 암호화된 추론 내용에 대한 보호 등을 들었다. 회사가 직접 수행한 적대적 평가에서, 이전 대화 턴의 추론을 빼내려는 공격의 평균 성공률은 GPT-6 Astra에서 54.0%였고 GPT-6.2 Astra에서 0.2%로 낮아졌다([OpenAI, GPT-6.2 Astra and Sol System Card, §2.2.5 Distillation Mitigations](https://deploymentsafety.openai.com/gpt-6-2-astra-sol) (기업 공식 문서; 게시: 2026-11-17; 확인: 2026-11-22)). 회사가 스스로 밝힌 수치이며 외부에서 검증되지 않았다. 그래도 SFT에 쓸 모범 답을 어디서 얻느냐가 기술만의 문제가 아니라는 점은 보여 준다.
+
+### 두 응답 중 나은 것을 고를 수 있는가?
+
+좋은 답을 새로 작성하기는 어려워도 이미 나온 두 답을 비교하기는 쉬울 수 있다. **선호 학습**에는 같은 요청, 선택된 답, 선택되지 않은 답을 한 묶음으로 쓸 수 있다. 대표적인 방법인 **직접 선호 최적화(DPO)**는 이 비교를 이용해, 훈련의 기준으로 삼은 모델에 비해 선택된 답이 다른 답보다 상대적으로 높은 확률을 얻도록 가중치를 조정한다. 평가자는 어느 답을 골랐는지 알려 주면 된다. 두 답에 각각 몇 점을 줄지까지 정할 필요는 없다([Rafailov 외, Direct Preference Optimization, §4](https://arxiv.org/abs/2305.18290) (NeurIPS 2023 본 학회)).
+
+코딩에서는 실행 결과가 선택의 근거가 되기도 한다. Qwen2.5-Coder 연구진은 지도 미세조정을 마친 뒤, 독립적으로 실행할 수 있는 알고리즘 문제에서는 테스트로 코드의 정확성을 확인했다. 더 복잡한 코드에서는 언어 모델의 판단도 활용했다. 그런 평가로 선호 자료를 구성하고 DPO를 적용했다. 이 사례에서 테스트는 어느 코드를 선호할지 정하는 데 쓰였고, 응답을 만드는 모델은 그렇게 얻은 **비교 결과**로 배웠다([Qwen2.5-Coder 기술보고서, §4.2](https://arxiv.org/html/2409.12186v3#S4.SS2)).
+
+### 모델이 직접 만든 답에 보상을 줄 수 있는가?
+
+**강화학습(RL)**에서는 훈련 중인 모델이 답을 시도하면 평가 결과를 **보상**으로 돌려준다. 학습 알고리즘은 여러 시도의 보상을 바탕으로 이후에 더 높은 보상을 기대할 수 있는 답을 생성하도록 모델을 조정한다. 프로그래밍 문제라면 제출한 코드를 정해진 테스트에 실행해 결과를 보상에 반영할 수 있다. DeepSeek-R1 연구진은 경쟁 프로그래밍 문제처럼 정답을 검증할 수 있는 과제에서 이런 방식의 피드백을 활용했다. 앞의 DPO 사례와 나란히 놓으면 같은 코드 테스트의 쓰임이 분명해진다. 한쪽에서는 두 응답의 선호를 정했고, 다른 쪽에서는 모델이 시도한 응답에 보상을 주었다. 응답에 파일 읽기나 명령 실행 같은 도구 호출이 들어가도 원리는 같다. 호출이 실제로 어떻게 실행되는지는 8.3절에서, 테스트 결과가 왜 빠르고 믿을 만한 기준이 되는지는 8.4절에서 본다([DeepSeek-R1, 보상 설계](https://www.nature.com/articles/s41586-025-09422-z); [Qwen2.5-Coder, §4.2](https://arxiv.org/html/2409.12186v3#S4.SS2)).
+
+프로그램으로 정답을 검사하기 어려우면 사람의 판단에서 보상을 얻기도 한다. InstructGPT 연구진은 사람이 여러 응답에 매긴 순위로 **보상 모델**을 훈련했다. 이 보상 모델은 사람이 아직 평가하지 않은 새 답에도 점수를 매긴다. 연구진은 그 점수를 이용해 응답을 작성하는 모델을 강화학습시켰다. 사람이 선호하는 답의 특징이 실제 모델 훈련에 반영되는 한 경로다([Ouyang 외, Training language models to follow instructions with human feedback, 그림 2](https://arxiv.org/abs/2203.02155) (NeurIPS 2022 본 학회)).
+
+## 다시 앵무새 질문으로
+
+지금까지 본 방법을 한데 모으면 다음과 같다.
+
+| 단계 | 방법 | 모델이 배우는 것 |
+|---|---|---|
+| 사전학습 | 다음 토큰 예측 | 원본 코드에서 실제로 이어진 토큰 |
+| 사전학습 | 관련 파일 함께 읽기, 가운데 채우기 | 정의와 사용 위치, 앞뒤 코드 같은 맥락 |
+| 사후학습 | 지도 미세조정(SFT) | 요청에 맞는 모범 응답 |
+| 사후학습 | 선호 학습(DPO) | 두 응답 가운데 더 나은 쪽 |
+| 사후학습 | 강화학습(RL) | 테스트나 사람의 판단으로 매긴 보상 |
+
+이런 방법들로 학습시킨 모델도 여전히 다음 토큰을 예측한다. 달라지는 것은 그 예측에 무엇이 반영되느냐다. 사전학습에서 맥락이 담긴 자료를 맥락째 예측했으므로, 김 부장님의 한 줄처럼 주변 코드에 담긴 쓰임이 다음 토큰의 확률에 반영될 수 있다. 사후학습에서 요청한 조건을 지킨 답이 더 높게 평가되었으므로, 사용자가 붙인 조건도 반영될 수 있다. 이것이 도입부 질문에 대한 이 절의 답이다. 모델이 맥락을 ‘이해’하는지와 별개로, 맥락이 반영된 출력이 나오도록 학습시키는 것이다.
+
+다만 어떤 조건이 반영될지는 사람이 정한 평가 기준에 달려 있다. 무엇을 모범 답으로 채택하고, 두 답 가운데 어느 쪽을 고르고, 무엇에 보상을 줄지에 들어가지 않은 조건은 학습되기 어렵다. 블루베리에게 흙의 산도가 중요하다는 것을 모르는 사람이 아무리 정성을 들여도 화분을 살리지 못하는 것과 같다.
+
+::: {.callout-note}
+## 덧붙임: 학습이 끝난 뒤에 모델을 고칠 수도 있을까?
+
+지금까지 본 방법은 모두 자료와 피드백으로 가중치를 조금씩 조정하는 훈련이다. 2026년 11월 MIT CSAIL의 Takehi 등은 다른 접근을 블로그에 공개했다. 이들은 GPT-6 Astra에게 작은 언어 모델 Qwen3.5-0.8B의 가중치와 그것을 살펴볼 Python 환경을 주었다. 이 모델은 추론 도중 같은 내용을 반복하다 답을 내지 못하는 문제가 있었고, 평가 문항의 93.0%에서 출력 길이 한도에 걸렸다. Astra는 내부 계산을 조사해 반복과 관련된 방향을 찾았고, 전체 가중치의 0.016%에 해당하는 131,072개를 직접 수정했다. 경사하강법을 쓴 추가 훈련은 없었다. 그 결과 수학 평가 MATH-500의 점수는 7.9%에서 48.1%로 올랐다([Takehi 외, Sparks of Weight-Space Programming, 실험 8](https://rikiyat.github.io/blog/weight-space-programming/) (연구 블로그, 동료 심사 없음; 게시: 2026-11-02; 확인: 2026-11-22)).
+
+이 결과를 모델이 수학을 새로 배웠다고 읽어서는 안 된다. 같은 글의 추가 실험에서 Astra는 반복 문제가 없는 Gemma 3 270M 모델의 MATH-500 점수를 약 1%포인트 이상 올리지 못했다. 저자들도 가중치 편집은 숨어 있던 능력을 가로막던 장애물을 치울 수는 있지만, 모델에 없던 능력을 더하지는 못했다고 정리했다. UC San Diego의 Wang 등은 이 편집이 특정 방향으로 내부 활성화를 밀어 주는 기존 기법(activation steering)의 한 형태이며, 점수가 오른 것도 주로 반복을 억제한 결과라고 비평했다([Wang 외, A closer look at “Sparks of Weight-Space Programming”](https://www.lesswrong.com/posts/PD8Hmzro4N3piJSMP/a-closer-look-at-sparks-of-weight-space-programming) (LessWrong 게시글, 동료 심사 없음; 게시: 2026-11-17; 확인: 2026-11-22)).
+
+해석은 아직 열려 있다. 그래도 사전학습과 사후학습이 모델을 만드는 마지막 단계가 아닐 수 있다는 질문은 남는다. 앞으로는 AI에게 모범 답을 가르치는 데서 그치지 않고, “이 모델이 왜 자꾸 틀리는지 찾아서 고쳐 줘”라고 부탁하게 될까?
+:::
+
+## 정리
+
+이 절은 코딩 모델이 사전학습으로 기반을, 사후학습으로 쓰임새를 얻는 과정을 보았다. 그런데 이렇게 만들어진 모델도 결국 텍스트를 출력할 뿐이다. 그 코드를 파일에 쓰고, 테스트를 실행하고, 실패하면 다시 고치는 일은 누가 맡을까? 8.3절은 모델이 도구를 호출하고 그 실행을 모델 바깥의 프로그램이 맡는 구조를 다룬다.
+
+## 참고문헌
+
+학술 자료는 게재처의 종류를, 그 밖의 자료는 자료의 성격을 함께 적었다.
+
+1. [Emily M. Bender 외, On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?](https://doi.org/10.1145/3442188.3445922) (FAccT 2021 본 학회).
+2. [Llama Team, The Llama 3 Herd of Models](https://arxiv.org/html/2407.21783v3) (기술보고서, 프리프린트 3판).
+3. [Baptiste Rozière 외, Code Llama: Open Foundation Models for Code](https://arxiv.org/html/2308.12950v3) (기술보고서, 프리프린트 3판).
+4. [Alec Radford 외, Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) (기업 기술보고서, 2018).
+5. [Daya Guo 외, DeepSeek-Coder: When the Large Language Model Meets Programming](https://arxiv.org/abs/2401.14196) (기술보고서, 프리프린트).
+6. [Mohammad Bavarian 외, Efficient Training of Language Models to Fill in the Middle](https://arxiv.org/abs/2207.14255) (프리프린트).
+7. [Daixuan Cheng 외, Instruction Pre-Training: Language Models are Supervised Multitask Learners](https://aclanthology.org/2024.emnlp-main.148/) (EMNLP 2024 본 학회).
+8. [Yoon Kim, Alexander M. Rush, Sequence-Level Knowledge Distillation](https://aclanthology.org/D16-1139/) (EMNLP 2016 본 학회).
+9. [DeepSeek-AI, DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948) (프리프린트; 학술지판: [Nature](https://www.nature.com/articles/s41586-025-09422-z)).
+10. [OpenAI, GPT-6.2 Astra and Sol System Card](https://deploymentsafety.openai.com/gpt-6-2-astra-sol) (기업 공식 문서; 게시: 2026-11-17; 확인: 2026-11-22).
+11. [Rafael Rafailov 외, Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2305.18290) (NeurIPS 2023 본 학회).
+12. [Binyuan Hui 외, Qwen2.5-Coder Technical Report](https://arxiv.org/html/2409.12186v3) (기술보고서, 프리프린트 3판).
+13. [Long Ouyang 외, Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) (NeurIPS 2022 본 학회).
+14. [Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab, Sparks of Weight-Space Programming: LLMs can natively read & write neural network weights](https://rikiyat.github.io/blog/weight-space-programming/) (연구 블로그, 동료 심사 없음; 게시: 2026-11-02; 확인: 2026-11-22).
+15. [Zhi Wang 외, A closer look at “Sparks of Weight-Space Programming”](https://www.lesswrong.com/posts/PD8Hmzro4N3piJSMP/a-closer-look-at-sparks-of-weight-space-programming) (LessWrong 게시글, 동료 심사 없음; 게시: 2026-11-17; 확인: 2026-11-22).
