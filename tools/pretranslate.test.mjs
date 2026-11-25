@@ -8,7 +8,7 @@ import {execFile} from "node:child_process";
 import {promisify} from "node:util";
 import vm from "node:vm";
 import {parseHTML} from "linkedom";
-import {fragments, embed, check, unitsFor, untranslatedDiagrams} from "./_translation_html.mjs";
+import {fragments, requiredFragments, embed, check, unitsFor, untranslatedDiagrams} from "./_translation_html.mjs";
 import {prepare, translationReport} from "./pretranslate.mjs";
 
 const fixture = '<!doctype html><html lang="ko"><head><title>한국어 제목</title><script>const untouched="한국어 코드";</script></head><body><nav>목차</nav><main><h1>테스트 제목</h1><p>본문 <a href="/chapter#anchor">링크</a>입니다.</p><pre><code>print("코드 보존")</code></pre><span translate="no">번역 제외</span></main></body></html>';
@@ -42,6 +42,29 @@ test("character references remain in the same text fragment as in a browser", ()
   assert.deepEqual(fragments(html), ["저자 외, Expectation vs.\u00a0Experience &amp; Tools"]);
 });
 
+test("a renamed sidebar label cannot disable English on an already translated article", async () => {
+  const html = '<html lang="ko"><body><nav><a href="/new">새 목차 제목</a></nav><main><h1>기존 제목</h1><p>이미 번역한 본문</p></main></body></html>';
+  const map = {"기존 제목":"Existing title","이미 번역한 본문":"Previously translated article"};
+  const page = {file:"/site/article.html",texts:fragments(html),requiredTexts:requiredFragments(html),translations:{}};
+  await prepare([page],map);
+  assert.equal(translationReport([page],map).pendingPages.length,0);
+  const output=embed(html,page.translations);
+  assert.equal(check(output).pending,false);
+  const {document}=parseHTML(output);
+  vm.runInContext(toggle,vm.createContext({document,localStorage:memoryStorage(),sessionStorage:memoryStorage()}));
+  const [ko,en]=document.querySelectorAll(".vc-language button");
+  assert.equal(en.disabled,false);
+  en.click();
+  assert.equal(document.querySelector("main p").textContent,"Previously translated article");
+  assert.equal(document.querySelector("nav a").textContent,"새 목차 제목");
+  assert.equal(document.querySelector("nav a").getAttribute("href"),"/new");
+  ko.click();
+  assert.equal(document.querySelector("main p").textContent,"이미 번역한 본문");
+  const changed=html.replace("이미 번역한 본문","새로 바뀐 본문");
+  assert.throws(()=>check(embed(changed,map)),/Missing translation/);
+  assert.equal(check(embed(changed,map,{pending:true}),{allowMissing:true}).pending,true);
+});
+
 test("explicit prose examples translate Markdown instructions without changing ordinary Markdown code", () => {
   const html = '<html lang="ko"><body><pre class="markdown vc-prose"><code>description: 발표 초안 작성\n1. 원고를 읽는다.</code></pre><pre class="markdown"><code># 코드 예시</code></pre></body></html>';
   const map = {"description: 발표 초안 작성\n1. 원고를 읽는다.":"description: Draft a presentation\n1. Read the manuscript."};
@@ -57,8 +80,9 @@ test("explicit prose examples translate Markdown instructions without changing o
 
 test("reviewed diagrams preserve graph structure and switch without rerendering or network access", async () => {
   const diagrams = JSON.parse(await readFile(new URL("../translations/diagrams.ko-en.json",import.meta.url),"utf8"));
-  const topology = text => [...text.matchAll(/^\s*(\w+)(?:\[[^\]]*\]|\{[^}]*\})?\s*-->\|[^|]*\|\s*(\w+)/gm)].map(m => [m[1],m[2]]);
+  const topology = text => [...text.matchAll(/^\s*(\w+)(?:\[[^\]]*\]|\{[^}]*\})?\s*-->(?:\|[^|]*\|)?\s*(\w+)/gm)].map(m => [m[1],m[2]]);
   for (const diagram of diagrams) {
+    assert.ok(topology(diagram.source).length > 0);
     assert.deepEqual(topology(diagram.english),topology(diagram.source));
     const {document} = parseHTML('<html lang="ko"><head></head><body><main><pre class="mermaid mermaid-js"></pre></main></body></html>');
     document.querySelector("pre").textContent = diagram.source;

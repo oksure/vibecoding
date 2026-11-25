@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 310" width="1180" height="310" role="img" aria-labelledby="title desc">
+<title id="title">MCP document summarization</title>
+<desc id="desc">A document link and summary request goes to AI, which selects the document reading tool. The returned content is summarized. Editing and deletion tools are available but not used.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#444"/></marker></defs>
+<g font-family="Arial, sans-serif" font-size="17" text-anchor="middle" fill="#252525">
+<rect x="520" y="12" width="300" height="286" rx="5" fill="#ffffde" stroke="#aaaa33"/>
+<text x="670" y="39">Document MCP</text>
+<g fill="#ece9ff" stroke="#9370db"><rect x="10" y="125" width="210" height="60"/><rect x="265" y="125" width="210" height="60"/><rect x="875" y="65" width="290" height="50"/></g>
+<rect x="550" y="65" width="240" height="50" fill="#e8f3ff" stroke="#3182f6"/>
+<g fill="#f2f4f6" stroke="#c5cbd3"><rect x="550" y="140" width="240" height="50"/><rect x="550" y="215" width="240" height="50"/></g>
+<text x="115" y="150"><tspan x="115">Document link and</tspan><tspan x="115" dy="22">summary request</tspan></text>
+<text x="370" y="150"><tspan x="370">AI selects</tspan><tspan x="370" dy="22">reading tool</tspan></text>
+<text x="670" y="96">Read document</text>
+<g fill="#6b7684"><text x="670" y="171">Edit document</text><text x="670" y="246">Delete document</text></g>
+<text x="1020" y="86"><tspan x="1020">AI summarizes</tspan><tspan x="1020" dy="22">returned content</tspan></text>
+</g>
+<g fill="none" stroke="#444" stroke-width="1.6" marker-end="url(#arrow)"><path d="M220 155 H265"/><path d="M475 155 H500 V90 H550"/><path d="M790 90 H875"/></g>
+</svg>

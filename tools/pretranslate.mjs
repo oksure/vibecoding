@@ -4,7 +4,7 @@
 import {readFile, writeFile, readdir, mkdir, appendFile} from "node:fs/promises";
 import {resolve, join, relative, dirname} from "node:path";
 import {pathToFileURL} from "node:url";
-import {hasKorean, fragments, embed, check, untranslatedDiagrams} from "./_translation_html.mjs";
+import {hasKorean, fragments, requiredFragments, embed, check, untranslatedDiagrams} from "./_translation_html.mjs";
 import {validateTranslation} from "./_translation_quality.mjs";
 
 async function htmlFiles(directory) {
@@ -48,7 +48,8 @@ export function curatedTranslation(text, glossary) {
 export async function prepare(pages, saved, {allowMissing = false} = {}) {
   for (const text of new Set(pages.flatMap(page => page.texts))) {
     const english = curatedTranslation(text,saved);
-    if (english === undefined && allowMissing) continue;
+    const required = pages.some(page => (page.requiredTexts || page.texts).includes(text));
+    if (english === undefined && (allowMissing || !required)) continue;
     if (typeof english !== "string" || !english.trim()) throw new Error(`Missing saved English translation: ${text.slice(0,160)}`);
     validateTranslation(text,english);
     for (const page of pages) if (page.texts.includes(text)) page.translations[text] = english;
@@ -61,7 +62,8 @@ export function translationReport(pages, saved) {
   for (const page of pages) {
     const file = relative(process.cwd(),page.file).split("\\").join("/");
     const texts = [...page.texts.filter(text => curatedTranslation(text,saved) === undefined),...(page.diagrams || [])];
-    if (texts.length) pendingPages.push({file,missingCount:texts.length});
+    const required = texts.filter(text => (page.requiredTexts || page.texts).includes(text) || (page.diagrams || []).includes(text));
+    if (required.length) pendingPages.push({file,missingCount:required.length});
     for (const source of texts) {
       if (!missing.has(source)) missing.set(source,{source,pages:[]});
       missing.get(source).pages.push(file);
@@ -100,7 +102,7 @@ async function main() {
   for (const directory of directories) {
     for (const file of await htmlFiles(resolve(directory))) {
       const html = await readFile(file,"utf8"), texts = fragments(html);
-      if (texts !== null) pages.push({file,html,texts,diagrams:untranslatedDiagrams(html),translations:{}});
+      if (texts !== null) pages.push({file,html,texts,requiredTexts:requiredFragments(html),diagrams:untranslatedDiagrams(html),translations:{}});
     }
   }
   if (!pages.length) throw new Error("No Korean HTML pages found");
@@ -126,7 +128,7 @@ async function main() {
   await prepare(pages,saved,{allowMissing});
   // Validate every output before touching any deployable file.
   const outputs = pages.map(page => {
-    const pending = page.texts.some(text => !Object.hasOwn(page.translations,text));
+    const pending = page.requiredTexts.some(text => !Object.hasOwn(page.translations,text));
     const html = embed(page.html,page.translations,{pending}); check(html,{allowMissing});
     return {file:page.file,html};
   });

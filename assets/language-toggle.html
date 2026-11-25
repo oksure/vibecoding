@@ -76,6 +76,13 @@
       if (stack.length !== 1 || seen.size !== unit.templates.length) throw new Error("Missing translation marker");
       return [...root.childNodes];
     }
+    // A newly renamed sidebar item must not disable an already translated
+    // article. Unknown surrounding labels retain their original text.
+    const main = document.querySelector("main");
+    for (const unit of units) {
+      const element = unit.kind === "text" ? unit.node.parentElement : unit.node;
+      unit.required = !main || !!element.closest("main");
+    }
     return {units, render};
   }
   // END SHARED TRANSLATION DOM
@@ -111,6 +118,7 @@
     try {
       for (const unit of dom.units) {
         const translated = Object.hasOwn(data.translations, unit.source) ? data.translations[unit.source] : null;
+        if (translated === null && unit.required === false) continue;
         if (typeof translated !== "string" || !translated.trim()) throw new Error("Missing translation");
         if (unit.kind === "block") {
           originals.push({...unit, original:[...unit.node.childNodes], english:dom.render(unit, translated)});

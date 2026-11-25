@@ -10,5 +10,11 @@
     "english": "flowchart TD\n  conv[Convert paper] -->|Markdown text| model[Implement model]\n  model -->|Model code| train[Implement training]\n  train -->|Training code| smoke{Smoke tests}\n  smoke -->|Pass| review[Human review: search space and budget]\n  smoke -->|Fail| diag[Diagnose cause]\n  diag -->|Model issue| model\n  diag -->|Training code issue| train\n  diag -->|Missing setting, or 3 failures with the same cause| human[Human judgment]\n  human -->|After choosing settings| model\n  review -->|Approved| tune[Hyperparameter tuning]\n  tune -->|Tuned settings| exp[Comparison experiment]",
     "svg": "paper-implementation.en.svg",
     "alt": "Paper implementation workflow with smoke tests, diagnosis, human review, and tuning."
+  },
+  {
+    "source": "flowchart LR\n    A[\"문서 링크와 요약 요청\"] --> B[\"AI가 읽기 도구 선택\"]\n    subgraph M[\"문서 MCP\"]\n        C[\"문서 읽기\"]\n        D[\"문서 편집\"]\n        E[\"문서 삭제\"]\n    end\n    B --> C\n    C --> F[\"AI가 받은 본문을 요약\"]\n    style C fill:#e8f3ff,stroke:#3182f6\n    style D fill:#f2f4f6,stroke:#c5cbd3,color:#6b7684\n    style E fill:#f2f4f6,stroke:#c5cbd3,color:#6b7684",
+    "english": "flowchart LR\n    A[\"Document link and summary request\"] --> B[\"AI selects reading tool\"]\n    subgraph M[\"Document MCP\"]\n        C[\"Read document\"]\n        D[\"Edit document\"]\n        E[\"Delete document\"]\n    end\n    B --> C\n    C --> F[\"AI summarizes returned content\"]\n    style C fill:#e8f3ff,stroke:#3182f6\n    style D fill:#f2f4f6,stroke:#c5cbd3,color:#6b7684\n    style E fill:#f2f4f6,stroke:#c5cbd3,color:#6b7684",
+    "svg": "mcp-document-summary.en.svg",
+    "alt": "AI selects only the document reading tool and summarizes the returned content; editing and deletion tools are not used."
   }
 ]

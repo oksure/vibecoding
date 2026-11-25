@@ -21,6 +21,10 @@ export function fragments(html) {
   const dom = unitsFor(html);
   return dom === null ? null : [...new Set(dom.units.map(unit => unit.source))];
 }
+export function requiredFragments(html) {
+  const dom = unitsFor(html);
+  return dom === null ? null : [...new Set(dom.units.filter(unit => unit.required).map(unit => unit.source))];
+}
 export function untranslatedDiagrams(html) {
   const {document} = parseHTML(html);
   return missingDiagrams(document);
@@ -48,7 +52,7 @@ export function check(html, {allowMissing = false} = {}) {
   if (data?.version !== 2 || data.generation !== VERSION || data.excluded !== EXCLUDED || !data.translations || typeof data.translations !== "object" || Array.isArray(data.translations)) throw new Error("Missing/invalid translation data");
   if (data.status !== undefined && !["ready","pending"].includes(data.status)) throw new Error("Invalid translation status");
   const dom = unitsFor(html);
-  const missing = [...texts.filter(text => !Object.hasOwn(data.translations, text)),...missingDiagrams(document,{requireEmbedded:true})];
+  const missing = [...new Set(dom.units.filter(unit => unit.required && !Object.hasOwn(data.translations,unit.source)).map(unit=>unit.source)),...missingDiagrams(document,{requireEmbedded:true})];
   if (missing.length && (!allowMissing || data.status !== "pending")) throw new Error(`Missing translation: ${missing[0].slice(0, 80)}`);
   if (!missing.length && data.status === "pending") throw new Error("Complete translations must be marked ready");
   for (const unit of dom.units) {
